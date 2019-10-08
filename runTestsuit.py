@@ -8,6 +8,7 @@ import yaml
 import os
 import sys
 import re
+import xmlrunner
 
 from tm_cases import tmTestcases
 from tm_cases import tm_init
@@ -124,11 +125,15 @@ if __name__ == '__main__':
 
     else:
         suit  = inspection_suit()
-    runner = HTMLReport.TestRunner(report_file_name='test',
-                                   output_path='./',
-                                   description='login test suite',
-                                   thread_count=1,
-                                   thread_start_wait=3,
-                                   sequential_execution=False,
-                                   lang='cn')
-    runner.run(suit)
+    if conf_args.get("key") == 'smoke':
+        runner = xmlrunner.XMLTestRunner(output="test")
+        runner.run(suit)
+    else:
+        runner = HTMLReport.TestRunner(report_file_name='test',
+                                       output_path='./',
+                                       description='login test suite',
+                                       thread_count=1,
+                                       thread_start_wait=3,
+                                       sequential_execution=False,
+                                       lang='cn')
+        runner.run(suit)
