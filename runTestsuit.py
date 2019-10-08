@@ -126,7 +126,7 @@ if __name__ == '__main__':
     else:
         suit  = inspection_suit()
     if conf_args.get("key") == 'smoke':
-        runner = xmlrunner.XMLTestRunner(output="test")
+        runner = xmlrunner.XMLTestRunner(output="test.xml")
         runner.run(suit)
     else:
         runner = HTMLReport.TestRunner(report_file_name='test',
