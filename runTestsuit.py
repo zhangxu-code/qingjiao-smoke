@@ -106,8 +106,8 @@ if __name__ == '__main__':
     createdata(100)
     '''
     #suit = login_suit()
-    print(conf_args.get("key"))
-    print(type(conf_args.get("key")))
+    #print(conf_args.get("key"))
+    #print(type(conf_args.get("key")))
     fr = open('conf.yml')
     all_conf = yaml.load(fr)
     fr.close()
