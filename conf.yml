@@ -1,0 +1,6 @@
+env192:
+  user: autotest
+  passwd: qwer1234
+  site: console-dev.tsingj.local
+  dbhost: 10.18.0.19
+  dbport: 21050
