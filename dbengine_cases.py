@@ -25,6 +25,8 @@ class dbengineCases(unittest.TestCase):
     host = None
     port = None
     def setUp(self) -> None:
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
         global host
         self.host = host
         global port
@@ -109,7 +111,7 @@ if __name__ == '__main__':
     db_init(ihost='10.18.0.19',iport=21050)
     fw = open('test.txt','w')
     runner = unittest.TextTestRunner(stream=fw,verbosity=2)
-
+    logging.debug("deubg")
 
     unittest.main()
     

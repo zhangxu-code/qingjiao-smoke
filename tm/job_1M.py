@@ -20,6 +20,8 @@ class tmJob:
         self.site =   site
         self.user =   user
         self.passwd = passwd
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
         url = 'https://%s/api/api-sso/token/simpleLogin' % (self.site)
         data = "username=%s&password=%s" % (self.user, self.passwd)
         req = requests.post(url=url, params=data, verify=False)

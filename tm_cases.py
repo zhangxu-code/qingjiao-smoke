@@ -10,6 +10,8 @@ class tmTestcases(unittest.TestCase):
     _tm = None
 
     def setUp(self) -> None:
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
         global conf_args
         global site
         tmp_site = site
