@@ -99,6 +99,7 @@ if __name__ == '__main__':
     parser.add_argument("--jobid",help="jobid,start jobs,split by ',' ",type=str)
     parser.add_argument("--key",help="create jobs, key for data & code exa: 10M_double、1M_double、sql_stage")
     parser.add_argument("--Num",help="create Num jobs,default = 1",default=1)
+    parser.add_argument("--time",help="report-${time}",type=str,default=None)
     args = vars(parser.parse_args())
     print(args)
     global conf_args
@@ -113,6 +114,10 @@ if __name__ == '__main__':
     all_conf = yaml.load(fr)
     fr.close()
     conf = all_conf.get(conf_args.get("env"))
+    if conf_args.get("time") == None:
+        timestr = time.strftime("%Y%m%d%H%M%S")
+    else:
+        timestr = conf_args.get("time")
 
     tm_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"))
     db_init(ihost=conf.get("dbhost"),iport=conf.get("dbport"))
@@ -126,7 +131,7 @@ if __name__ == '__main__':
     else:
         suit  = inspection_suit()
     if conf_args.get("key") == 'smoke':
-        runner = xmlrunner.XMLTestRunner(output="report")
+        runner = xmlrunner.XMLTestRunner(output="report-%s"%(timestr))
         runner.run(suit)
     else:
         runner = HTMLReport.TestRunner(report_file_name='test',
