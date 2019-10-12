@@ -4,3 +4,14 @@ env192:
   site: console-dev.tsingj.local
   dbhost: 10.18.0.19
   dbport: 21050
+env-inspection:
+  user: user
+  passwd: 123456
+  site: debugsaas-inspection.tsingj.local
+
+master:
+  user: smoketest
+  passwd: qwer1234
+  site: console.tsingj.local
+  dbhost: 10.18.0.19
+  dbport: 21050
