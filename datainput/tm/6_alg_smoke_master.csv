@@ -14,7 +14,7 @@ for vec in PEOPLE:
     RES.append(index)
     
 pp.reveal(pp.farr(RES), 'result')"
-matrix_factor,"[{""dataSourceId"":194,""dataSourceMetadataId"":105,""dataServerId"":1,""varName"":""movie""},{""dataSourceId"":194,""dataSourceMetadataId"":122,""dataServerId"":1,""varName"":""movie2""}]","[{""resultVarName"":""result1"",""resultDest"":""-1""},{""resultVarName"":""result2"",""resultDest"":""-1""}]","import numpy as np
+matrix_factor,"[{""dataSourceId"":194,""dataSourceMetadataId"":105,""dataServerId"":1,""varName"":""movie1""},{""dataSourceId"":194,""dataSourceMetadataId"":122,""dataServerId"":1,""varName"":""movie2""}]","[{""resultVarName"":""result1"",""resultDest"":""-1""},{""resultVarName"":""result2"",""resultDest"":""-1""}]","import numpy as np
 import privpy as pp
 import pnumpy as pnp
 
