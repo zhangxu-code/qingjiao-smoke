@@ -5,7 +5,7 @@ import unittest
 import HTMLReport
 import logging
 import csv
-import ddt
+from ddt import ddt
 # table gold info: {'len': 1940, 'price_Count': 7816861, 'price_Count_1000': 37}
 # price_Count_1000： count(price < 1000) == 37
 
@@ -74,6 +74,7 @@ class dbengineCases(unittest.TestCase):
         data = self.db.execut_sql(sql=sql)
         logging.info(data)
         self.assertEquals(data[0][0],1938)
+
     @ddt.data(*select_count_csv_reader())
     @ddt.unpack
     def test_agg_case(self,name,sql,expect):

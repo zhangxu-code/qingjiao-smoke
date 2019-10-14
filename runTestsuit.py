@@ -10,12 +10,13 @@ import sys
 import re
 import xmlrunner
 
-from tm_cases import tmTestcases
+from tm_cases import tmTestcases,get_job_csv
 from tm_cases import tm_init
 from dbengine_cases import dbengineCases
 from dbengine_cases import db_init
 from login_cases import loginTestcases
 from login_cases import login_init
+from alarm.alarm import post_alarm
 
 import logging
 
@@ -25,12 +26,6 @@ def login_suit():
     loginsuit.addTest(loginTestcases("logincase"))
     return loginsuit
 
-def tm_suit():
-    tmsuit = unittest.TestSuite()
-    #tmsuit.addTest(tmTestcases("jobstart_pipline_case"))
-    #tmsuit.addTest(tmTestcases("jobgetConfig_case"))
-    tmsuit.addTest(tmTestcases("jobcreate_pipline"))
-    return tmsuit
 
 def inspection_suit():
     inspectionsuit = unittest.TestSuite()
@@ -45,20 +40,10 @@ def inspection_suit():
     return inspectionsuit
 
 def tm_smoke_suit():
-    smokesuit = unittest.TestSuite()
-    smokesuit.addTest(loginTestcases("logincase_ok"))
-    smokesuit.addTest(tmTestcases("jobcreate_cnnface_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_matrix_factor_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_logistic_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_query_gold_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_lstm_hsi_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_nn_mnist_pipline"))
-
-    smokesuit.addTest(tmTestcases("jobcreate_100M_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_10M_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_1M_pipline"))
-    smokesuit.addTest(tmTestcases("jobcreate_500M_pipline"))
-    return smokesuit
+    tmsmokesuit = unittest.TestLoader().loadTestsFromTestCase(tmTestcases)
+    tmsmokesuit.addTest(loginTestcases("logincase_ok"))
+    logging.info("get tm smoke cases")
+    return tmsmokesuit
 
 def db_smoke_suit():
     dbsomkesuit = unittest.TestLoader().loadTestsFromTestCase(dbengineCases)
@@ -91,12 +76,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     #parser.description("run job test")
     parser.add_argument("--env",help="environment,like: env192 ",type=str)
-    parser.add_argument("--site",help="env site",type=str)
-    parser.add_argument("--user",help="user",type=str)
-    parser.add_argument("--passwd",help="password",type=str)
-    parser.add_argument("--dbhost",help="impala host",type=str)
-    parser.add_argument("--dbport",help="impala port",type=int)
-    parser.add_argument("--jobid",help="jobid,start jobs,split by ',' ",type=str)
     parser.add_argument("--key",help="create jobs, key for data & code exa: 10M_double、1M_double、sql_stage")
     parser.add_argument("--Num",help="create Num jobs,default = 1",default=1)
     parser.add_argument("--time",help="report-${time}",type=str,default=None)
@@ -104,12 +83,6 @@ if __name__ == '__main__':
     print(args)
     global conf_args
     conf_args = args
-    '''
-    createdata(100)
-    '''
-    #suit = login_suit()
-    print(conf_args.get("key"))
-    print(type(conf_args.get("key")))
     fr = open('conf.yml')
     all_conf = yaml.load(fr)
     fr.close()
@@ -118,8 +91,8 @@ if __name__ == '__main__':
         timestr = time.strftime("%Y%m%d%H%M%S")
     else:
         timestr = conf_args.get("time")
-
-    tm_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"))
+    get_job_csv(env=conf_args.get('env'),key=conf_args.get("key"))
+    tm_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"),inenv=conf.get("csvfile"))
     db_init(ihost=conf.get("dbhost"),iport=conf.get("dbport"))
     login_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"))
     if conf_args.get("key") == 'smoke':
@@ -127,12 +100,15 @@ if __name__ == '__main__':
         dbsuit = db_smoke_suit()
         tmsuit = tm_smoke_suit()
         suit = unittest.TestSuite((tmsuit,dbsuit))
+    if conf_args.get("key") == 'heartbeat':
+        suit = tm_smoke_suit()
 
-    else:
+    elif conf_args.get("env") == 'env-inspection':
         suit  = inspection_suit()
-    if conf_args.get("key") == 'smoke':
-        runner = xmlrunner.XMLTestRunner(output="report-%s"%(timestr))
+    if conf_args.get("key") in ['smoke','heartbeat']:
+        runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s"%(conf_args.get("key"),timestr))
         runner.run(suit)
+        post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr))
     else:
         runner = HTMLReport.TestRunner(report_file_name='test',
                                        output_path='./',
