@@ -5,6 +5,8 @@ import requests
 import HTMLReport
 import json
 import logging
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 '''
@@ -30,6 +32,7 @@ class tmJob:
 
 
     def job_start(self,jobid,token = None):
+        logging.info("job start "+str(jobid))
         url = 'https://%s/api/api-tm/task/startTask/%s' % (self.site, str(jobid))
         if token ==None:
             token = self.token
@@ -40,6 +43,7 @@ class tmJob:
         logging.info(req.text)
         return  req.json()
     def job_getinfo(self,jobid,token = None):
+        logging.info("get job "+str(jobid))
         url = 'https://%s/api/api-tm/task/%s' % (self.site, str(jobid))
         if token ==None:
             token = self.token
@@ -62,17 +66,8 @@ class tmJob:
         return req.json()
 
     def job_create(self,key,datasource = [],result=[],code='',token=None):
+        logging.info('create job '+key)
         url = "https://%s/api/api-tm/task"%(self.site)
-        #var_re = re.compile('pp\.ss\(\"[\w]+\"\)')
-        #arname = 'var_autotest_%d_%d' %(datasource.get("dataServeId"),datasource.get("dataSourceId"))
-        datasource_body = []
-        for data in datasource:
-            tmp = {}
-            tmp["dataServerId"] = data.get("dataServeId")
-            tmp["dataSourceId"] = data.get("dataSourceId")
-            tmp["dataSourceMetadataId"] = data.get("dataSourceMetadataId")
-            tmp["varName"] = data.get("varName")
-
         body = {
             "name":"autotest_%s" %(key),
             "code": code, #re.sub(var_re,"'pp\.ss\(\"%s\"\)'"%(varname),code),
