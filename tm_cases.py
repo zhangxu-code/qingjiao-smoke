@@ -2,7 +2,7 @@ import unittest
 from tm.job_1M import tmJob
 import logging
 import time
-from ddt import ddt
+import ddt
 import csv
 import re
 import os

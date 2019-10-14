@@ -5,7 +5,7 @@ import unittest
 import HTMLReport
 import logging
 import csv
-from ddt import ddt
+import ddt
 # table gold info: {'len': 1940, 'price_Count': 7816861, 'price_Count_1000': 37}
 # price_Count_1000： count(price < 1000) == 37
 
