@@ -1,2 +1,5 @@
 title,datasource,result,code
-1M,"[{""dataSourceId"":295,""dataSourceMetadataId"":278,""dataServerId"":1,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp\na1=pp.ss(\""data1\"")\nresult = a1*a1\npp.reveal(result, \""result\"")"
+1M-heartbeat,"[{""dataSourceId"":295,""dataSourceMetadataId"":278,""dataServerId"":1,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")"
