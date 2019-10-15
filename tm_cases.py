@@ -154,6 +154,8 @@ class tmTestcases(unittest.TestCase):
                     self.assertTrue(False,"job not finished ,timeout:%s"%(str(timeout)))
         self.assertEquals(jobinfo.get("code"), 0)
         self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
+        if 'heartbeat' in key:
+            self._tm.del_jobid(jobid=ret.get("data").get("id"))
 
     @ddt.data(*job_csv())
     @ddt.unpack

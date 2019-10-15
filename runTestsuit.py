@@ -41,7 +41,7 @@ def inspection_suit():
 
 def tm_smoke_suit():
     tmsmokesuit = unittest.TestLoader().loadTestsFromTestCase(tmTestcases)
-    tmsmokesuit.addTest(loginTestcases("logincase_ok"))
+    #tmsmokesuit.addTest(loginTestcases("logincase_ok"))
     logging.info("get tm smoke cases")
     return tmsmokesuit
 
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         timestr = time.strftime("%Y%m%d%H%M%S")
     else:
         timestr = conf_args.get("time")
-    get_job_csv(env=conf_args.get('env'),key=conf_args.get("key"))
+    #get_job_csv(env=conf_args.get('env'),key=conf_args.get("key"))
     tm_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"),inenv=conf.get("csvfile"))
     db_init(ihost=conf.get("dbhost"),iport=conf.get("dbport"))
     login_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"))

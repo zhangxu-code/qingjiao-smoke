@@ -108,5 +108,18 @@ class tmJob:
         logging.info(req.text)
         return req.json()
 
+    def del_jobid(self,jobid,token = None):
+        logging.info("job start " + str(jobid))
+        url = 'https://%s/api/api-tm/task/%s' % (self.site, str(jobid))
+        if token == None:
+            token = self.token
+        head = {
+            "Authorization": "bearer %s" % (self.token)
+        }
+        req = requests.delete(url=url, headers=head, verify=False)
+        logging.info(req.text)
+        return req.json()
+
+
 if __name__ == '__main__':
     print('hello')
