@@ -132,7 +132,7 @@ class tmTestcases(unittest.TestCase):
         logging.debug(result_ret)
         self.assertEquals(datasource_ret,datasource)
         self.assertEquals(result_ret,result)
-    def createjob_pipline(self,key,datasource,result,code):
+    def createjob_pipline(self,key,datasource,result,code,timeout = None):
         ret = self._tm.job_create(key=key, result=result,
                                   datasource=datasource,
                                   code=code)
@@ -142,18 +142,23 @@ class tmTestcases(unittest.TestCase):
         self.assertIsInstance(ret_start.get("data"), str)
         finished = False
         # get jobinfo and check job status
+        trycount = 0
         while not finished:
             jobinfo = self._tm.job_getinfo(jobid=ret.get("data").get("id"))
             if jobinfo.get("data").get("queueStatus") == 6 or jobinfo.get("data").get("queueStatus") == 7:
                 finished = True
-            time.sleep(1)
+            time.sleep(3)
+            if timeout != None:
+                trycount = trycount+1
+                if trycount* 3 >= int(timeout):
+                    self.assertTrue(False,"job not finished ,timeout:%s"%(str(timeout)))
         self.assertEquals(jobinfo.get("code"), 0)
         self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
 
     @ddt.data(*job_csv())
     @ddt.unpack
-    def test_jobrun(self,title,datasource,result,code):
-        self.createjob_pipline(key=title,datasource=json.loads(datasource),result=json.loads(result),code=code)
+    def test_jobrun(self,title,datasource,result,code,timeout=None):
+        self.createjob_pipline(key=title,datasource=json.loads(datasource),result=json.loads(result),code=code,timeout=timeout)
 
 
     def jobcreate_multiplication_pipline(self):
@@ -385,15 +390,17 @@ def tm_init(insite,inuser,inpasswd,inenv = 'master'):
 
 if __name__ == '__main__':
     #tm_init('1','2','3','master')
-    get_job_csv(key=None)
-    '''
+    get_job_csv(key='heartbeat')
+
     jobs =  (job_csv())
     for job in jobs:
         print(type(job[1]))
-        print(job[1])
-        print(json.loads(job[1]))
-        print(json.loads(job[2]))
-    '''
+        #print(job[1])
+        #print(json.loads(job[1]))
+        #print(json.loads(job[2]))
+        print(job[3])
+        print(r'%s'%(job[3]))
+
     #fw = open('test.txt', 'w')
     #runner = unittest.TextTestRunner(stream=fw, verbosity=2)
     #tmTestcases()
