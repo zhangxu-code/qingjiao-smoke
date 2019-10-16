@@ -11,6 +11,7 @@ from readxml import listxmlfile_dir
 from absl import flags,app
 FLAGS = flags.FLAGS
 flags.DEFINE_string("report",None,"report dir")
+flags.DEFINE_string("buildid",None,"jenkins Build ID")
 
 BASE_URL = "http://wiki.tsingj.local/rest/api/content"
 VIEW_URL = "http://wiki.tsingj.local/pages/viewpage.action?pageId="
@@ -120,8 +121,6 @@ def write_table(auth,pageid,html,title=None):
     logging.info("Wrote '%s' version %d" % (info['title'], ver))
     logging.info("URL: %s%s" % (VIEW_URL, str(pageid)))
 
-
-
 def main(argv):
     del argv
     if FLAGS.report == None:
@@ -141,6 +140,7 @@ def main(argv):
     new_row.append(report_xml.get("root").get("failures"))
     new_row.append(report_xml.get("root").get("errors"))
     new_row.append(report_xml.get("root").get("time"))
+    new_row.append("http://jenkins.tsingj.local/job/QA/job/smoketest/%s/testReport/"%(str(flags.buildid)))
     table[0].add_row(new_row)
     write_table(auth=auth,pageid=pageid,html=table[0].get_html_string(),title='报告汇总')
 
