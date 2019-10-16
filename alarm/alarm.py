@@ -68,7 +68,7 @@ def postalarm(msg=None):
     }
     body = {
         "moduleId":"1",
-        "username":"qa",
+        "username":"alert",
         "desc":msg
     }
     logging.info(json.dumps(body))
