@@ -140,7 +140,7 @@ def main(argv):
     new_row.append(report_xml.get("root").get("failures"))
     new_row.append(report_xml.get("root").get("errors"))
     new_row.append(report_xml.get("root").get("time"))
-    new_row.append("http://jenkins.tsingj.local/job/QA/job/smoketest/%s/testReport/"%(str(flags.buildid)))
+    new_row.append("http://jenkins.tsingj.local/job/QA/job/smoketest/%s/testReport/"%(str(FLAGS.buildid)))
     table[0].add_row(new_row)
     write_table(auth=auth,pageid=pageid,html=table[0].get_html_string(),title='报告汇总')
 

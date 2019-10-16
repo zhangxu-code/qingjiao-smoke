@@ -108,7 +108,8 @@ if __name__ == '__main__':
     if conf_args.get("key") in ['smoke','heartbeat']:
         runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s"%(conf_args.get("key"),timestr))
         runner.run(suit)
-        post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr))
+        if conf_args.get("key") == 'heartbeat':
+            post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr))
     else:
         runner = HTMLReport.TestRunner(report_file_name='test',
                                        output_path='./',
