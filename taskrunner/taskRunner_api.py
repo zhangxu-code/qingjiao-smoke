@@ -48,13 +48,16 @@ class TaskRunnerAPI:
         datasource_l = []
         datasource["varName"] = "data"
         datasource_l.append(datasource)
-        return  self.job_pipline(datasource=datasource_l,result=result,code=code)
+        return  self.job_pipline(datasource=datasource_l,result=result,code=self.sub_debug_reveal(code=code))
 
     def code_reveal(self,code):
-        re_reveal = re.compile(r'''\.debug_reveal|reveal\([a-zA-Z_0-9\ ]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
+        re_reveal = re.compile(r'''\.['debug_reveal|reveal'\([a-zA-Z_0-9\ ]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
         reveal = re.findall(re_reveal,code)
         return  reveal
 
+    def sub_debug_reveal(self,code):
+        re_reveal = re.compile(r'\.debug_reveal\(')
+        return re.sub(re_reveal,".reveal(",code)
 
     def job_pipline(self,datasource,result,code):
         logging.info("start job")
@@ -65,7 +68,9 @@ class TaskRunnerAPI:
             return False
         if not  self.job_status(jobid=jobid):
             return  False
-        return self.job_result(jobid=jobid)
+        result =  self.job_result(jobid=jobid)
+        self.job_delete(jobid=jobid)
+        return result
 
     def job_create(self,datasource,result,code):
         body = {
@@ -81,11 +86,18 @@ class TaskRunnerAPI:
         logging.info(body)
         try:
             url = "https://%s/api/api-tm/task" %(self.conf.get("site"))
-            req = requests.post(url=url,headers=head,data=json.dumps(body),verify=False)
-            if req.json().get("code") != 0:
-                logging.error("create job failed :%s"%(req.text))
-                return False
-            return req.json().get("data").get("id")
+            while 1:
+                req = requests.post(url=url,headers=head,data=json.dumps(body),verify=False)
+                if req.json().get("subCode") == 'GLOBAL0004':
+                    logging.info(req.text)
+                    time.sleep(1)
+                    self.login()
+                    head["Authorization"] = "bearer %s" % (self.token)
+                    continue
+                if req.json().get("code") != 0:
+                    logging.error("create job failed :%s"%(req.text))
+                    return False
+                return req.json().get("data").get("id")
         except Exception as err:
             logging.error(err)
             logging.error(req.text)
@@ -99,13 +111,45 @@ class TaskRunnerAPI:
 
         try:
             url = "https://%s/api/api-tm/task/startTask/%s"%(self.conf.get("site"),str(jobid))
-            req = requests.put(url=url,headers=head,verify=False)
-            if req.json().get("code") != 0:
-                logging.error("start job failed:%s"%(req.text))
-                return False
+            while 1:
+                req = requests.put(url=url,headers=head,verify=False)
+                if req.json().get("subCode") == 'GLOBAL0004':
+                    time.sleep(1)
+                    logging.info(req.text)
+                    self.login()
+                    head["Authorization"] = "bearer %s" % (self.token)
+                    continue
+                if req.json().get("code") != 0:
+                    logging.error("start job failed:%s"%(req.text))
+                    return False
+                else:
+                    return True
         except Exception as err:
             logging.error(err)
         return True
+
+    def job_delete(self,jobid):
+        logging.info("delete job :%s" % (str(jobid)))
+        head = {
+            "Authorization": "bearer %s" % (self.token),
+            "Content-Type": "application/json"
+        }
+        url = 'https://%s/api/api-tm/task/%s' % (self.conf.get("site"), str(jobid))
+        try:
+            while 1:
+                req = requests.delete(url=url, headers=head, verify=False)
+                if req.json().get("subCode") == 'GLOBAL0004':
+                    time.sleep(1)
+                    logging.info(req.text)
+                    self.login()
+                    head["Authorization"] = "bearer %s" % (self.token)
+                    continue
+                else:
+                    return True
+        except Exception as err:
+            logging.error(err)
+            logging.error(req.text)
+            return False
 
     def job_status(self,jobid):
         logging.info("check job status:%s"%(str(jobid)))
@@ -117,6 +161,12 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url=url,headers=head,verify=False)
+                if req.json().get("subCode") == 'GLOBAL0004':
+                    time.sleep(1)
+                    logging.info(req.text)
+                    self.login()
+                    head["Authorization"] = "bearer %s" % (self.token)
+                    continue
                 if req.json().get("data").get("queueStatus") == 6 or req.json().get("data").get("queueStatus") == 7:
                     logging.info("job finished")
                     return True
@@ -137,10 +187,19 @@ class TaskRunnerAPI:
         }
         result_ditc = {}
         try:
-            req = requests.get(url=url,headers=head,verify=False)
-            for res in req.json().get("data"):
-                result_ditc[res.get("resultVarName")] = res.get("result")
-            return result_ditc
+            while 1 :
+                req = requests.get(url=url,headers=head,verify=False)
+                if req.json().get("subCode") == 'GLOBAL0004':
+                    time.sleep(1)
+                    logging.info(req.text)
+                    self.login()
+                    head["Authorization"] = "bearer %s" % (self.token)
+                    continue
+                for res in req.json().get("data"):
+                    tmp = {}
+                    tmp['val'] = eval(res.get("result"))
+                    result_ditc[res.get("resultVarName")] = tmp
+                return result_ditc
         except Exception as err:
             logging.error(err)
             logging.error(req.text)
@@ -172,6 +231,12 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
+                if req.json().get("subCode") == 'GLOBAL0004':
+                    time.sleep(1)
+                    logging.info(req.text)
+                    self.login()
+                    head["Authorization"] = "bearer %s" % (self.token)
+                    continue
                 if len(req.json().get("data").get("data")) == 0:
                     logging.error("ds is empty")
                     return False
@@ -198,6 +263,12 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
+                if req.json().get("subCode") == 'GLOBAL0004':
+                    time.sleep(1)
+                    logging.info(req.text)
+                    self.login()
+                    head["Authorization"] = "bearer %s" % (self.token)
+                    continue
                 if len(req.json().get("data").get("data")) == 0:
                     logging.info("data is empty")
                     return False
@@ -215,24 +286,6 @@ class TaskRunnerAPI:
             logging.error(req.text)
             return False
 
-    def  check_dsalive(self,dsid):
-        logging.info("check ds is alive")
-        url = "https://%s/api/api-tm/dataServer/%s" %(self.conf.get("site"),str(dsid))
-        head = {
-            "Authorization": "bearer %s" % (self.token),
-            "Content-Type": "application/json"
-        }
-        try:
-            req = requests.get(url=url,verify=False,headers = head)
-            logging.info(req.text)
-            if req.json().get("data").get("status") == 1:
-                logging.info("ds:%s alive"%(str(dsid)))
-                return True
-            else:
-                return False
-        except Exception as err:
-            logging.error(err)
-            logging.error(req.text)
 
 if __name__ == '__main__':
     runner = TaskRunnerAPI()
@@ -242,7 +295,12 @@ import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
 import pnumpy as pnp
 s1 = pnp.eye(4)
-pp.reveal(s1, 'result1')
+pp.debug_reveal(s1, 'result1')
     '''
+    #print(runner.sub_debug_reveal(code))
     #print(runner.code_reveal(code=code))
-    print(runner.run(code=code))
+    #print(runner.run(code=code))
+
+    res = '[[1.0,0.0,0.0,0.0],[0.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0],[0.0,0.0,0.0,1.0]]'
+    print(res.split(','))
+    print(eval(res))

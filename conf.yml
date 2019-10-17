@@ -9,9 +9,20 @@ env-inspection:
   passwd: 123456
   site: debugsaas-inspection.tsingj.local
 
-master:
+master-smoketest:
   user: smoketest
   passwd: qwer1234
   site: console.tsingj.local
   dbhost: 10.18.0.19
   dbport: 21050
+  csvfile: 6_alg_master.csv
+
+master-heartbeat:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console.tsingj.local
+
+master-library:
+  user: smoketest
+  passwd: qwer1234
+  site: console.tsingj.local
