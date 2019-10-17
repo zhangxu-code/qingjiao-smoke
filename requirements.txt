@@ -21,3 +21,4 @@ thriftpy==0.3.9
 xmlrunner==1.7.7
 absl-py==0.8.1
 prettytable==0.7.2
+numpy==1.17.2
