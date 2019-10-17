@@ -54,6 +54,7 @@ class tmJob:
             if req.json().get("subCode") == 'GLOBAL0004':
                 time.sleep(1)
                 self.login()
+                head["Authorization"] = "bearer %s" % (self.token)
                 continue
             return  req.json()
     def job_getinfo(self,jobid,token = None):
@@ -69,6 +70,7 @@ class tmJob:
             if req.json().get("subCode") == 'GLOBAL0004':
                 time.sleep(1)
                 self.login()
+                head["Authorization"] = "bearer %s" % (self.token)
                 continue
             logging.info(req.text)
             return req.json()
@@ -85,6 +87,7 @@ class tmJob:
             if req.json().get("subCode") == 'GLOBAL0004':
                 time.sleep(1)
                 self.login()
+                head["Authorization"] = "bearer %s" % (self.token)
                 continue
             logging.info(req.text)
             return req.json()
@@ -109,6 +112,7 @@ class tmJob:
             if req.json().get("subCode") == 'GLOBAL0004':
                 time.sleep(1)
                 self.login()
+                head["Authorization"] = "bearer %s" % (self.token)
                 continue
             logging.info(req.text)
             return req.json()
@@ -126,6 +130,7 @@ class tmJob:
             if req.json().get("subCode") == 'GLOBAL0004':
                 time.sleep(1)
                 self.login()
+                head["Authorization"] = "bearer %s" % (self.token)
                 continue
             logging.info(req.text)
             return req.json()
@@ -142,6 +147,7 @@ class tmJob:
             if req.json().get("subCode") == 'GLOBAL0004':
                 time.sleep(1)
                 self.login()
+                head["Authorization"] = "bearer %s" % (self.token)
                 continue
             logging.info(req.text)
             return req.json()
@@ -159,6 +165,7 @@ class tmJob:
             if req.json().get("subCode") == 'GLOBAL0004':
                 time.sleep(1)
                 self.login()
+                head["Authorization"] = "bearer %s" % (self.token)
                 continue
             logging.info(req.text)
             return req.json()
