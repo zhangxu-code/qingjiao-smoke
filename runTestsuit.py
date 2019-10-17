@@ -80,13 +80,12 @@ if __name__ == '__main__':
     parser.add_argument("--Num",help="create Num jobs,default = 1",default=1)
     parser.add_argument("--time",help="report-${time}",type=str,default=None)
     args = vars(parser.parse_args())
-    print(args)
     global conf_args
     conf_args = args
     fr = open('conf.yml')
     all_conf = yaml.load(fr)
     fr.close()
-    conf = all_conf.get(conf_args.get("env"))
+    conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
     if conf_args.get("time") == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
     else:
