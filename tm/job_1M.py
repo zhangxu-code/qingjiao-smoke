@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-
+import time
 import re
 import requests
 import HTMLReport
@@ -31,6 +31,14 @@ class tmJob:
         logging.info(req.text)
         self.token = req.json().get("data").get("access_token")
 
+    def login(self):
+        logging.info("get access token")
+        url = 'https://%s/api/api-sso/token/simpleLogin' % (self.site)
+        data = "username=%s&password=%s" % (self.user, self.passwd)
+        req = requests.post(url=url, params=data, verify=False)
+        # print(req.text)
+        logging.info(req.text)
+        self.token = req.json().get("data").get("access_token")
 
     def job_start(self,jobid,token = None):
         logging.info("job start "+str(jobid))
@@ -40,9 +48,14 @@ class tmJob:
         head = {
             "Authorization": "bearer %s" % (self.token)
         }
-        req = requests.put(url=url,headers = head,verify=False)
-        logging.info(req.text)
-        return  req.json()
+        while 1:
+            req = requests.put(url=url,headers = head,verify=False)
+            logging.info(req.text)
+            if req.json().get("subCode") == 'GLOBAL0004':
+                time.sleep(1)
+                self.login()
+                continue
+            return  req.json()
     def job_getinfo(self,jobid,token = None):
         logging.info("get job "+str(jobid))
         url = 'https://%s/api/api-tm/task/%s' % (self.site, str(jobid))
@@ -51,9 +64,14 @@ class tmJob:
         head = {
             "Authorization": "bearer %s" % (self.token)
         }
-        req = requests.get(url=url,headers = head,verify=False)
-        logging.info(req.text)
-        return req.json()
+        while 1:
+            req = requests.get(url=url,headers = head,verify=False)
+            if req.json().get("subCode") == 'GLOBAL0004':
+                time.sleep(1)
+                self.login()
+                continue
+            logging.info(req.text)
+            return req.json()
 
     def job_getconfig(self,jobid,token = None):
         url = 'https://%s/api/api-tm/task/getTaskSendConfig/%s'%(self.site,str(jobid))
@@ -62,9 +80,14 @@ class tmJob:
         head = {
             "Authorization":"bearer %s"%(self.token)
         }
-        req = requests.get(url=url,headers = head,verify=False)
-        logging.info(req.text)
-        return req.json()
+        while 1:
+            req = requests.get(url=url,headers = head,verify=False)
+            if req.json().get("subCode") == 'GLOBAL0004':
+                time.sleep(1)
+                self.login()
+                continue
+            logging.info(req.text)
+            return req.json()
 
     def job_create(self,key,datasource = [],result=[],code='',token=None):
         logging.info('create job '+key)
@@ -81,11 +104,14 @@ class tmJob:
             "Authorization": "bearer %s" % (token),
             "Content-Type": "application/json"
         }
-        logging.debug(json.dumps(body))
-        logging.debug(json.dumps(head))
-        req = requests.post(url=url,headers = head,data=json.dumps(body),verify = False)
-        logging.info(req.text)
-        return req.json()
+        while 1:
+            req = requests.post(url=url,headers = head,data=json.dumps(body),verify = False)
+            if req.json().get("subCode") == 'GLOBAL0004':
+                time.sleep(1)
+                self.login()
+                continue
+            logging.info(req.text)
+            return req.json()
 
     def list_job(self,page = 1,token = None):
         url = 'https://%s/api/api-tm/task' % (self.site)
@@ -95,9 +121,14 @@ class tmJob:
             "Authorization": "bearer %s" % (token)
         }
         data = "page=%d"%(page)
-        req = requests.get(url=url,headers = head,params=data,verify = False)
-        logging.info(req.text)
-        return req.json()
+        while 1:
+            req = requests.get(url=url,headers = head,params=data,verify = False)
+            if req.json().get("subCode") == 'GLOBAL0004':
+                time.sleep(1)
+                self.login()
+                continue
+            logging.info(req.text)
+            return req.json()
 
     def get_job_result(self,jobid,token = None):
         url = 'https://%s/api/api-tm/task/getTaskResult/%s' % (self.site, str(jobid))
@@ -106,9 +137,14 @@ class tmJob:
         head = {
             "Authorization": "bearer %s" % (self.token)
         }
-        req = requests.get(url=url, headers=head, verify=False)
-        logging.info(req.text)
-        return req.json()
+        while 1:
+            req = requests.get(url=url, headers=head, verify=False)
+            if req.json().get("subCode") == 'GLOBAL0004':
+                time.sleep(1)
+                self.login()
+                continue
+            logging.info(req.text)
+            return req.json()
 
     def del_jobid(self,jobid,token = None):
         logging.info("job start " + str(jobid))
@@ -118,9 +154,14 @@ class tmJob:
         head = {
             "Authorization": "bearer %s" % (self.token)
         }
-        req = requests.delete(url=url, headers=head, verify=False)
-        logging.info(req.text)
-        return req.json()
+        while 1:
+            req = requests.delete(url=url, headers=head, verify=False)
+            if req.json().get("subCode") == 'GLOBAL0004':
+                time.sleep(1)
+                self.login()
+                continue
+            logging.info(req.text)
+            return req.json()
 
 
 if __name__ == '__main__':
