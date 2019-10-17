@@ -70,7 +70,8 @@ class TaskRunnerAPI:
         if not  self.job_status(jobid=jobid):
             return  False
         result =  self.job_result(jobid=jobid)
-        self.job_delete(jobid=jobid)
+        if len(result.keys()) != 0:
+            self.job_delete(jobid=jobid)
         return result
 
     def job_create(self,datasource,result,code):
@@ -89,6 +90,7 @@ class TaskRunnerAPI:
             url = "https://%s/api/api-tm/task" %(self.conf.get("site"))
             while 1:
                 req = requests.post(url=url,headers=head,data=json.dumps(body),verify=False)
+                logging.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     logging.info(req.text)
                     time.sleep(1)
@@ -114,6 +116,7 @@ class TaskRunnerAPI:
             url = "https://%s/api/api-tm/task/startTask/%s"%(self.conf.get("site"),str(jobid))
             while 1:
                 req = requests.put(url=url,headers=head,verify=False)
+                logging.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
                     logging.info(req.text)
@@ -139,6 +142,7 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.delete(url=url, headers=head, verify=False)
+                logging.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
                     logging.info(req.text)
@@ -147,6 +151,7 @@ class TaskRunnerAPI:
                     continue
                 else:
                     return True
+
         except Exception as err:
             logging.error(err)
             logging.error(req.text)
@@ -159,9 +164,11 @@ class TaskRunnerAPI:
             "Content-Type": "application/json"
         }
         url = 'https://%s/api/api-tm/task/%s' % (self.conf.get("site"), str(jobid))
+        tryCount = 0
         try:
-            while 1:
+            while tryCount < 100:
                 req = requests.get(url=url,headers=head,verify=False)
+                logging.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
                     logging.info(req.text)
@@ -173,6 +180,7 @@ class TaskRunnerAPI:
                     return True
                 logging.info("job:%s is running ...."%(str(jobid)))
                 time.sleep(3)
+                tryCount =  tryCount + 1
 
         except Exception as err:
             logging.error(err)
@@ -190,6 +198,7 @@ class TaskRunnerAPI:
         try:
             while 1 :
                 req = requests.get(url=url,headers=head,verify=False)
+                logging.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
                     logging.info(req.text)
@@ -232,6 +241,7 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
+                logging.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
                     logging.info(req.text)
@@ -264,6 +274,7 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
+                logging.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
                     logging.info(req.text)
