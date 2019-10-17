@@ -23,6 +23,6 @@ master-heartbeat:
   site: console.tsingj.local
 
 master-library:
-  user: smoketest
-  passwd: qwer1234
+  user: smokelibrary
+  passwd: 1234qwer
   site: console.tsingj.local
