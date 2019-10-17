@@ -28,6 +28,7 @@ class tmJob:
         data = "username=%s&password=%s" % (self.user, self.passwd)
         req = requests.post(url=url, params=data, verify=False)
         #print(req.text)
+        logging.info(req.text)
         self.token = req.json().get("data").get("access_token")
 
 
@@ -51,7 +52,7 @@ class tmJob:
             "Authorization": "bearer %s" % (self.token)
         }
         req = requests.get(url=url,headers = head,verify=False)
-        logging.debug(req.text)
+        logging.info(req.text)
         return req.json()
 
     def job_getconfig(self,jobid,token = None):
@@ -83,7 +84,7 @@ class tmJob:
         logging.debug(json.dumps(body))
         logging.debug(json.dumps(head))
         req = requests.post(url=url,headers = head,data=json.dumps(body),verify = False)
-        logging.debug(req.text)
+        logging.info(req.text)
         return req.json()
 
     def list_job(self,page = 1,token = None):
@@ -95,6 +96,7 @@ class tmJob:
         }
         data = "page=%d"%(page)
         req = requests.get(url=url,headers = head,params=data,verify = False)
+        logging.info(req.text)
         return req.json()
 
     def get_job_result(self,jobid,token = None):
