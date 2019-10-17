@@ -18,8 +18,9 @@ class TaskRunnerAPI:
     token = None
     def __init__(self):
         logging.info("runner init")
-        fr = open('conf.yml')
+        fr = open('./taskrunner/conf.yml')
         self.conf = yaml.load(fr)
+        logging.info(self.conf)
         fr.close()
 
     def run(self,code):
