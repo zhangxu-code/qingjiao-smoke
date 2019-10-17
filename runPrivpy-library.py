@@ -25,10 +25,11 @@ def conf(env):
     fw.write("user: %s\n"%(conf.get(env).get("user")))
     fw.write("passwd: %s\n" % (conf.get(env).get("passwd")))
     fw.write("site: %s\n" % (conf.get(env).get("site")))
+    fw.close()
 
 def main(argv):
     del argv
-
+    logging.info("%s run %s:%s time:%s"%(FLAGS.env,FLAGS.package,FLAGS.module,FLAGS.timestr))
     conf(env='%s-library'%(FLAGS.env))
     if FLAGS.timestr == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
