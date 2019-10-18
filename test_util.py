@@ -1,7 +1,9 @@
 #import numpy as np
 #from client import TaskRunner
 from taskrunner.taskRunner_api import TaskRunnerAPI
-import logging
+#import logging
+from loguru import logger
+
 '''
 def run_task(code):
     task_runner = TaskRunner()
@@ -27,6 +29,6 @@ def run_task(code):
     runner = TaskRunnerAPI()
     result = runner.run(code=code)
     #print('----------')
-    logging.info(result)
+    logger.info(result)
     #print('+++++++++++')
     return result

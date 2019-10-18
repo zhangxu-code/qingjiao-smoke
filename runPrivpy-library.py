@@ -5,10 +5,18 @@ import unittest
 from taskrunner.taskRunner_api import TaskRunnerAPI
 import xmlrunner
 import yaml
-import logging
+#import logger
 import time
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+#logger = logger.getLogger()
+#logger.setLevel(logger.INFO)
+#from logger import config
+#logger.config.fileConfig("log.conf")
+from loguru import logger
+logger.add('./logs/log-{time}.log')
+logger.add(sys.stderr,format="{time} {level} {message}",filter="./logs/log")
+logger.add(sys.stdout,format="{time} {level} {message}",filter="./logs/log")
+#logger.add('log_1.log',rotation='10M')
+#logger.add('log_2.log',level='INFO')
 
 
 FLAGS = flags.FLAGS
@@ -29,7 +37,7 @@ def conf(env):
 
 def main(argv):
     del argv
-    logging.info("%s run %s:%s time:%s"%(FLAGS.env,FLAGS.package,FLAGS.module,FLAGS.timestr))
+    logger.info("%s run %s:%s time:%s"%(FLAGS.env,FLAGS.package,FLAGS.module,FLAGS.timestr))
     conf(env='%s-library'%(FLAGS.env))
     if FLAGS.timestr == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
