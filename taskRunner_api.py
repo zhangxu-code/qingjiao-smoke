@@ -210,7 +210,10 @@ class TaskRunnerAPI:
                 for res in req.json().get("data"):
                     tmp = {}
                     #logger.info(type(eval(res.get("result"))))
-                    tmp['val'] = numpy.array(eval(res.get("result")))
+                    if isinstance(type(eval(res.get("result"))),list):
+                        tmp['val'] = numpy.array(eval(res.get("result")))
+                    else:
+                        tmp['val'] = eval(res.get("result"))
                     #logger.info(type(tmp['val']))
                     result_ditc[res.get("resultVarName")] = tmp
                 return result_ditc
