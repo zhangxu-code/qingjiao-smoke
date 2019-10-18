@@ -2,41 +2,43 @@ import time
 import os
 import sys
 import re
-import logging
+#import logger
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 import yaml
 import json
+import numpy
+from loguru import logger
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+#logger = logger.getLogger()
+#logger.setLevel(logger.INFO)
 
 
 class TaskRunnerAPI:
     conf = None
     token = None
     def __init__(self):
-        logging.info("runner init")
+        logger.info("runner init")
         fr = open('./taskrunner/conf.yml')
         self.conf = yaml.load(fr)
-        logging.info(self.conf)
+        logger.info(self.conf)
         fr.close()
 
     def run(self,code):
         if not self.login():
-            logging.error("login failed")
+            logger.error("login failed")
             return False
         aliveds = self.find_allalive_ds()
         if aliveds == [] or aliveds == False:
-            logging.error("no alive ds")
+            logger.error("no alive ds")
             return False
         datasource = self.find_metadata(aliveds)
         if not datasource:
-            logging.error("no data")
+            logger.error("no data")
             return False
 
-        logging.info("running job")
+        logger.info("running job")
         #[{""resultVarName"":""result"",""resultDest"":""-1""}]
         var_result = self.code_reveal(code=code)
         result = []
@@ -61,7 +63,7 @@ class TaskRunnerAPI:
         return re.sub(re_reveal,".reveal(",code)
 
     def job_pipline(self,datasource,result,code):
-        logging.info("start job")
+        logger.info("start job")
         jobid = self.job_create(datasource=datasource,result=result,code=code)
         if jobid == False:
             return False
@@ -85,28 +87,28 @@ class TaskRunnerAPI:
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
         }
-        logging.info(body)
+        logger.info(body)
         try:
             url = "https://%s/api/api-tm/task" %(self.conf.get("site"))
             while 1:
                 req = requests.post(url=url,headers=head,data=json.dumps(body),verify=False)
-                logging.info(req.text)
+                logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
-                    logging.info(req.text)
+                    logger.info(req.text)
                     time.sleep(1)
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
                 if req.json().get("code") != 0:
-                    logging.error("create job failed :%s"%(req.text))
+                    logger.error("create job failed :%s"%(req.text))
                     return False
                 return req.json().get("data").get("id")
         except Exception as err:
-            logging.error(err)
-            logging.error(req.text)
+            logger.error(err)
+            logger.error(req.text)
             return False
     def job_start(self,jobid):
-        logging.info("start job:%s"%(str(jobid)))
+        logger.info("start job:%s"%(str(jobid)))
         head = {
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
@@ -116,24 +118,24 @@ class TaskRunnerAPI:
             url = "https://%s/api/api-tm/task/startTask/%s"%(self.conf.get("site"),str(jobid))
             while 1:
                 req = requests.put(url=url,headers=head,verify=False)
-                logging.info(req.text)
+                logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
-                    logging.info(req.text)
+                    logger.info(req.text)
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
                 if req.json().get("code") != 0:
-                    logging.error("start job failed:%s"%(req.text))
+                    logger.error("start job failed:%s"%(req.text))
                     return False
                 else:
                     return True
         except Exception as err:
-            logging.error(err)
+            logger.error(err)
         return True
 
     def job_delete(self,jobid):
-        logging.info("delete job :%s" % (str(jobid)))
+        logger.info("delete job :%s" % (str(jobid)))
         head = {
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
@@ -142,10 +144,10 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.delete(url=url, headers=head, verify=False)
-                logging.info(req.text)
+                logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
-                    logging.info(req.text)
+                    logger.info(req.text)
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
@@ -153,12 +155,12 @@ class TaskRunnerAPI:
                     return True
 
         except Exception as err:
-            logging.error(err)
-            logging.error(req.text)
+            logger.error(err)
+            logger.error(req.text)
             return False
 
     def job_status(self,jobid):
-        logging.info("check job status:%s"%(str(jobid)))
+        logger.info("check job status:%s"%(str(jobid)))
         head = {
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
@@ -168,27 +170,27 @@ class TaskRunnerAPI:
         try:
             while tryCount < 100:
                 req = requests.get(url=url,headers=head,verify=False)
-                logging.info(req.text)
+                logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
-                    logging.info(req.text)
+                    logger.info(req.text)
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
                 if req.json().get("data").get("queueStatus") == 6 or req.json().get("data").get("queueStatus") == 7:
-                    logging.info("job finished")
+                    logger.info("job finished")
                     return True
-                logging.info("job:%s is running ...."%(str(jobid)))
+                logger.info("job:%s is running ...."%(str(jobid)))
                 time.sleep(3)
                 tryCount =  tryCount + 1
 
         except Exception as err:
-            logging.error(err)
-            logging.error(req.text)
+            logger.error(err)
+            logger.error(req.text)
             return False
 
     def job_result(self,jobid):
-        logging.info("get job result")
+        logger.info("get job result")
         url =  "https://%s/api/api-tm/task/getTaskResult/%s" %(self.conf.get("site"),str(jobid))
         head = {
             "Authorization": "bearer %s" % (self.token),
@@ -198,25 +200,30 @@ class TaskRunnerAPI:
         try:
             while 1 :
                 req = requests.get(url=url,headers=head,verify=False)
-                logging.info(req.text)
+                logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
-                    logging.info(req.text)
+                    logger.info(req.text)
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
                 for res in req.json().get("data"):
                     tmp = {}
-                    tmp['val'] = eval(res.get("result"))
+                    #logger.info(type(eval(res.get("result"))))
+                    if isinstance(type(eval(res.get("result"))),list):
+                        tmp['val'] = numpy.array(eval(res.get("result")))
+                    else:
+                        tmp['val'] = eval(res.get("result"))
+                    #logger.info(type(tmp['val']))
                     result_ditc[res.get("resultVarName")] = tmp
                 return result_ditc
         except Exception as err:
-            logging.error(err)
-            logging.error(req.text)
-            return False
+            logger.error(err)
+            logger.error(req.text)
+            return result_ditc
 
     def login(self):
-        logging.info("login :%s"%(self.conf.get("site")))
+        logger.info("login :%s"%(self.conf.get("site")))
         url = 'https://%s/api/api-sso/token/simpleLogin' % (self.conf.get("site"))
         data = "username=%s&password=%s" % (self.conf.get("user"), self.conf.get("passwd"))
         try:
@@ -224,13 +231,13 @@ class TaskRunnerAPI:
             # print(req.text)
             self.token = req.json().get("data").get("access_token")
         except Exception as err:
-            logging.error(err)
+            logger.error(err)
             return False
         return  True
 
 
     def find_allalive_ds(self):
-        logging.info("find ds")
+        logger.info("find ds")
         url  = 'https://%s/api/api-tm/dataServer'%(self.conf.get("site"))
         head = {
             "Authorization": "bearer %s" % (self.token),
@@ -241,15 +248,15 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
-                logging.info(req.text)
+                logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
-                    logging.info(req.text)
+                    logger.info(req.text)
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
                 if len(req.json().get("data").get("data")) == 0:
-                    logging.error("ds is empty")
+                    logger.error("ds is empty")
                     return False
                 for ds in req.json().get("data").get("data"):
                     if ds.get("status") == '1':
@@ -258,13 +265,13 @@ class TaskRunnerAPI:
                     return  alive_ds
                 page = page + 1
         except Exception as err:
-            logging.error(req.text)
-            logging.error(err)
+            logger.error(req.text)
+            logger.error(err)
             return False
 
     def find_metadata(self,aliveds = []):
         datasource = {}
-        logging.info("find metadata")
+        logger.info("find metadata")
         url = 'https://%s/api/api-tm/dataSourceMetadata' %(self.conf.get("site"))
         head = {
             "Authorization": "bearer %s" % (self.token),
@@ -274,15 +281,15 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
-                logging.info(req.text)
+                logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
-                    logging.info(req.text)
+                    logger.info(req.text)
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
                 if len(req.json().get("data").get("data")) == 0:
-                    logging.info("data is empty")
+                    logger.info("data is empty")
                     return False
                 for data in req.json().get("data").get("data"):
                     if data.get("dsId")  in aliveds:
@@ -294,8 +301,8 @@ class TaskRunnerAPI:
                     return False
                 page = page + 1
         except Exception as err:
-            logging.error(err)
-            logging.error(req.text)
+            logger.error(err)
+            logger.error(req.text)
             return False
 
 
