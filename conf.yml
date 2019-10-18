@@ -9,7 +9,7 @@ env-inspection:
   passwd: 123456
   site: debugsaas-inspection.tsingj.local
 
-master-smoketest:
+master-smoke:
   user: smoketest
   passwd: qwer1234
   site: console.tsingj.local
@@ -26,3 +26,8 @@ master-library:
   user: smokelibrary
   passwd: 1234qwer
   site: console.tsingj.local
+
+dev-library:
+  user: smokelibrary
+  passwd: 1234qwer
+  site: console-dev.tsingj.local
