@@ -54,7 +54,7 @@ class TaskRunnerAPI:
         return  self.job_pipline(datasource=datasource_l,result=result,code=self.sub_debug_reveal(code=code))
 
     def code_reveal(self,code):
-        re_reveal = re.compile(r'''\. ?:debug_reveal|reveal\([a-zA-Z_0-9\ ]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
+        re_reveal = re.compile(r'''\. ?:debug_reveal|reveal\([a-zA-Z_0-9\ \[\]\-]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
         reveal = re.findall(re_reveal,code)
         return  reveal
 
@@ -72,8 +72,8 @@ class TaskRunnerAPI:
         if not  self.job_status(jobid=jobid):
             return  False
         result =  self.job_result(jobid=jobid)
-        if len(result.keys()) != 0:
-            self.job_delete(jobid=jobid)
+        #if len(result.keys()) != 0:
+        #    self.job_delete(jobid=jobid)
         return result
 
     def job_create(self,datasource,result,code):
@@ -319,19 +319,17 @@ import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
 
 import pnumpy as pnp
-import numpy as np
+import numpy as nps
 
-A = pp.farr([[1, 2], [3, 4]])
-result1 = pnp.resize(A, (2, 4))
-result2 = pnp.resize(A, (4, 2))
-result3 = pnp.resize(A, (4, 3))
+a = pnp.arange(9.0)
+result1 = pnp.split(a, 3)
+x = pnp.arange(8.0)
+result2 = pnp.split(x, [3, 5, 6, 10])
 
-#test 0 size
-result4 = pnp.resize(A, (0,))
-pp.debug_reveal(result1, 'result1')
-pp.debug_reveal(result2, 'result2')
-pp.debug_reveal(result3, 'result3')
-pp.debug_reveal(result4, 'result4')
+pp.reveal(result1[0], 'result1')
+pp.reveal(result2[1], 'result2')
+pp.reveal(result2[-1], 'result3')
+    
     '''
     #print(runner.sub_debug_reveal(code))
     #print(runner.code_reveal(code=code))
