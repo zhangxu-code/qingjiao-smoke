@@ -210,13 +210,17 @@ class TaskRunnerAPI:
                 for res in req.json().get("data"):
                     tmp = {}
                     #logger.info(type(eval(res.get("result"))))
-                    if isinstance((eval(res.get("result"))),list):
-                        #logger.info("numpy.arrary()")
-                        tmp['val'] = numpy.array(eval(res.get("result")))
-                    else:
-                        tmp['val'] = eval(res.get("result"))
-                    #logger.info(type(tmp['val']))
-                    result_ditc[res.get("resultVarName")] = tmp
+                    try:
+                        if isinstance((eval(res.get("result"))),list):
+                            #logger.info("numpy.arrary()")
+                            tmp['val'] = numpy.array(eval(res.get("result")))
+                        else:
+                            tmp['val'] = eval(res.get("result"))
+                        #logger.info(type(tmp['val']))
+                        result_ditc[res.get("resultVarName")] = tmp
+                    except Exception as err:
+                        tmp['val'] = res.get("result")
+                        result_ditc[res.get("resultVarName")] = tmp
                 return result_ditc
         except Exception as err:
             logger.error(err)
@@ -317,21 +321,17 @@ sys.path.append(os.getcwd() + '/privpy_lib')
 import pnumpy as pnp
 import numpy as np
 
-a = pp.farr([1, 2, 3])
-b = pp.farr([4, 5, 6])
-result1 = pnp.stack((a, b))
-result2 = pnp.stack((a, b), axis=1)
+A = pp.farr([[1, 2], [3, 4]])
+result1 = pnp.resize(A, (2, 4))
+result2 = pnp.resize(A, (4, 2))
+result3 = pnp.resize(A, (4, 3))
 
-arrays = [pp.farr(np.random.randn(3, 4)) for _ in range(10)]
-result3 = pnp.stack(arrays, axis=0)
-result4 = pnp.stack(arrays, axis=1)
-result5 = pnp.stack(arrays, axis=2)
-
+#test 0 size
+result4 = pnp.resize(A, (0,))
 pp.debug_reveal(result1, 'result1')
 pp.debug_reveal(result2, 'result2')
 pp.debug_reveal(result3, 'result3')
 pp.debug_reveal(result4, 'result4')
-pp.debug_reveal(result5, 'result5')
     '''
     #print(runner.sub_debug_reveal(code))
     #print(runner.code_reveal(code=code))
