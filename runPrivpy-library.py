@@ -3,7 +3,7 @@ import sys
 from absl import flags,app
 import unittest
 from taskrunner.taskRunner_api import TaskRunnerAPI
-import xmlrunner
+from xmlrunnerR import xmlrunner
 import yaml
 #import logger
 import time
