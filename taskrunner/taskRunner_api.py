@@ -210,7 +210,8 @@ class TaskRunnerAPI:
                 for res in req.json().get("data"):
                     tmp = {}
                     #logger.info(type(eval(res.get("result"))))
-                    if isinstance(type(eval(res.get("result"))),list):
+                    if isinstance((eval(res.get("result"))),list):
+                        #logger.info("numpy.arrary()")
                         tmp['val'] = numpy.array(eval(res.get("result")))
                     else:
                         tmp['val'] = eval(res.get("result"))
@@ -312,13 +313,28 @@ if __name__ == '__main__':
 import os
 import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
+
 import pnumpy as pnp
-s1 = pnp.eye(4)
-pp.debug_reveal(s1, 'result1')
-pp.reveal(s1, 'result2')
+import numpy as np
+
+a = pp.farr([1, 2, 3])
+b = pp.farr([4, 5, 6])
+result1 = pnp.stack((a, b))
+result2 = pnp.stack((a, b), axis=1)
+
+arrays = [pp.farr(np.random.randn(3, 4)) for _ in range(10)]
+result3 = pnp.stack(arrays, axis=0)
+result4 = pnp.stack(arrays, axis=1)
+result5 = pnp.stack(arrays, axis=2)
+
+pp.debug_reveal(result1, 'result1')
+pp.debug_reveal(result2, 'result2')
+pp.debug_reveal(result3, 'result3')
+pp.debug_reveal(result4, 'result4')
+pp.debug_reveal(result5, 'result5')
     '''
     #print(runner.sub_debug_reveal(code))
-    print(runner.code_reveal(code=code))
-    #print(runner.run(code=code))
+    #print(runner.code_reveal(code=code))
+    print(runner.run(code=code))
 
     res = '[[1.0,0.0,0.0,0.0],[0.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0],[0.0,0.0,0.0,1.0]]'
