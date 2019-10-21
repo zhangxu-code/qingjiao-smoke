@@ -54,7 +54,7 @@ class TaskRunnerAPI:
         return  self.job_pipline(datasource=datasource_l,result=result,code=self.sub_debug_reveal(code=code))
 
     def code_reveal(self,code):
-        re_reveal = re.compile(r'''\.['debug_reveal|reveal'\([a-zA-Z_0-9\ ]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
+        re_reveal = re.compile(r'''\. ?:debug_reveal|reveal\([a-zA-Z_0-9\ ]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
         reveal = re.findall(re_reveal,code)
         return  reveal
 
@@ -315,11 +315,10 @@ sys.path.append(os.getcwd() + '/privpy_lib')
 import pnumpy as pnp
 s1 = pnp.eye(4)
 pp.debug_reveal(s1, 'result1')
+pp.reveal(s1, 'result2')
     '''
     #print(runner.sub_debug_reveal(code))
-    #print(runner.code_reveal(code=code))
+    print(runner.code_reveal(code=code))
     #print(runner.run(code=code))
 
     res = '[[1.0,0.0,0.0,0.0],[0.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0],[0.0,0.0,0.0,1.0]]'
-    print(res.split(','))
-    print(eval(res))
