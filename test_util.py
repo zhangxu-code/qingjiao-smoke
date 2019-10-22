@@ -26,6 +26,7 @@ def run_task(code):
 '''
 
 def run_task(code):
+    logger.info(code)
     runner = TaskRunnerAPI()
     result = runner.run(code=code)
     #print('----------')
