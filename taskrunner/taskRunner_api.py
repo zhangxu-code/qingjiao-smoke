@@ -181,7 +181,7 @@ class TaskRunnerAPI:
                     logger.info("job finished")
                     return True
                 logger.info("job:%s is running ...."%(str(jobid)))
-                time.sleep(3)
+                time.sleep(6)
                 tryCount =  tryCount + 1
 
         except Exception as err:
@@ -320,10 +320,8 @@ sys.path.append(os.getcwd() + '/privpy_lib')
 import pnumpy as pnp
 import numpy as np
 
-when = ['end', 'begin', 'e', 'b']
-res = pnp.convert_when(when)
-pp.debug_reveal(pp.farr(res), 're-1')
-    
+re1 = pnp.rate(pp.farr([10]), pp.farr([0]), pp.farr([-3500]), pp.farr([10000]))
+pp.debug_reveal(pp.farr(re1), 're-1')
     '''
     #print(runner.sub_debug_reveal(code))
     #print(runner.code_reveal(code=code))
