@@ -332,11 +332,11 @@ class _XMLTestResult(_TextTestResult):
         all_results_new = {}
         if test_runner.merge:
             for suite,tests in all_results.items():
-                if suite.split('.')[0] in all_results_new.keys():
-                    all_results_new[suite.split('.')[0]].extend(tests)
+                if suite[:-1-len(suite.split('.')[-1])] in all_results_new.keys():
+                    all_results_new[suite[:-1-len(suite.split('.')[-1])]].extend(tests)
                 else:
-                    all_results_new[suite.split('.')[0]] = []
-                    all_results_new[suite.split('.')[0]].extend(tests)
+                    all_results_new[suite[:-1-len(suite.split('.')[-1])]] = []
+                    all_results_new[suite[:-1-len(suite.split('.')[-1])]].extend(tests)
         else:
             all_results_new = all_results
         for suite, tests in all_results_new.items():
