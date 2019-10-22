@@ -17,6 +17,14 @@ master-smoke:
   dbport: 21050
   csvfile: 6_alg_master.csv
 
+dev-smoke:
+  user: smoketest
+  passwd: qwer1234
+  site: console-dev.tsingj.local
+  dbhost: 10.18.0.19
+  dbport: 21050
+  csvfile: 6_alg_master.csv
+
 master-heartbeat:
   user: heartbeat
   passwd: 1234qwer
