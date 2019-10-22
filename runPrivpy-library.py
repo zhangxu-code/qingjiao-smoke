@@ -45,12 +45,20 @@ def main(argv):
         timestr = FLAGS.timestr
     sys.path.append(os.getcwd())
     case_path = os.getcwd() + '/privpy_library/privpy_lib/tests/test_' + FLAGS.package
-    if FLAGS.module == "":
+    if FLAGS.package == "all":
         pattern = "test*.py"
+        case_path = os.getcwd() + '/privpy_library/privpy_lib/tests'
+        discover = (unittest.defaultTestLoader.discover(case_path, pattern=pattern, top_level_dir=None))
     else:
-        pattern = "test_" +  FLAGS.module +".py"
-    discover = unittest.defaultTestLoader.discover(case_path, pattern=pattern, top_level_dir=None)
-    #runner = unittest.TextTestRunner(stream=None, descriptions=None, verbosity=2)
+        if FLAGS.module == "":
+            pattern = "test*.py"
+        else:
+            pattern = "test_" +  FLAGS.module +".py"
+
+        discover = unittest.defaultTestLoader.discover(case_path, pattern=pattern, top_level_dir=None)
+        print(type(discover))
+        print(discover.countTestCases())
+        #runner = unittest.TextTestRunner(stream=None, descriptions=None, verbosity=2)
     runner = xmlrunner.XMLTestRunner(output="privpy-library-%s" % (timestr))
     runner.run(discover)
 
