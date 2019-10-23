@@ -80,7 +80,7 @@ class dbengineCases(unittest.TestCase):
     def test_agg_case(self,name,sql,expect):
         data = self.db.execut_sql(sql=sql)
         logging.info(data)
-        self.assertEquals(data[0][0], int(expect))
+        self.assertEquals(data[0][0], int(expect),msg=sql)
 
 
     def create_tabel_gold_case(self):
