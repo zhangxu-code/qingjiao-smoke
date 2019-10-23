@@ -55,8 +55,8 @@ def db_smoke_suit():
     #dbsomkesuit.addTest(dbengineCases("agg_ccode_gold_case"))
     #dbsomkesuit.addTest(dbengineCases("agg_limit_gold_case"))
     #dbsomkesuit.addTest(dbengineCases("agg_filter_gold_case"))
-    dbsomkesuit.addTest(dbengineCases("sum_gold_price_case"))
-    dbsomkesuit.addTest(dbengineCases("sum_gold_price_filter_case"))
+    #dbsomkesuit.addTest(dbengineCases("sum_gold_price_case"))
+    #dbsomkesuit.addTest(dbengineCases("sum_gold_price_filter_case"))
     return dbsomkesuit
 
 def createdata(length=1000):
@@ -107,8 +107,8 @@ if __name__ == '__main__':
     if conf_args.get("key") in ['smoke','heartbeat']:
         runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s"%(conf_args.get("key"),timestr))
         runner.run(suit)
-        if conf_args.get("key") == 'heartbeat':
-            post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr))
+        #if conf_args.get("key") == 'heartbeat':
+        post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr))
     else:
         runner = HTMLReport.TestRunner(report_file_name='test',
                                        output_path='./',
