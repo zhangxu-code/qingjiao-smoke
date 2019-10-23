@@ -7,6 +7,8 @@ import logging
 from prettytable import PrettyTable
 from prettytable import from_html
 from readxml import listxmlfile_dir
+import datetime
+import time
 
 from absl import flags,app
 FLAGS = flags.FLAGS
@@ -121,6 +123,11 @@ def write_table(auth,pageid,html,title=None):
     logging.info("Wrote '%s' version %d" % (info['title'], ver))
     logging.info("URL: %s%s" % (VIEW_URL, str(pageid)))
 
+def runtime(runtime):
+    tmptime = time.strptime(str(runtime),"%Y%m%d%H%M%S")
+    #print(tmptime)
+    return time.strftime("%Y-%m-%d %H:%M:%S",tmptime)
+
 def main(argv):
     del argv
     if FLAGS.report == None:
@@ -134,7 +141,8 @@ def main(argv):
     table = from_html(table_html)
     report_xml = listxmlfile_dir(FLAGS.report)
     new_row = []
-    new_row.append(FLAGS.report.split('-')[-1])
+    #runtime = FLAGS.report.split('-')[-1]
+    new_row.append(runtime(FLAGS.report.split('-')[-1]))
     new_row.append(report_xml.get("root").get("tests"))
     new_row.append(int(report_xml.get("root").get("tests")) - int(report_xml.get("root").get("failures"))-int(report_xml.get("root").get("errors")))
     new_row.append(report_xml.get("root").get("failures"))
@@ -147,4 +155,5 @@ def main(argv):
 if __name__ == '__main__':
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
-    app.run(main)
+    #app.run(main)
+    print(runtime("20191023101010"))
