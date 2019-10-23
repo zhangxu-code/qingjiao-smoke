@@ -155,5 +155,5 @@ def main(argv):
 if __name__ == '__main__':
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
-    #app.run(main)
-    print(runtime("20191023101010"))
+    app.run(main)
+    #print(runtime("20191023101010"))
