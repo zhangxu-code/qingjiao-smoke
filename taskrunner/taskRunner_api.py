@@ -168,7 +168,7 @@ class TaskRunnerAPI:
         url = 'https://%s/api/api-tm/task/%s' % (self.conf.get("site"), str(jobid))
         tryCount = 0
         try:
-            while tryCount < 100:
+            while tryCount < 300:
                 req = requests.get(url=url,headers=head,verify=False)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
@@ -325,6 +325,11 @@ pp.debug_reveal(pp.farr(re1), 're-1')
     '''
     #print(runner.sub_debug_reveal(code))
     #print(runner.code_reveal(code=code))
-    print(runner.run(code=code))
+    #print(runner.run(code=code))
+    res = {'re-1': {'val': [0.11117075, 0.11069179, 0.11069085, 0.11069085, 0.11069085,
+       0.11069085, 0.11069085, 0.11069085, 0.11069085, 0.11069085,
+       0.11069085, 0.11069085, 0.11069085, 0.11069085, 0.11069085,
+       0.11069085, 0.11069085, 0.11069085, 0.11069085, 0.11069085]}}
 
+    numpy.testing.assert_almost_equal(res['re-1']['val'], 0.1107, 2)
     res = '[[1.0,0.0,0.0,0.0],[0.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0],[0.0,0.0,0.0,1.0]]'
