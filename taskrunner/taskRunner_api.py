@@ -8,7 +8,8 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 import yaml
 import json
-import numpy
+import numpy as np
+import numpy.testing as npt
 from loguru import logger
 
 #logger = logger.getLogger()
@@ -51,7 +52,7 @@ class TaskRunnerAPI:
         datasource_l = []
         datasource["varName"] = "data"
         datasource_l.append(datasource)
-        return  self.job_pipline(datasource=datasource_l,result=result,code=self.sub_debug_reveal(code=code))
+        return  self.job_pipline(datasource=[] ,result=result,code=self.sub_debug_reveal(code=code))
 
     def code_reveal(self,code):
         re_reveal = re.compile(r'''\. ?:debug_reveal|reveal\([a-zA-Z_0-9\ \[\]\-\.\(\)]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
@@ -317,19 +318,15 @@ if __name__ == '__main__':
 import os
 import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
+
 import pnumpy as pnp
 import numpy as np
 
-re1 = pnp.rate(pp.farr([10]), pp.farr([0]), pp.farr([-3500]), pp.farr([10000]))
-pp.debug_reveal(pp.farr(re1), 're-1')
+(a1, b1) = pnp.histogram(pp.farr(np.arange(10)), bins=10)
+
+pp.debug_reveal(a1, 'res1')
     '''
     #print(runner.sub_debug_reveal(code))
     #print(runner.code_reveal(code=code))
-    #print(runner.run(code=code))
-    res = {'re-1': {'val': [0.11117075, 0.11069179, 0.11069085, 0.11069085, 0.11069085,
-       0.11069085, 0.11069085, 0.11069085, 0.11069085, 0.11069085,
-       0.11069085, 0.11069085, 0.11069085, 0.11069085, 0.11069085,
-       0.11069085, 0.11069085, 0.11069085, 0.11069085, 0.11069085]}}
-
-    numpy.testing.assert_almost_equal(res['re-1']['val'], 0.1107, 2)
-    res = '[[1.0,0.0,0.0,0.0],[0.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0],[0.0,0.0,0.0,1.0]]'
+    res = (runner.run(code=code))
+    print(res)
