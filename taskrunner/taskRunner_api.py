@@ -178,7 +178,7 @@ class TaskRunnerAPI:
                     self.login()
                     head["Authorization"] = "bearer %s" % (self.token)
                     continue
-                if req.json().get("data").get("queueStatus") == 6 or req.json().get("data").get("queueStatus") == 7:
+                if req.json().get("data").get("queueStatus") == 6 or req.json().get("data").get("queueStatus") == 7  or req.json().get("data").get("queueStatus") == 8:
                     logger.info("job finished")
                     return True
                 logger.info("job:%s is running ...."%(str(jobid)))
