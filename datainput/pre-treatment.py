@@ -14,7 +14,7 @@ def get_job_csv(env='master',key=None):
     logging.info(env)
     value_rows = []
     csvfiles = os.listdir('./datainput/tm/')
-    csvtype = re.compile(r'_([a-zA-Z]+)_([a-zA-Z]+)\.csv')
+    csvtype = re.compile(r'_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)\.csv')
     fw = open('./datainput/tm/jobs.csv','w')
     writer = csv.writer(fw)
     fw.write('title,datasource,result,code\n')
