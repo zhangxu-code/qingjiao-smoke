@@ -1,9 +1,11 @@
+
 import os
 import sys
 import json
 import  requests
 import  xml.etree.ElementTree as ET
 import logging
+import time
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -37,6 +39,11 @@ def readjunitxml(xmlpath):
         testsuit_dict["cases"].append(tmp_case)
     return testsuit_dict
 
+def runtime_format(runtime):
+    tmptime = time.strptime(str(runtime), "%Y%m%d%H%M%S")
+    # print(tmptime)
+    return time.strftime("%Y-%m-%d %H:%M:%S", tmptime)
+
 def listxmlfile_dir(dir):
     files = os.listdir(dir)
     report = {}
@@ -59,9 +66,11 @@ def listxmlfile_dir(dir):
             tmproot["time"] = tmproot["time"] + xmlreport.get("root").get("time")
             report["testsuit"].append(xmlreport)
     report["root"] = tmproot
-    return report
+    _,dirname = os.path.split(dir)
+    title = '[talert] [%s] %s' %(dirname.split()[1],runtime_format(dirname.split()[-1]))
+    return report,title
 
-def postalarm(msg=None):
+def postalarm(msg=None,title=None):
     head = {
         "Content-Type":"application/json",
         "charset":"utf-8"
@@ -69,20 +78,21 @@ def postalarm(msg=None):
     body = {
         "moduleId":"1",
         "username":"alert",
-        "desc":msg
+        "desc":msg,
+        "title":title
     }
     logging.info(json.dumps(body))
     logging.info(json.dumps(head))
     try:
         req = requests.post(url="http://talert-dev.tsingj.local/api/warning",headers=head,data=json.dumps(body))
         logging.info("post alarm")
-        logging.info(req.text)
+        #logging.info(req.text)
     except Exception as err:
         logging.info("failed")
         logging.error(err)
 
 def post_alarm(xmlpath):
-    report = listxmlfile_dir(dir=xmlpath)
+    report,title = listxmlfile_dir(dir=xmlpath)
     #print(report)
 
     if report.get("root").get("errors") + report.get("root").get("failures") != 0:
@@ -93,7 +103,7 @@ def post_alarm(xmlpath):
                 if case.get("status") == False:
                     msg = msg +case.get("name")+":"+ case.get("msg")+";"
         logging.error(msg)
-        postalarm(msg=msg)
+        postalarm(msg=msg,title=title)
 
 if __name__ == '__main__':
-    post_alarm(xmlpath='../privpy-heartbeat-20191015140230')
+    postalarm(msg="test",title='[talert][test] 20191014 19:00:00')
