@@ -65,9 +65,11 @@ def listxmlfile_dir(dir):
             tmproot["tests"] = tmproot["tests"] + xmlreport.get("root").get("tests")
             tmproot["time"] = tmproot["time"] + xmlreport.get("root").get("time")
             report["testsuit"].append(xmlreport)
+
     report["root"] = tmproot
     _,dirname = os.path.split(dir)
-    title = '[talert] [%s] %s' %(dirname.split()[1],runtime_format(dirname.split()[-1]))
+    print(dirname)
+    title = '[talert] [%s] %s' %(dirname.split('-')[1],runtime_format(dirname.split('-')[-1]))
     return report,title
 
 def postalarm(msg=None,title=None):
@@ -106,4 +108,5 @@ def post_alarm(xmlpath):
         postalarm(msg=msg,title=title)
 
 if __name__ == '__main__':
-    postalarm(msg="test",title='[talert][test] 20191014 19:00:00')
+    #postalarm(msg="test",title='[talert][test] 20191014 19:00:00')
+    print(listxmlfile_dir('./privpy-smoke-20191025151717'))
