@@ -39,3 +39,8 @@ dev-library:
   user: smokelibrary
   passwd: 1234qwer
   site: console-dev.tsingj.local
+
+dev195-heartbeat:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console-dev195.tsingj.local
