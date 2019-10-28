@@ -72,14 +72,15 @@ def listxmlfile_dir(dir):
     title = '[talert] [%s] %s' %(dirname.split('-')[1],runtime_format(dirname.split('-')[-1]))
     return report,title
 
-def postalarm(msg=None,title=None):
+def postalarm(msg=None,title=None,env=None):
     head = {
         "Content-Type":"application/json",
         "charset":"utf-8"
     }
     body = {
-        "moduleId":"1",
+        "moduleId":1,
         "username":"alert",
+        "environment":env,
         "desc":msg,
         "title":title
     }
@@ -93,7 +94,7 @@ def postalarm(msg=None,title=None):
         logging.info("failed")
         logging.error(err)
 
-def post_alarm(xmlpath):
+def post_alarm(xmlpath,env='master'):
     report,title = listxmlfile_dir(dir=xmlpath)
     #print(report)
 
@@ -105,8 +106,8 @@ def post_alarm(xmlpath):
                 if case.get("status") == False:
                     msg = msg +case.get("name")+":"+ case.get("msg")+";"
         logging.error(msg)
-        postalarm(msg=msg,title=title)
+        postalarm(msg=msg,title='[%s]'%(env) + title,env=env)
 
 if __name__ == '__main__':
-    #postalarm(msg="test",title='[talert][test] 20191014 19:00:00')
-    print(listxmlfile_dir('./privpy-smoke-20191025151717'))
+    postalarm(msg="test",title='[talert][test] 20191014 19:00:00',env="master")
+    #print(listxmlfile_dir('./privpy-smoke-20191025151717'))
