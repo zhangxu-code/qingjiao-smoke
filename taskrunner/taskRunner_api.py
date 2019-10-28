@@ -217,7 +217,7 @@ class TaskRunnerAPI:
                             tmp['val'] = numpy.array(eval(res.get("result")))
                         else:
                             tmp['val'] = eval(res.get("result"))
-                        #logger.info(type(tmp['val']))
+                        logger.info(type(tmp['val']))
                         result_ditc[res.get("resultVarName")] = tmp
                     except Exception as err:
                         tmp['val'] = res.get("result")
