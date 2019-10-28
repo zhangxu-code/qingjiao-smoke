@@ -224,13 +224,9 @@ class TaskRunnerAPI:
                     try:
                         if isinstance((eval(res.get("result"))),list):
                             logger.info("list result")
-                            logger.info(res.get("result"))
-                            logger.info(type(res.get("result")))
                             tmp['val'] = np.array(eval(res.get("result")),dtype=float)
-                            logger.info("-----------------")
                         else:
                             tmp['val'] = eval(res.get("result"))
-                        logger.info((tmp['val']))
                         logger.info(tmp['val'].dtype)
                         result_ditc[res.get("resultVarName")] = tmp
                     except Exception as err:
