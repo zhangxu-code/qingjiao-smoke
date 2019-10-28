@@ -220,10 +220,11 @@ class TaskRunnerAPI:
                     try:
                         if isinstance((eval(res.get("result"))),list):
                             logger.info("list result")
-                            tmp['val'] = np.array(eval(res.get("result")))
+                            tmp['val'] = np.array(eval(res.get("result")), detype=float)
                         else:
                             tmp['val'] = eval(res.get("result"))
                         logger.info((tmp['val']))
+                        logger.info(tmp['val'].dtype)
                         result_ditc[res.get("resultVarName")] = tmp
                     except Exception as err:
                         tmp['val'] = res.get("result")
@@ -320,22 +321,27 @@ class TaskRunnerAPI:
 
 if __name__ == '__main__':
     runner = TaskRunnerAPI()
-    code= '''import numpy as np 
-import privpy as pp
+    code= '''import privpy as pp
 import os
 import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
+
 import pnumpy as pnp
-import pai as pa
-globals()['pnp'] = pnp
-
-x = pp.farr([2.5,0.5,2.2,1.9,3.1,2.3,2,1,1.5,1.1])
-y = pp.farr([2.4,0.7,2.9,2.2,3,2.7,1.6,1.1,1.6,0.9])
-feature = pa.pca(x, y, n_components=1)
-
-pp.debug_reveal(feature, 're-1')
+s1 = pnp.diag(pp.iarr([[0, 1, 2],
+       [3, 4, 5],
+       [6, 7, 8]]))
+s2 = pnp.diag(pp.iarr([0, 4, 8]))
+pp.reveal(s1, 'result1')
+pp.reveal(s2, 'result2')
     '''
     #print(runner.sub_debug_reveal(code))
-    print(runner.code_reveal(code=code))
-    #res = (runner.run(code=code))
+    #print(runner.code_reveal(code=code))
+    res = (runner.run(code=code))
     #print(res)
+    result1 = res['result1']['val']
+    result2 = res['result2']['val']
+
+    npt.assert_almost_equal(result1, [0, 4, 8], decimal=8)
+    npt.assert_almost_equal(result2, [[0, 0, 0],
+                                      [0, 4, 0],
+                                      [0, 0, 8]], decimal=8)
