@@ -56,7 +56,7 @@ class TaskRunnerAPI:
 
     def code_reveal(self,code):
         print(code.split('\n'))
-        re_reveal = re.compile(r'''^[a-zA-Z_\-0-9\ ]+\.(?:debug_reveal|reveal)\([a-zA-Z_0-9\ \[\]\-\.\(\)]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
+        re_reveal = re.compile(r'''^[a-zA-Z_\-0-9\ ]+\.(?:debug_reveal|reveal)\([a-zA-Z_0-9\ \[\]\-\.\(\),=]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
         reveal = []
         for line in code.split('\n'):
             tmp = re.search(re_reveal,line)
@@ -328,27 +328,48 @@ class TaskRunnerAPI:
 
 if __name__ == '__main__':
     runner = TaskRunnerAPI()
-    code= '''import privpy as pp
+    code= '''
+import privpy as pp
 import os
 import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
-
 import pnumpy as pnp
-s1 = pnp.diag(pp.iarr([[0, 1, 2],
-       [3, 4, 5],
-       [6, 7, 8]]))
-s2 = pnp.diag(pp.iarr([0, 4, 8]))
-pp.reveal(s1, 'result1')
-pp.reveal(s2, 'result2')
+import numpy as np
+u = pp.farr([1, 2])
+v = pp.farr([3, 4])
+cp = pnp.cross(u, v)
+pp.reveal(cp, 'result1')
+u = pp.farr([1, 2])
+v = pp.farr([3, 4, 5])
+cp = pnp.cross(u, v)
+pp.reveal(cp, 'result2')
+u = pp.farr([1, 2, 3])
+v = pp.farr([4, 5, 6])
+cp = pnp.cross(u, v)
+pp.reveal(cp, 'result3')
+u = pp.farr([1, 2, 3])
+v = pp.farr([4, 5, 6])
+cp = pnp.cross(v, u)
+pp.reveal(cp, 'result4')
+u = np.tile([1, 2], (11, 1)).T
+v = np.tile([3, 4, 5], (11, 1))
+cp = pnp.cross(u, v, axisa=0)
+pp.reveal(cp, 'result5')
+pp.reveal(pnp.cross(v, u.T), 'result6')
+u = pp.farr(np.ones((10, 3, 5)))
+v = pp.farr(np.ones((2, 5)))
+pp.reveal(pnp.cross(u, v, axisa=1, axisb=0), 'result7')
+
     '''
     #print(runner.sub_debug_reveal(code))
-    #print(runner.code_reveal(code=code))
-    res = (runner.run(code=code))
+    print(runner.code_reveal(code=code))
+    #res = (runner.run(code=code))
     #print(res)
-    result1 = res['result1']['val']
+    '''result1 = res['result1']['val']
     result2 = res['result2']['val']
 
     npt.assert_almost_equal(result1, [0, 4, 8], decimal=8)
     npt.assert_almost_equal(result2, [[0, 0, 0],
                                       [0, 4, 0],
                                       [0, 0, 8]], decimal=8)
+'''
