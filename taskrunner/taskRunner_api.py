@@ -220,7 +220,9 @@ class TaskRunnerAPI:
                     try:
                         if isinstance((eval(res.get("result"))),list):
                             logger.info("list result")
+                            logger.info(res.get("result"))
                             tmp['val'] = np.array(eval(res.get("result")), detype=float)
+                            logger.info("-----------------")
                         else:
                             tmp['val'] = eval(res.get("result"))
                         logger.info((tmp['val']))
