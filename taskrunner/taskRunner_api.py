@@ -56,7 +56,7 @@ class TaskRunnerAPI:
 
     def code_reveal(self,code):
         print(code.split('\n'))
-        re_reveal = re.compile(r'''^[a-zA-Z_\-0-9\ ]+\.(?:debug_reveal|reveal)\([a-zA-Z_0-9\ \[\]\-\.\(\),=]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
+        re_reveal = re.compile(r'''^[a-zA-Z_\-0-9\ \=]+\.(?:debug_reveal|reveal)\([a-zA-Z_0-9\ \[\]\-\.\(\),=]+['"]([a-zA-Z_\-0-9]+)['"]''')
         reveal = []
         for line in code.split('\n'):
             tmp = re.search(re_reveal,line)
@@ -359,6 +359,7 @@ pp.reveal(pnp.cross(v, u.T), 'result6')
 u = pp.farr(np.ones((10, 3, 5)))
 v = pp.farr(np.ones((2, 5)))
 pp.reveal(pnp.cross(u, v, axisa=1, axisb=0), 'result7')
+re1 = pp.reveal(re1, 're-1')
 
     '''
     #print(runner.sub_debug_reveal(code))
