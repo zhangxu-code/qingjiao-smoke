@@ -207,6 +207,7 @@ class TaskRunnerAPI:
         try:
             get_result = True
             while 1:
+                get_result = True
                 req = requests.get(url=url,headers=head,verify=False)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
