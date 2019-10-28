@@ -205,7 +205,8 @@ class TaskRunnerAPI:
         }
         result_ditc = {}
         try:
-            while 1 :
+            get_result = True
+            while 1:
                 req = requests.get(url=url,headers=head,verify=False)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
@@ -217,6 +218,8 @@ class TaskRunnerAPI:
                 for res in req.json().get("data"):
                     tmp = {}
                     #logger.info(type(eval(res.get("result"))))
+                    if res.get("result") == None:
+                        get_result = False
                     try:
                         if isinstance((eval(res.get("result"))),list):
                             logger.info("list result")
@@ -233,6 +236,9 @@ class TaskRunnerAPI:
                         logger.info(err)
                         tmp['val'] = res.get("result")
                         result_ditc[res.get("resultVarName")] = tmp
+                if get_result == False:
+                    time.sleep(3)
+                    continue
                 return result_ditc
         except Exception as err:
             logger.error(err)
