@@ -214,7 +214,7 @@ class TaskRunnerAPI:
                     try:
                         if isinstance((eval(res.get("result"))),list):
                             logger.info("list result")
-                            tmp['val'] = numpy.array(eval(res.get("result")))
+                            tmp['val'] = np.array(eval(res.get("result")))
                         else:
                             tmp['val'] = eval(res.get("result"))
                         logger.info((tmp['val']))
@@ -314,17 +314,20 @@ class TaskRunnerAPI:
 
 if __name__ == '__main__':
     runner = TaskRunnerAPI()
-    code= '''import privpy as pp
+    code= '''import numpy as np 
+import privpy as pp
 import os
 import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
-
 import pnumpy as pnp
-import numpy as np
+import pai as pa
+globals()['pnp'] = pnp
 
-(a1, b1) = pnp.histogram(pp.farr(np.arange(10)), bins=10)
+x = pp.farr([2.5,0.5,2.2,1.9,3.1,2.3,2,1,1.5,1.1])
+y = pp.farr([2.4,0.7,2.9,2.2,3,2.7,1.6,1.1,1.6,0.9])
+feature = pa.pca(x, y, n_components=1)
 
-pp.debug_reveal(a1, 'res1')
+pp.debug_reveal(feature, 're-1')
     '''
     #print(runner.sub_debug_reveal(code))
     #print(runner.code_reveal(code=code))
