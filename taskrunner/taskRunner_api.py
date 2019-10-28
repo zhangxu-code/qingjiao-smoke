@@ -55,8 +55,14 @@ class TaskRunnerAPI:
         return  self.job_pipline(datasource=[] ,result=result,code=self.sub_debug_reveal(code=code))
 
     def code_reveal(self,code):
-        re_reveal = re.compile(r'''\. ?:debug_reveal|reveal\([a-zA-Z_0-9\ \[\]\-\.\(\)]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
-        reveal = re.findall(re_reveal,code)
+        print(code.split('\n'))
+        re_reveal = re.compile(r'''^[a-zA-Z_\-0-9\ ]+\.(?:debug_reveal|reveal)\([a-zA-Z_0-9\ \[\]\-\.\(\)]+,[\ ]+['"]([a-zA-Z_\-0-9]+)['"]''')
+        reveal = []
+        for line in code.split('\n'):
+            tmp = re.search(re_reveal,line)
+            if tmp:
+                print(line)
+                reveal.append(tmp.group(1))
         return  reveal
 
     def sub_debug_reveal(self,code):
@@ -330,6 +336,6 @@ feature = pa.pca(x, y, n_components=1)
 pp.debug_reveal(feature, 're-1')
     '''
     #print(runner.sub_debug_reveal(code))
-    #print(runner.code_reveal(code=code))
-    res = (runner.run(code=code))
-    print(res)
+    print(runner.code_reveal(code=code))
+    #res = (runner.run(code=code))
+    #print(res)
