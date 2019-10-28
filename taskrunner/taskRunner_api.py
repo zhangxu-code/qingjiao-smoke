@@ -213,7 +213,7 @@ class TaskRunnerAPI:
                     #logger.info(type(eval(res.get("result"))))
                     try:
                         if isinstance((eval(res.get("result"))),list):
-                            #logger.info("numpy.arrary()")
+                            logger.info("list result")
                             tmp['val'] = numpy.array(eval(res.get("result")))
                         else:
                             tmp['val'] = eval(res.get("result"))
