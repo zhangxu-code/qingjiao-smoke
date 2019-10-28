@@ -31,5 +31,8 @@ def run_task(code):
     result = runner.run(code=code)
     #print('----------')
     logger.info(result)
+    for key in result.keys():
+        logger.info(result.get(key).get("val"))
+        logger.info(type(result.get(key).get('val')))
     #print('+++++++++++')
     return result
