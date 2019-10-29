@@ -51,12 +51,7 @@ def db_smoke_suit():
     dbsomkesuit.addTest(dbengineCases("describe_gold_case"))
     dbsomkesuit.addTest(dbengineCases("hdfs_gold_case"))
     dbsomkesuit.addTest(dbengineCases("hdfs_filter_gold_case"))
-    #dbsomkesuit.addTest(dbengineCases("agg_gold_case"))
-    #dbsomkesuit.addTest(dbengineCases("agg_ccode_gold_case"))
-    #dbsomkesuit.addTest(dbengineCases("agg_limit_gold_case"))
-    #dbsomkesuit.addTest(dbengineCases("agg_filter_gold_case"))
-    #dbsomkesuit.addTest(dbengineCases("sum_gold_price_case"))
-    #dbsomkesuit.addTest(dbengineCases("sum_gold_price_filter_case"))
+
     return dbsomkesuit
 
 def createdata(length=1000):
@@ -79,8 +74,8 @@ if __name__ == '__main__':
     parser.add_argument("--key",help="create jobs, key for data & code exa: 10M_double、1M_double、sql_stage")
     parser.add_argument("--Num",help="create Num jobs,default = 1",default=1)
     parser.add_argument("--time",help="report-${time}",type=str,default=None)
+    parser.add_argument("--thread",help="Multithreading",type=int,default=1)
     args = vars(parser.parse_args())
-    global conf_args
     conf_args = args
     fr = open('conf.yml')
     all_conf = yaml.load(fr)
@@ -101,16 +96,19 @@ if __name__ == '__main__':
         suit = unittest.TestSuite((tmsuit,dbsuit))
     if conf_args.get("key") == 'heartbeat':
         suit = tm_smoke_suit()
+    if conf_args.get("key") == 'db':
+        logging.info("run db test  suit")
+        suit = db_smoke_suit()
 
-    elif conf_args.get("env") == 'env-inspection':
-        suit  = inspection_suit()
     if conf_args.get("key") in ['smoke','heartbeat']:
         runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s"%(conf_args.get("key"),timestr))
         runner.run(suit)
         #if conf_args.get("key") == 'heartbeat':
-        post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr))
+        post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr),env=conf_args.get("env"))
     else:
-        runner = HTMLReport.TestRunner(report_file_name='test',
+        runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (conf_args.get("key"), timestr))
+        runner.run(suit)
+        '''runner = HTMLReport.TestRunner(report_file_name='test',
                                        output_path='./',
                                        description='login test suite',
                                        thread_count=1,
@@ -118,3 +116,4 @@ if __name__ == '__main__':
                                        sequential_execution=False,
                                        lang='cn')
         runner.run(suit)
+        '''
