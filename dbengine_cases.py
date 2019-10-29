@@ -25,6 +25,8 @@ class dbengineCases(unittest.TestCase):
     host = None
     port = None
     def setUp(self) -> None:
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
         global host
         self.host = host
         global port
@@ -72,12 +74,13 @@ class dbengineCases(unittest.TestCase):
         data = self.db.execut_sql(sql=sql)
         logging.info(data)
         self.assertEquals(data[0][0],1938)
+
     @ddt.data(*select_count_csv_reader())
     @ddt.unpack
     def test_agg_case(self,name,sql,expect):
         data = self.db.execut_sql(sql=sql)
         logging.info(data)
-        self.assertEquals(data[0][0], int(expect))
+        self.assertEquals(data[0][0], int(expect),msg=sql)
 
 
     def create_tabel_gold_case(self):
@@ -109,7 +112,7 @@ if __name__ == '__main__':
     db_init(ihost='10.18.0.19',iport=21050)
     fw = open('test.txt','w')
     runner = unittest.TextTestRunner(stream=fw,verbosity=2)
-
+    logging.debug("deubg")
 
     unittest.main()
     

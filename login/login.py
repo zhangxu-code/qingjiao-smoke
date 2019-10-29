@@ -1,5 +1,5 @@
 import requests
-
+import logging
 class login_c:
     site = ''
     user=''
@@ -8,6 +8,8 @@ class login_c:
         self.site = site
         self.user = user
         self.passwd = passwd
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
 
     def login_sso(self):
         url = 'https://%s/api/api-sso/token/simpleLogin' % (self.site)

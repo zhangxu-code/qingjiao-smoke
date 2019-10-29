@@ -1,0 +1,17 @@
+title,datasource,result,code
+1M,"[{""dataSourceId"":295,""dataSourceMetadataId"":278,""dataServerId"":1,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")"
+10M,"[{""dataSourceId"":290,""dataSourceMetadataId"":272,""dataServerId"":1,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")"
+100M,"[{""dataSourceId"":289,""dataSourceMetadataId"":271,""dataServerId"":1,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")"
+500M,"[{""dataSourceId"":292,""dataSourceMetadataId"":275,""dataServerId"":1,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")"

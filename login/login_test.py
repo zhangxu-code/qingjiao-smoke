@@ -3,6 +3,7 @@ import HTMLReport
 import requests
 import json
 from stability_py.login.login import login_c
+import  logging
 
 class loginTestCase(unittest.TestCase):
     site = ''
@@ -10,7 +11,8 @@ class loginTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.site = 'debugsaas-inspection.tsingj.local'
         self.login_ = login_c(site=self.site,user='user',passwd='123456')
-
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
     def login_ok(self):
         ret_j = self.login_.login_sso()
         self.assertEqual(ret_j.get("code"),0,"expect recode code")
