@@ -104,7 +104,8 @@ if __name__ == '__main__':
         runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s"%(conf_args.get("key"),timestr))
         runner.run(suit)
         #if conf_args.get("key") == 'heartbeat':
-        post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr),env=conf_args.get("env"))
+        if conf_args.get('env') == 'master':
+            post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr),env=conf_args.get("env"))
     else:
         runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (conf_args.get("key"), timestr))
         runner.run(suit)
