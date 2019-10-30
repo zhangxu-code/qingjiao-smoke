@@ -60,6 +60,15 @@ def library_smoke_suit():
     math_function  = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_math_function.py',top_level_dir=None)
     logic_function = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_logic_function.py',top_level_dir=None)
     return unittest.TestSuite((array_creation,math_function,logic_function))
+def library_conf(env):
+    fr = open("conf.yml")
+    conf = yaml.load(fr)
+    fr.close()
+    fw = open('./taskrunner/conf.yml','w')
+    fw.write("user: %s\n"%(conf.get(env).get("user")))
+    fw.write("passwd: %s\n" % (conf.get(env).get("passwd")))
+    fw.write("site: %s\n" % (conf.get(env).get("site")))
+    fw.close()
 
 def init(site=None,user=None,passwd=None,dbhost=None,dbport=None):
 
@@ -100,6 +109,7 @@ if __name__ == '__main__':
     #python3 runTestsuit.py --site=debugsaas-inspection.tsingj.local --user=user --passwd=123456 --key=inspection
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
+    sys.path.append(os.getcwd())
     parser = argparse.ArgumentParser()
     #parser.description("run job test")
     parser.add_argument("--env",help="environment,like: env192 ",type=str)
@@ -114,6 +124,7 @@ if __name__ == '__main__':
     conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
     init(site=conf.get('site'),user=conf.get('user'),passwd=conf.get('passwd'),
          dbhost=conf.get('dbhost'),dbport=conf.get('dbport'))
+    library_conf(env=conf_args.get("env")+'-'+conf_args.get("key"))
     if conf_args.get("key") == 'smoke':
         runsmoke(key=conf_args.get('key'),env=conf_args.get('evn'),timestr=conf_args.get('time'))
     if conf_args.get("key") == 'heartbeat':
