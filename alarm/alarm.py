@@ -90,7 +90,7 @@ def postalarm(msg=None,title=None,env=None):
     try:
         req = requests.post(url="http://talert-dev.tsingj.local/api/warning",headers=head,data=json.dumps(body))
         logging.info("post alarm")
-        #logging.info(req.text)
+        logging.info(req.text)
     except Exception as err:
         logging.info("failed")
         logging.error(err)
@@ -101,15 +101,15 @@ def post_alarm(xmlpath,env='master'):
     #print(report)
     logging.info(report.get("root"))
     if report.get("root").get("errors") + report.get("root").get("failures") != 0:
-        logging.error("run heartbeat failed ,post alarm")
+        logging.error("run test failed ,post alarm")
         msg = ''
         for suit in report.get("testsuit"):
             for case in suit.get("cases"):
                 if case.get("status") == False:
                     msg = msg +case.get("name")+":"+ case.get("msg")+";"
-        logging.error(msg)
-        postalarm(msg=msg,title='[%s]'%(env) + title,env=env)
+        logging.error(msg.replace('\'','\\\''))
+        postalarm(msg=msg.replace('\'','\\\''),title='[%s]'%(env) + title,env=env)
 
 if __name__ == '__main__':
-    postalarm(msg="test",title='[talert][test] 20191014 19:00:00',env="master")
-    #print(listxmlfile_dir('./privpy-smoke-20191025151717'))
+    #postalarm(msg="test",title='[talert][test] 20191014 19:00:00',env="master")
+    print(post_alarm('./privpy-smoke-20191030145344'))
