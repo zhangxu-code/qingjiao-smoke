@@ -112,7 +112,6 @@ if __name__ == '__main__':
     all_conf = yaml.load(fr)
     fr.close()
     conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
-    print(conf)
     init(site=conf.get('site'),user=conf.get('user'),passwd=conf.get('passwd'),
          dbhost=conf.get('dbhost'),dbport=conf.get('dbport'))
     if conf_args.get("key") == 'smoke':
