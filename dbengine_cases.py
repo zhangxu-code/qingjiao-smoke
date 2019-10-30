@@ -11,7 +11,7 @@ import ddt
 
 def select_count_csv_reader():
     value_rows = []
-    fr = open("./datainput/db/select_count.csv")
+    fr = open("./datainput/db/dbsql.csv")
     csvfile = csv.reader(fr)
     next(csvfile)  # 忽略表头
     #csvfile = csv.DictReader(fr)
@@ -47,33 +47,13 @@ class dbengineCases(unittest.TestCase):
         data = self.db.execut_sql(sql=sql)
         logging.info(data)
         self.assertEquals(len(data),0)
+
     def hdfs_filter_gold_case(self):
         sql = "SELECT c_code from gold WHERE price > 5 LIMIT 10;"
         data = self.db.execut_sql(sql=sql)
         logging.info(data)
         self.assertEquals(len(data),0)
-    def agg_gold_case(self):
-        sql = "select count(*) from gold"
-        data = self.db.execut_sql(sql=sql)
-        logging.info(data)
-        self.assertEquals(data[0][0],1940)
 
-    def agg_ccode_gold_case(self):
-        sql = "select count(c_code) from gold"
-        data = self.db.execut_sql(sql=sql)
-        logging.info(data)
-        self.assertEquals(data[0][0],1940)
-    def agg_limit_gold_case(self):
-        sql = "select count(c_code) from gold limit 10"
-        data = self.db.execut_sql(sql=sql)
-        logging.info(data)
-        self.assertEquals(data[0][0],1940)
-
-    def agg_filter_gold_case(self):
-        sql = "select count(c_code) from gold where price > 1000"
-        data = self.db.execut_sql(sql=sql)
-        logging.info(data)
-        self.assertEquals(data[0][0],1938)
 
     @ddt.data(*select_count_csv_reader())
     @ddt.unpack
@@ -85,17 +65,6 @@ class dbengineCases(unittest.TestCase):
 
     def create_tabel_gold_case(self):
         sql = "create table gold_10(day int,time int,price int,c_code int) tblproperties('DS.Dataset'='70:data:tablea.txt')"
-    def sum_gold_price_case(self):
-        sql = "select sum(price) from gold"
-        data = self.db.execut_sql(sql=sql)
-        logging.info(data)
-        self.assertEquals(int(data[0][0]),7816861)
-        #7816824  37
-    def sum_gold_price_filter_case(self):
-        sql = "select sum(price) from gold where price < 1000"
-        data = self.db.execut_sql(sql=sql)
-        logging.info(data)
-        self.assertEquals(int(data[0][0]), 37)
 
 def db_init(ihost,iport=21050):
     global host

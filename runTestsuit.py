@@ -84,18 +84,18 @@ def runsmoke(key=None,env='dev',timestr= None):
     suit = unittest.TestSuite((tm_smoke_suit(), db_smoke_suit(),library_smoke_suit()))
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
-    if env == 'master':
-        post_alarm("privpy-%s-%s" % (key, timestr), env=env)
+    #if env == 'master':
+    post_alarm("privpy-%s-%s" % (key, timestr), env=env)
 
 def runheartbeat(key=None,env='dev',timestr= None):
     logging.info('running heartbeat test')
     if timestr == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
-    suit = tm_smoke_suit()
+    suit = unittest.TestSuite((tm_smoke_suit(),db_smoke_suit()))
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
-    if env == 'master':
-        post_alarm("privpy-%s-%s" % (key, timestr), env=env)
+    #if env == 'master':
+    post_alarm("privpy-%s-%s" % (key, timestr), env=env)
 
 def rundb(key=None,env='dev',timestr= None):
     logging.info('running db test')
