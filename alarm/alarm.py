@@ -58,6 +58,7 @@ def listxmlfile_dir(dir):
     for xmlfile in files:
         #print(os.path.splitext(xmlfile))
         if os.path.splitext(xmlfile)[1] == ".xml":
+            logging.info(dir+"/"+xmlfile)
             xmlreport =  readjunitxml(dir+"/"+xmlfile)
             #print(xmlreport.get("root"))
             tmproot["errors"] = tmproot["errors"] + xmlreport.get("root").get("errors")
@@ -95,9 +96,10 @@ def postalarm(msg=None,title=None,env=None):
         logging.error(err)
 
 def post_alarm(xmlpath,env='master'):
+    logging.info(xmlpath)
     report,title = listxmlfile_dir(dir=xmlpath)
     #print(report)
-
+    logging.info(report.get("root"))
     if report.get("root").get("errors") + report.get("root").get("failures") != 0:
         logging.error("run heartbeat failed ,post alarm")
         msg = ''
