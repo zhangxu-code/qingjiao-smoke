@@ -40,7 +40,7 @@ master-library:
 dev136-library:
   user: smokelibrary
   passwd: 1234qwer
-  site: console.tsingj.local
+  site: console-dev136.tsingj.local
 
 dev-library:
   user: smokelibrary
