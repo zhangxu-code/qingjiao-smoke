@@ -54,15 +54,46 @@ def db_smoke_suit():
 
     return dbsomkesuit
 
-def createdata(length=1000):
-    fw = open("data.csv",'w')
-    for i in range(length):
-        begin = i + 1
-        for j in range(length):
-            fw.write(str(begin))
-            begin =  begin + 1
-            fw.write(',')
-        fw.write('\n')
+def library_smoke_suit():
+    basePath = os.getcwd()+'/privpy_library/privpy_lib/tests/'
+    array_creation = unittest.defaultTestLoader.discover(basePath+'/test_pnumpy', pattern='test_array_creation.py', top_level_dir=None)
+    math_function  = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_math_function.py',top_level_dir=None)
+    logic_function = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_logic_function.py',top_level_dir=None)
+    return unittest.TestSuite((array_creation,math_function,logic_function))
+
+def init(site=None,user=None,passwd=None,dbhost=None,dbport=None):
+    tm_init(insite=site, inuser=user, inpasswd=passwd)
+    db_init(ihost=dbhost, iport=dbport)
+    login_init(insite=site, inuser=user, inpasswd=passwd)
+
+def runsmoke(key=None,env='dev',timestr= None):
+    logging.info("running smoke test suite")
+    if timestr == None:
+        timestr = time.strftime("%Y%m%d%H%M%S")
+
+    suit = unittest.TestSuite((tm_smoke_suit(), db_smoke_suit(),library_smoke_suit()))
+    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
+    runner.run(suit)
+    if env == 'master':
+        post_alarm("privpy-%s-%s" % (key, timestr), env=env)
+
+def runheartbeat(key=None,env='dev',timestr= None):
+    logging.info('running heartbeat test')
+    if timestr == None:
+        timestr = time.strftime("%Y%m%d%H%M%S")
+    suit = tm_smoke_suit()
+    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
+    runner.run(suit)
+    if env == 'master':
+        post_alarm("privpy-%s-%s" % (key, timestr), env=env)
+
+def rundb(key=None,env='dev',timestr= None):
+    logging.info('running db test')
+    if timestr == None:
+        timestr = time.strftime("%Y%m%d%H%M%S")
+    suit = db_smoke_suit()
+    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
+    runner.run(suit)
 
 if __name__ == '__main__':
     #python3 runTestsuit.py --site=debugsaas-inspection.tsingj.local --user=user --passwd=123456 --key=inspection
@@ -80,41 +111,15 @@ if __name__ == '__main__':
     fr = open('conf.yml')
     all_conf = yaml.load(fr)
     fr.close()
-    conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
-    if conf_args.get("time") == None:
-        timestr = time.strftime("%Y%m%d%H%M%S")
-    else:
-        timestr = conf_args.get("time")
-    #get_job_csv(env=conf_args.get('env'),key=conf_args.get("key"))
-    tm_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"),inenv=conf.get("csvfile"))
-    db_init(ihost=conf.get("dbhost"),iport=conf.get("dbport"))
-    login_init(insite=conf.get("site"),inuser=conf.get("user"),inpasswd=conf.get("passwd"))
-    if conf_args.get("key") == 'smoke':
-        logging.info("run smoke test suit")
-        dbsuit = db_smoke_suit()
-        tmsuit = tm_smoke_suit()
-        suit = unittest.TestSuite((tmsuit,dbsuit))
-    if conf_args.get("key") == 'heartbeat':
-        suit = tm_smoke_suit()
-    if conf_args.get("key") == 'db':
-        logging.info("run db test  suit")
-        suit = db_smoke_suit()
+    #conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
 
-    if conf_args.get("key") in ['smoke','heartbeat']:
-        runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s"%(conf_args.get("key"),timestr))
-        runner.run(suit)
-        #if conf_args.get("key") == 'heartbeat':
-        if conf_args.get('env') == 'master':
-            post_alarm("privpy-%s-%s"%(conf_args.get("key"),timestr),env=conf_args.get("env"))
-    else:
-        runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (conf_args.get("key"), timestr))
-        runner.run(suit)
-        '''runner = HTMLReport.TestRunner(report_file_name='test',
-                                       output_path='./',
-                                       description='login test suite',
-                                       thread_count=1,
-                                       thread_start_wait=3,
-                                       sequential_execution=False,
-                                       lang='cn')
-        runner.run(suit)
-        '''
+    init(site=conf_args.get('site'),user=conf_args.get('user'),passwd=conf_args.get('passwd'),
+         dbhost=conf_args.get('dbhost'),dbport=conf_args.get('dbport'))
+
+    if conf_args.get("key") == 'smoke':
+        runsmoke(key=conf_args.get('key'),env=conf_args.get('evn'),timestr=conf_args.get('time'))
+    if conf_args.get("key") == 'heartbeat':
+        runheartbeat(key=conf_args.get('key'), env=conf_args.get('evn'), timestr=conf_args.get('time'))
+
+    if conf_args.get("key") == 'db':
+        rundb(key=conf_args.get('key'),timestr=conf_args.get('time'),env=conf_args.get('env'))
