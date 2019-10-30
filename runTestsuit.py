@@ -8,7 +8,7 @@ import yaml
 import os
 import sys
 import re
-import xmlrunner
+from xmlrunnerR import xmlrunner
 
 from tm_cases import tmTestcases,get_job_csv
 from tm_cases import tm_init
@@ -62,6 +62,7 @@ def library_smoke_suit():
     return unittest.TestSuite((array_creation,math_function,logic_function))
 
 def init(site=None,user=None,passwd=None,dbhost=None,dbport=None):
+
     tm_init(insite=site, inuser=user, inpasswd=passwd)
     db_init(ihost=dbhost, iport=dbport)
     login_init(insite=site, inuser=user, inpasswd=passwd)
@@ -106,16 +107,13 @@ if __name__ == '__main__':
     parser.add_argument("--Num",help="create Num jobs,default = 1",default=1)
     parser.add_argument("--time",help="report-${time}",type=str,default=None)
     parser.add_argument("--thread",help="Multithreading",type=int,default=1)
-    args = vars(parser.parse_args())
-    conf_args = args
+    conf_args = vars(parser.parse_args())
     fr = open('conf.yml')
     all_conf = yaml.load(fr)
     fr.close()
-    #conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
-
-    init(site=conf_args.get('site'),user=conf_args.get('user'),passwd=conf_args.get('passwd'),
-         dbhost=conf_args.get('dbhost'),dbport=conf_args.get('dbport'))
-
+    conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
+    init(site=conf.get('site'),user=conf.get('user'),passwd=conf.get('passwd'),
+         dbhost=conf.get('dbhost'),dbport=conf.get('dbport'))
     if conf_args.get("key") == 'smoke':
         runsmoke(key=conf_args.get('key'),env=conf_args.get('evn'),timestr=conf_args.get('time'))
     if conf_args.get("key") == 'heartbeat':
