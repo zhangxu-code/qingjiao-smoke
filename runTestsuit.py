@@ -126,9 +126,9 @@ if __name__ == '__main__':
          dbhost=conf.get('dbhost'),dbport=conf.get('dbport'))
     library_conf(env=conf_args.get("env")+'-'+conf_args.get("key"))
     if conf_args.get("key") == 'smoke':
-        runsmoke(key=conf_args.get('key'),env=conf_args.get('evn'),timestr=conf_args.get('time'))
+        runsmoke(key=conf_args.get('key'),env=conf_args.get('env'),timestr=conf_args.get('time'))
     if conf_args.get("key") == 'heartbeat':
-        runheartbeat(key=conf_args.get('key'), env=conf_args.get('evn'), timestr=conf_args.get('time'))
+        runheartbeat(key=conf_args.get('key'), env=conf_args.get('env'), timestr=conf_args.get('time'))
 
     if conf_args.get("key") == 'db':
         rundb(key=conf_args.get('key'),timestr=conf_args.get('time'),env=conf_args.get('env'))
