@@ -28,7 +28,7 @@ def run_task(code):
 def run_task(code):
     logger.info(code)
     runner = TaskRunnerAPI()
-    result = runner.run(code='import sys\nimport os\n'+code)
+    result = runner.run(code='import sys\nimport os\nimport privpy as pp\n'+code)
     #print('----------')
     logger.info(result)
     for key in result.keys():
