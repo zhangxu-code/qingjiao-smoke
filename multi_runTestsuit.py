@@ -109,7 +109,7 @@ def main(argv):
         timestr = FLAGS.timestr
 
     sys.path.append(os.getcwd())
-    suite = unittest.TestSuite((db_suit(),tm_suit(),library_suit()))
+    #suite = unittest.TestSuite((db_suit(),tm_suit(),library_suit()))
 
     basePath = os.getcwd() + '/privpy_library/privpy_lib/tests'
     case_path = (basePath + '/test_pnumpy')
