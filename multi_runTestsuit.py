@@ -99,6 +99,16 @@ def runsuit(cases,output):
     runner = xmlrunner.XMLTestRunner(output=output)
     runner.run(cases)
 
+def conf(env):
+    fr = open("conf.yml")
+    conf = yaml.load(fr)
+    fr.close()
+    fw = open('./taskrunner/conf.yml','w')
+    fw.write("user: %s\n"%(conf.get(env).get("user")))
+    fw.write("passwd: %s\n" % (conf.get(env).get("passwd")))
+    fw.write("site: %s\n" % (conf.get(env).get("site")))
+    fw.close()
+
 
 def main(argv):
     del argv
@@ -109,7 +119,7 @@ def main(argv):
         timestr = time.strftime("%Y%m%d%H%M%S")
     else:
         timestr = FLAGS.timestr
-
+    conf(env='%s-library' % (FLAGS.env))
     sys.path.append(os.getcwd())
     #suite = unittest.TestSuite((db_suit(),tm_suit(),library_suit()))
 
