@@ -5,9 +5,9 @@ import time
 import unittest
 import logging
 import yaml
-from taskrunner.taskRunner_api import TaskRunnerAPI
 from xmlrunnerR import xmlrunner
 from absl import flags,app
+'''
 from tm_cases import tmTestcases,get_job_csv
 from tm_cases import tm_init
 from dbengine_cases import dbengineCases
@@ -15,12 +15,13 @@ from dbengine_cases import db_init
 from login_cases import loginTestcases
 from login_cases import login_init
 from alarm.alarm import post_alarm
+'''
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string("env",'master','environment,default:master')
 flags.DEFINE_string("timestr",None,help="report-mutli-${time}")
 flags.DEFINE_integer("cycle",default=1,help='all case run N times')
-
+'''
 def tm_suit():
     tmsmokesuit = unittest.TestLoader().loadTestsFromTestCase(tmTestcases)
     #tmsmokesuit.addTest(loginTestcases("logincase_ok"))
@@ -36,7 +37,7 @@ def db_suit():
 
     return dbsomkesuit
 
-
+'''
 def process_executor(suite,executor,timestr):
     task = []
     for tmp in suite:
@@ -85,13 +86,14 @@ def library_conf(env):
     fw.write("site: %s\n" % (conf.get(env).get("site")))
     fw.close()
 
+'''
 def init(site=None,user=None,passwd=None,dbhost=None,dbport=None):
 
     tm_init(insite=site, inuser=user, inpasswd=passwd)
     db_init(ihost=dbhost, iport=dbport)
     login_init(insite=site, inuser=user, inpasswd=passwd)
 
-
+'''
 def runsuit(cases,output):
     logging.info("run suite")
     runner = xmlrunner.XMLTestRunner(output=output)
