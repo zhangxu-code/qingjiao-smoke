@@ -52,6 +52,11 @@ dev195-heartbeat:
   passwd: 1234qwer
   site: console-dev195.tsingj.local
 
+dev195-library:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console-dev195.tsingj.local
+
 master-db:
   dbhost: 10.18.0.19
   dbport: 21050
