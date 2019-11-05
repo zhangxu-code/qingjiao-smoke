@@ -11,7 +11,8 @@ import json
 import numpy as np
 import numpy.testing as npt
 from loguru import logger
-
+#from multiprocessing import Lock
+import threading
 #logger = logger.getLogger()
 #logger.setLevel(logger.INFO)
 
@@ -27,6 +28,8 @@ class TaskRunnerAPI:
         fr.close()
 
     def run(self,code):
+        logger.info(threading.current_thread().name)
+        #return True
         if not self.login():
             logger.error("login failed")
             return False
@@ -243,9 +246,15 @@ class TaskRunnerAPI:
             return result_ditc
 
     def login(self):
+        threadname = threading.current_thread().name
         logger.info("login :%s"%(self.conf.get("site")))
         url = 'https://%s/api/api-sso/token/simpleLogin' % (self.conf.get("site"))
-        data = "username=%s&password=%s" % (self.conf.get("user"), self.conf.get("passwd"))
+        if 'multiRun' in threadname:
+            username = self.conf.get("user")+str((int(threadname.split('_')[-1])+1)%(int(self.conf.get("thread"))))
+        else:
+            username = self.conf.get("user")
+        data = "username=%s&password=%s" % (username, self.conf.get("passwd"))
+        logger.info(data)
         try:
             req = requests.post(url=url, params=data, verify=False)
             # print(req.text)
@@ -335,42 +344,39 @@ import sys
 sys.path.append(os.getcwd() + '/privpy_lib')
 import pnumpy as pnp
 import numpy as np
-u = pp.farr([1, 2])
-v = pp.farr([3, 4])
-cp = pnp.cross(u, v)
-pp.reveal(cp, 'result1')
-u = pp.farr([1, 2])
-v = pp.farr([3, 4, 5])
-cp = pnp.cross(u, v)
-pp.reveal(cp, 'result2')
-u = pp.farr([1, 2, 3])
-v = pp.farr([4, 5, 6])
-cp = pnp.cross(u, v)
-pp.reveal(cp, 'result3')
-u = pp.farr([1, 2, 3])
-v = pp.farr([4, 5, 6])
-cp = pnp.cross(v, u)
-pp.reveal(cp, 'result4')
-u = np.tile([1, 2], (11, 1)).T
-v = np.tile([3, 4, 5], (11, 1))
-cp = pnp.cross(u, v, axisa=0)
-pp.reveal(cp, 'result5')
-pp.reveal(pnp.cross(v, u.T), 'result6')
-u = pp.farr(np.ones((10, 3, 5)))
-v = pp.farr(np.ones((2, 5)))
-pp.reveal(pnp.cross(u, v, axisa=1, axisb=0), 'result7')
-re1 = pp.reveal(re1, 're-1')
 
+a = pp.farr([1, 2])
+b = pp.farr([1, 2, 3])
+c = pp.farr([3, 4])
+d = pp.farr([1, 3])
+
+s1 = pnp.array_equal(a, a)
+s2 = pnp.array_equal(a, b)       
+s3 = pnp.array_equal(a, c)  
+s4 = pnp.array_equal(a, d) 
+
+pp.debug_reveal(s1, 's1')
+pp.debug_reveal(s2, 's2')
+pp.debug_reveal(s3, 's3')
+pp.debug_reveal(s4, 's4')
     '''
     #print(runner.sub_debug_reveal(code))
-    print(runner.code_reveal(code=code))
-    #res = (runner.run(code=code))
-    #print(res)
-    '''result1 = res['result1']['val']
-    result2 = res['result2']['val']
+    #print(runner.code_reveal(code=code))
+    res = (runner.run(code=code))
+    print(res)
+    a = np.array([1, 2])
+    b = np.array([1, 2, 3])
+    c = np.array([3, 4])
+    d = np.array([1, 3])
 
-    npt.assert_almost_equal(result1, [0, 4, 8], decimal=8)
-    npt.assert_almost_equal(result2, [[0, 0, 0],
-                                      [0, 4, 0],
-                                      [0, 0, 8]], decimal=8)
-'''
+    #res = test_util.run_task(code)
+    s1 = res['s1']['val']
+    s2 = res['s2']['val']
+    s3 = res['s3']['val']
+    s4 = res['s4']['val']
+
+    npt.assert_array_almost_equal(s1, np.array_equal(a, a))
+    npt.assert_array_almost_equal(s2, np.array_equal(a, b))
+    npt.assert_array_almost_equal(s3, np.array_equal(a, c))
+    npt.assert_array_almost_equal(s4, np.array_equal(a, d))
+    print('assert ok')
