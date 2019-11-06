@@ -2,6 +2,8 @@
 import unittest
 import HTMLReport
 import json
+import datetime
+import pytz
 import argparse
 import time
 import yaml
@@ -9,7 +11,7 @@ import os
 import sys
 import re
 from xmlrunnerR import xmlrunner
-
+from es2csv.es2csv import es2csv
 from tm_cases import tmTestcases,get_job_csv
 from tm_cases import tm_init
 from dbengine_cases import dbengineCases
@@ -20,6 +22,17 @@ from alarm.alarm import post_alarm
 
 import logging
 
+def cur_utc_time():
+    utc_tz = pytz.timezone('UTC')
+    curtime = datetime.datetime.now(tz=utc_tz)
+    return (curtime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+
+def downlog(begintime,endtime):
+    es = es2csv(host="10.18.0.18")
+    es.query_time(begintime=begintime, endtime=endtime)
+    scrollid = es.scroll()
+    print(scrollid)
+    es.search(scroll_id=scrollid)
 
 def login_suit():
     loginsuit = unittest.TestSuite()
@@ -80,22 +93,27 @@ def runsmoke(key=None,env='dev',timestr= None):
     logging.info("running smoke test suite")
     if timestr == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
-
+    begintime = cur_utc_time()
     suit = unittest.TestSuite((tm_smoke_suit(), db_smoke_suit(),library_smoke_suit()))
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
+    endtime = cur_utc_time()
     #if env == 'master':
-    post_alarm("privpy-%s-%s" % (key, timestr), env=env)
+    if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
+        downlog(begintime=begintime,endtime=endtime)
 
 def runheartbeat(key=None,env='dev',timestr= None):
     logging.info('running heartbeat test')
     if timestr == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
+    begintime = cur_utc_time()
     suit = unittest.TestSuite((tm_smoke_suit(),db_smoke_suit()))
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
+    endtime = cur_utc_time()
     #if env == 'master':
-    post_alarm("privpy-%s-%s" % (key, timestr), env=env)
+    if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
+        downlog(begintime=begintime,endtime=endtime)
 
 def rundb(key=None,env='dev',timestr= None):
     logging.info('running db test')
