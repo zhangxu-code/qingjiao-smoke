@@ -35,7 +35,7 @@ master-heartbeat:
 ali-heartbeat:
   user: heartbeat
   passwd: 1234qwer
-  site: console.tsingj.local
+  site: console.tsingj.com
 
 master-library:
   user: smokelibrary
