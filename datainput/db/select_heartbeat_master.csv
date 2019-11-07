@@ -1,2 +1,3 @@
 title,sql,expect
 sum(price) where price<1000,select sum(price) from gold where price < 1000,37
+count(c_code),select count(c_code) from gold,1940
