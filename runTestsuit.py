@@ -107,7 +107,10 @@ def runheartbeat(key=None,env='dev',timestr= None):
     if timestr == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
     begintime = cur_utc_time()
-    suit = unittest.TestSuite((tm_smoke_suit(),db_smoke_suit()))
+    if env == 'ali':
+        suit = unittest.TestSuite(tm_smoke_suit())
+    else:
+        suit = unittest.TestSuite((tm_smoke_suit(),db_smoke_suit()))
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
     endtime = cur_utc_time()

@@ -32,6 +32,11 @@ master-heartbeat:
   dbhost: 10.18.0.19
   dbport: 21050
 
+ali-heartbeat:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console.tsingj.local
+
 master-library:
   user: smokelibrary
   passwd: 1234qwer
