@@ -109,6 +109,8 @@ def post_alarm(xmlpath,env='master'):
                     msg = msg +case.get("name")+":"+ case.get("msg")+";"
         logging.error(msg.replace('\'','\\\''))
         postalarm(msg=msg.replace('\'','\\\''),title='[%s]'%(env) + title,env=env)
+        return True
+    return False
 
 if __name__ == '__main__':
     #postalarm(msg="test",title='[talert][test] 20191014 19:00:00',env="master")
