@@ -108,7 +108,7 @@ def post_alarm(xmlpath,env='master'):
                 if case.get("status") == False:
                     msg = msg +case.get("name")+":"+ case.get("msg")+";"
         logging.error(msg.replace('\'','\\\''))
-        postalarm(msg=msg.replace('\'','\\\''),title='[%s]'%(env) + title,env=env)
+        postalarm(msg=msg.replace('\'','\\\''),title= title,env=env)
         return True
     return False
 
