@@ -7,16 +7,11 @@ from xmlrunnerR import xmlrunner
 import yaml
 #import logger
 import time
-#logger = logger.getLogger()
-#logger.setLevel(logger.INFO)
-#from logger import config
-#logger.config.fileConfig("log.conf")
 from loguru import logger
 logger.add('./logs/log-{time}.log')
 logger.add(sys.stderr,format="{time} {level} {message}",filter="./logs/log")
 logger.add(sys.stdout,format="{time} {level} {message}",filter="./logs/log")
-#logger.add('log_1.log',rotation='10M')
-#logger.add('log_2.log',level='INFO')
+
 
 
 FLAGS = flags.FLAGS
@@ -35,6 +30,34 @@ def conf(env):
     fw.write("site: %s\n" % (conf.get(env).get("site")))
     fw.close()
 
+def loadAll_suite():
+
+    basePath = os.getcwd() + '/privpy_library/privpy_lib/tests'
+    case_path = (basePath + '/test_pnumpy')
+    dis = unittest.TestLoader()
+    array_creation = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+    case_path = (basePath + '/test_pai')
+    dis = unittest.TestLoader()
+    math_function = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+
+    #case_path = (basePath + '/test_ppandas')
+    #dis = unittest.TestLoader()
+    #pandas = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+
+    case_path = (basePath + '/test_psql')
+    dis = unittest.TestLoader()
+    psql = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+
+    case_path = (basePath + '/test_ptorch')
+    dis = unittest.TestLoader()
+    ptorch = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+    return unittest.TestSuite((array_creation,math_function,psql,ptorch))
+
 def main(argv):
     del argv
     logger.info("%s run %s:%s time:%s"%(FLAGS.env,FLAGS.package,FLAGS.module,FLAGS.timestr))
@@ -46,19 +69,19 @@ def main(argv):
     sys.path.append(os.getcwd())
     case_path = os.getcwd() + '/privpy_library/privpy_lib/tests/test_' + FLAGS.package
     if FLAGS.package == "all":
-        pattern = "test*.py"
-        case_path = os.getcwd() + '/privpy_library/privpy_lib/tests'
-        discover = (unittest.defaultTestLoader.discover(case_path, pattern=pattern, top_level_dir=None))
+        discover = loadAll_suite()
     else:
         if FLAGS.module == "":
             pattern = "test*.py"
         else:
             pattern = "test_" +  FLAGS.module +".py"
-
+        print(case_path)
+        print(pattern)
         discover = unittest.defaultTestLoader.discover(case_path, pattern=pattern, top_level_dir=None)
-        print(type(discover))
-        print(discover.countTestCases())
-        #runner = unittest.TextTestRunner(stream=None, descriptions=None, verbosity=2)
+    print(type(discover))
+    print(discover.countTestCases())
+
+
     runner = xmlrunner.XMLTestRunner(output="privpy-library-%s" % (timestr))
     runner.run(discover)
 

@@ -1,6 +1,6 @@
 #!/user/bin/env python3
 import unittest
-import HTMLReport
+#import HTMLReport
 import json
 import datetime
 import pytz
@@ -98,9 +98,9 @@ def runsmoke(key=None,env='dev',timestr= None):
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
     endtime = cur_utc_time()
-    #if env == 'master':
-    if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
-        downlog(begintime=begintime,endtime=endtime)
+    if env in ['master','ali']:
+        if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
+            downlog(begintime=begintime,endtime=endtime)
 
 def runheartbeat(key=None,env='dev',timestr= None):
     logging.info('running heartbeat test')
@@ -114,9 +114,9 @@ def runheartbeat(key=None,env='dev',timestr= None):
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
     endtime = cur_utc_time()
-    #if env == 'master':
-    if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
-        downlog(begintime=begintime,endtime=endtime)
+    if env in ['ali','master']:
+        if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
+            downlog(begintime=begintime,endtime=endtime)
 
 def rundb(key=None,env='dev',timestr= None):
     logging.info('running db test')
