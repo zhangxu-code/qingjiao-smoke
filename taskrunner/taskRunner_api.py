@@ -288,7 +288,7 @@ class TaskRunnerAPI:
                     logger.error("ds is empty")
                     return False
                 for ds in req.json().get("data").get("data"):
-                    if ds.get("status") == '1':
+                    if ds.get("status") == '1' and ds.get("isCache") == 0:
                         alive_ds.append(ds.get("id"))
                 if page == req.json().get("data").get("nextPageNo"):
                     return  alive_ds
