@@ -27,8 +27,8 @@ def cur_utc_time():
     curtime = datetime.datetime.now(tz=utc_tz)
     return (curtime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
 
-def downlog(begintime,endtime):
-    es = es2csv(host="10.18.0.18")
+def downlog(begintime,endtime,filename = 'log.csv'):
+    es = es2csv(host="10.18.0.18",filename=filename)
     es.query_time(begintime=begintime, endtime=endtime)
     scrollid = es.scroll()
     print(scrollid)
@@ -100,7 +100,7 @@ def runsmoke(key=None,env='dev',timestr= None):
     endtime = cur_utc_time()
     if env in ['master','ali']:
         if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
-            downlog(begintime=begintime,endtime=endtime)
+            downlog(begintime=begintime,endtime=endtime,filename="./privpy-%s-%s/log.csv" % (key, timestr))
 
 def runheartbeat(key=None,env='dev',timestr= None):
     logging.info('running heartbeat test')
@@ -116,7 +116,7 @@ def runheartbeat(key=None,env='dev',timestr= None):
     endtime = cur_utc_time()
     if env in ['ali','master']:
         if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
-            downlog(begintime=begintime,endtime=endtime)
+            downlog(begintime=begintime,endtime=endtime,filename="./privpy-%s-%s/log.csv" % (key, timestr))
 
 def rundb(key=None,env='dev',timestr= None):
     logging.info('running db test')
