@@ -78,10 +78,15 @@ def postalarm(msg=None,title=None,env=None):
         "Content-Type":"application/json",
         "charset":"utf-8"
     }
+
+    moduleid = {
+        "ali":9,
+        "dev":8,
+        "master":1
+    }
     body = {
-        "moduleId":1,
+        "moduleId":moduleid[env],
         "username":"alert",
-        "environment":env,
         "desc":msg,
         "title":title
     }
