@@ -17,11 +17,13 @@ class es2csv:
     user = 'admin'
     passwd = 'qwer1234'
     query = ''
-    def __init__(self,host,port=9200,user='admin',passwd='qwer1234'):
+    filename = ''
+    def __init__(self,host,port=9200,user='admin',passwd='qwer1234',filename='log.csv'):
         self.host = host
         self.port = port
         self.user = user
         self.passwd = passwd
+        self.filename = filename
     def query_time(self,begintime,endtime):
         self.query = {
                       "query": {
@@ -52,7 +54,7 @@ class es2csv:
                         ]
                     }
     def write_data_2_csv(self,hits):
-        fw = open('log.csv','a+')
+        fw = open(self.filenames,'a+')
         csvwriter = csv.writer(fw)
         for log in hits:
             row = []
