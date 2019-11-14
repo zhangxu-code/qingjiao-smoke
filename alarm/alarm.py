@@ -84,9 +84,14 @@ def postalarm(msg=None,title=None,env=None):
         "dev":8,
         "master":1
     }
+    if env == "master" and "smoke" in title:
+        isJiraIssue = True
+    else:
+        isJiraIssue = False
     body = {
         "moduleId":moduleid[env],
         "username":"alert",
+        "isJiraIssue":isJiraIssue,
         "desc":msg,
         "title":title
     }
