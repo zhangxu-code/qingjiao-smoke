@@ -1,17 +1,43 @@
-title,datasource,result,code
+title,datasource,result,code,timeout,expect
 1M,"[{""dataSourceId"":500,""dataSourceMetadataId"":747,""dataServerId"":70,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""70""}]","import privpy as pp
 a1=pp.ss(""data1"")
 result = a1*a1
-pp.reveal(result, ""result"")"
+pp.reveal(result, ""result"")",,
 10M,"[{""dataSourceId"":856,""dataSourceMetadataId"":1553,""dataServerId"":70,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""70""}]","import privpy as pp
 a1=pp.ss(""data1"")
 result = a1*a1
-pp.reveal(result, ""result"")"
+pp.reveal(result, ""result"")",,
 100M,"[{""dataSourceId"":1278,""dataSourceMetadataId"":2521,""dataServerId"":70,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""70""}]","import privpy as pp
 a1=pp.ss(""data1"")
 result = a1*a1
-pp.reveal(result, ""result"")"
+pp.reveal(result, ""result"")",,
 500M,"[{""dataSourceId"":1375,""dataSourceMetadataId"":2742,""dataServerId"":70,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""70""}]","import privpy as pp
 a1=pp.ss(""data1"")
 result = a1*a1
-pp.reveal(result, ""result"")"
+pp.reveal(result, ""result"")",,
+sql_multi_filter,"[{""dataSourceId"":172,""dataSourceMetadataId"":222,""varName"":""gold"",""dataServerId"":1}]","[{""resultVarName"":""a3"",""resultDest"":""1""}]","import privpy as pp
+import sys
+import os
+sys.path.append(os.getcwd() + '/privpy_lib')
+import pnumpy as pnp
+import psql as psq
+table = pnp.reshape(pp.ss(""gold""), (1940,4))
+colm10,colm11,colm12,colm13,= table.trans()
+del table
+conj0 = (colm13==5152)
+conj1 = (colm12<=3948)
+conj2 = (colm12>=3946)
+conj3 = ( 1 - (1 - (colm10<20181031)) * (1 - ((colm10==20181031)*(colm11<=95838463))))
+conj4 = ( 1 - (1 - (colm10>20181031)) * (1 - ((colm10==20181031)*(colm11>=95327897))))
+conjs0 =conj0*conj1*conj2*conj3*conj4
+del conj0
+del conj1
+del conj2
+del conj3
+del conj4
+colm12 = psq.count(colm12, condition = conjs0)
+
+colm12 = pp.farr([colm12])
+colm12 = colm12.trans()
+pp.reveal(colm12, ""a3"")
+",60,"{""a3"":12}"

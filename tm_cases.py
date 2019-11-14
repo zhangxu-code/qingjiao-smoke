@@ -1,5 +1,5 @@
 import unittest
-from tm.job_1M import tmJob
+from tm.tm import tmJob
 import logging
 import time
 import ddt
@@ -7,7 +7,7 @@ import csv
 import re
 import os
 import json
-
+import numpy.testing as npt
 #env = None
 def get_job_csv(env='master',key=None):
     #global env
@@ -126,13 +126,14 @@ class tmTestcases(unittest.TestCase):
             tmp["resultVarName"] = res.get("resultVarName")
             tmp["resultDest"]    = res.get("resultDest")
             result_ret.append(tmp)
-        logging.debug(datasource)
-        logging.debug(datasource_ret)
+        print(datasource)
+        print(datasource_ret)
         logging.debug(result)
         logging.debug(result_ret)
         self.assertEquals(datasource_ret,datasource)
         self.assertEquals(result_ret,result)
-    def createjob_pipline(self,key,datasource,result,code,timeout = None):
+
+    def createjob_pipline(self,key,datasource,result,code,timeout = None,expect=None):
         ret = self._tm.job_create(key=key, result=result,
                                   datasource=datasource,
                                   code=code)
@@ -154,13 +155,20 @@ class tmTestcases(unittest.TestCase):
                     self.assertTrue(False,"job not finished ,timeout:%s"%(str(timeout)))
         self.assertEquals(jobinfo.get("code"), 0)
         self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
+        jobresult = self._tm.get_job_result(jobid=ret.get("data").get("id"))
+        if expect != '' and expect != None:
+            self.check_result(jobresult.get("data"),expect_res=json.loads(expect))
         if 'heartbeat' in key:
             self._tm.del_jobid(jobid=ret.get("data").get("id"))
 
+    def check_result(self,result,expect_res):
+        for res in result:
+            npt.assert_almost_equal(eval(res.get("result")),expect_res.get(res.get("resultVarName")),decimal=8)
+
     @ddt.data(*job_csv())
     @ddt.unpack
-    def test_jobrun(self,title,datasource,result,code,timeout=None):
-        self.createjob_pipline(key=title,datasource=json.loads(datasource),result=json.loads(result),code=code,timeout=timeout)
+    def test_jobrun(self,title,datasource,result,code,timeout=None,expect=None):
+        self.createjob_pipline(key=title,datasource=json.loads(datasource),result=json.loads(result),code=code,timeout=timeout,expect=expect)
 
 
     def jobcreate_multiplication_pipline(self):
@@ -392,7 +400,7 @@ def tm_init(insite,inuser,inpasswd,inenv = 'master'):
 
 if __name__ == '__main__':
     #tm_init('1','2','3','master')
-    get_job_csv(key='heartbeat')
+    #get_job_csv(key='heartbeat')
 
     jobs =  (job_csv())
     for job in jobs:
@@ -400,8 +408,9 @@ if __name__ == '__main__':
         #print(job[1])
         #print(json.loads(job[1]))
         #print(json.loads(job[2]))
-        print(job[3])
-        print(r'%s'%(job[3]))
+        print(job[5])
+        print(type(job[5]))
+        #print(r'%s'%(job[3]))
 
     #fw = open('test.txt', 'w')
     #runner = unittest.TextTestRunner(stream=fw, verbosity=2)
