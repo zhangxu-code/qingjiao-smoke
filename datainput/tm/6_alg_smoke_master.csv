@@ -1,4 +1,4 @@
-title,datasource,result,code
+title,datasource,result,code,timeout,expect
 cnnface,"[{""dataSourceId"":184,""dataSourceMetadataId"":225,""dataServerId"":1,""varName"":""face_people""},{""dataSourceId"":184,""dataSourceMetadataId"":92,""dataServerId"":1,""varName"":""face_table""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
 import pnumpy as pnp
 
@@ -13,7 +13,7 @@ for vec in PEOPLE:
     index = pnp.argmin(dist)
     RES.append(index)
     
-pp.reveal(pp.farr(RES), 'result')"
+pp.reveal(pp.farr(RES), 'result')",,
 matrix_factor,"[{""dataSourceId"":194,""dataSourceMetadataId"":105,""dataServerId"":1,""varName"":""movie1""},{""dataSourceId"":194,""dataSourceMetadataId"":122,""dataServerId"":1,""varName"":""movie2""}]","[{""resultVarName"":""result1"",""resultDest"":""-1""},{""resultVarName"":""result2"",""resultDest"":""-1""}]","import numpy as np
 import privpy as pp
 import pnumpy as pnp
@@ -50,7 +50,7 @@ ITER_NUM = 2
 U_RES, V_RES = funk_svd(DATA, k, iter_times=ITER_NUM, learn_rate=0.0005, alpha=0.001)
 
 pp.reveal(U_RES, ""result1"")
-pp.reveal(V_RES, ""result2"")"
+pp.reveal(V_RES, ""result2"")",,
 logistic,"[{""dataSourceId"":269,""dataSourceMetadataId"":244,""dataServerId"":1,""varName"":""adult1""},{""dataSourceId"":175,""dataSourceMetadataId"":237,""dataServerId"":1,""varName"":""adult2""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import numpy as np
 import privpy as pp
 import pnumpy as pnp
@@ -130,7 +130,7 @@ MODEL_S = LogisticRegressionS(q=0.1, num_iter=NUM_ITER)
 MODEL_S.fit(X_S, Y_S, batch=BATCH_SIZE)
 
 PRED_S = MODEL_S.predict(X_S)
-pp.reveal(PRED_S, ""result"")"
+pp.reveal(PRED_S, ""result"")",,
 query_gold,"[{""dataSourceId"":172,""dataSourceMetadataId"":222,""dataServerId"":1,""varName"":""table""},{""dataSourceId"":172,""dataSourceMetadataId"":223,""dataServerId"":1,""varName"":""query""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import numpy as np
 import privpy as pp
 import pnumpy as pnp
@@ -160,7 +160,7 @@ for i in range(len(QUERY)):
     tmp_res = queryf(TABLE, QUERY[i])
     res.append(tmp_res)
 
-pp.reveal(pp.farr(res), ""result"")"
+pp.reveal(pp.farr(res), ""result"")",,
 lstm_hsi,"[{""dataSourceId"":183,""dataSourceMetadataId"":90,""dataServerId"":1,""varName"":""data""},{""dataSourceId"":183,""dataSourceMetadataId"":226,""dataServerId"":1,""varName"":""model""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import numpy as np
 import privpy as pp
 import pnumpy as pnp
@@ -318,7 +318,7 @@ for j in range(X_LEN):
     Y_PREDS.append(y_pred)
 Y_PREDS = pp.farr(Y_PREDS)
 
-pp.reveal(Y_PREDS, ""result"")"
+pp.reveal(Y_PREDS, ""result"")",,
 nn_mnist,"[{""dataSourceId"":254,""dataSourceMetadataId"":218,""dataServerId"":1,""varName"":""mnist_weight""},{""dataSourceId"":254,""dataSourceMetadataId"":219,""dataServerId"":1,""varName"":""mnist_image""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import numpy as np
 import privpy as pp
 import pnumpy as pnp
@@ -355,4 +355,4 @@ w = parse_weight(WEIGHT)
 
 PREDS = inference(IMG, w)
 
-pp.reveal(PREDS, ""result"")"
+pp.reveal(PREDS, ""result"")",,
