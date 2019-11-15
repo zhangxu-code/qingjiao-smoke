@@ -54,7 +54,7 @@ class es2csv:
                         ]
                     }
     def write_data_2_csv(self,hits):
-        fw = open(self.filenames,'a+')
+        fw = open(self.filename,'a+')
         csvwriter = csv.writer(fw)
         for log in hits:
             row = []
