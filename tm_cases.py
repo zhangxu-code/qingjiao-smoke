@@ -134,7 +134,7 @@ class tmTestcases(unittest.TestCase):
 
     def check_result(self,result,expect_res):
         for res in result:
-            npt.assert_almost_equal(eval(res.get("result")),expect_res.get(res.get("resultVarName")),decimal=8,
+            npt.assert_almost_equal(eval(res.get("result")),expect_res.get(res.get("resultVarName")),decimal=5,
                                     err_msg="jobreslut: 校验任务结果与预期结果不一致：curresult:%s expect:%s" %(json.dumps(result),json.dumps(expect_res)))
 
     @ddt.data(*job_csv())
@@ -142,120 +142,6 @@ class tmTestcases(unittest.TestCase):
     def test_jobrun(self,title,datasource,result,code,timeout=None,expect=None):
         self.createjob_pipline(key=title,datasource=json.loads(datasource),result=json.loads(result),code=code,timeout=timeout,expect=expect)
 
-
-    def jobcreate_multiplication_pipline(self):
-        logging.info("create job")
-        #create job
-        jobCount = 1
-        datasource = [{
-            "dataServeId":324,
-            "dataSourceId":523,
-            "dataSourceMetadataId":766,
-            "varName":"data"
-        }]
-        result = [{
-            "resultDest":"324",
-            "resultVarName":"result"
-        }]
-        var_re = re.compile('pp\.ss\(\"[\w]+\"\)')
-        varname = 'data'
-        code = "import privpy as pp\ndd=pp.ss(\"%s\")\nresult = dd*dd \npp.reveal(result,\"result\")" %(varname)
-        index = 0
-        while index < jobCount:
-            ret = self._tm.job_create(key='multiplication',result=result,
-                                datasource=datasource,
-                                code=code)
-            #check create job response
-            self.createjob_ret_check(key='multiplication',ret=ret,code=code,datasource=datasource,result=result)
-            #start job and check code
-            ret_start = self._tm.job_start(ret.get("data").get("id"))
-            self.assertEqual(ret_start.get("code"), 0)
-            self.assertIsInstance(ret_start.get("data"), str)
-            finished = False
-            #get jobinfo and check job status
-            while not finished:
-                jobinfo = self._tm.job_getinfo(jobid=ret.get("data").get("id"))
-                if jobinfo.get("data").get("queueStatus") == 6 or jobinfo.get("data").get("queueStatus") == 7:
-                    finished = True
-                time.sleep(1)
-            self.assertEquals(jobinfo.get("code"), 0)
-            self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
-            index = index + 1
-    def jobcreate_addition_pipline(self):
-        logging.info("create job")
-        #create job
-        jobCount = 1
-        datasource = [{
-            "dataServeId": 324,
-            "dataSourceId": 523,
-            "dataSourceMetadataId": 766,
-            "varName": "data"
-        }]
-        result = [{
-            "resultDest": "324",
-            "resultVarName": "result"
-        }]
-        var_re = re.compile('pp\.ss\(\"[\w]+\"\)')
-        varname = 'data'
-        code = "import privpy as pp\ndd=pp.ss(\"%s\")\nresult = dd + dd \npp.reveal(result,\"result\")" %(varname)
-        index = 0
-        while index < jobCount:
-            ret = self._tm.job_create(key='addition',result=result,
-                                datasource=datasource,
-                                code=code)
-            #check create job response
-            self.createjob_ret_check(key='addition',ret=ret,code=code,datasource=datasource,result=result)
-            #start job and check code
-            ret_start = self._tm.job_start(ret.get("data").get("id"))
-            self.assertEqual(ret_start.get("code"), 0)
-            self.assertIsInstance(ret_start.get("data"), str)
-            finished = False
-            #get jobinfo and check job status
-            while not finished:
-                jobinfo = self._tm.job_getinfo(jobid=ret.get("data").get("id"))
-                if jobinfo.get("data").get("queueStatus") == 6 or jobinfo.get("data").get("queueStatus") == 7:
-                    finished = True
-                time.sleep(1)
-            self.assertEquals(jobinfo.get("code"), 0)
-            self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
-            index = index + 1
-    def jobcreate_comparison_pipline(self):
-        logging.info("create job")
-        #create job
-        jobCount = 1
-        datasource = [{
-            "dataServeId": 324,
-            "dataSourceId": 523,
-            "dataSourceMetadataId": 766,
-            "varName": "data"
-        }]
-        result = [{
-            "resultDest": "324",
-            "resultVarName": "result"
-        }]
-        varname = 'data'
-        code = "import privpy as pp\ndd=pp.ss(\"%s\")\nresult = dd < dd \npp.reveal(result,\"result\")" %(varname)
-        index = 0
-        while index < jobCount:
-            ret = self._tm.job_create(key='comparison',result=result,
-                                datasource=datasource,
-                                code=code)
-            #check create job response
-            self.createjob_ret_check(key='comparison',ret=ret,code=code,datasource=datasource,result=result)
-            #start job and check code
-            ret_start = self._tm.job_start(ret.get("data").get("id"))
-            self.assertEqual(ret_start.get("code"), 0)
-            self.assertIsInstance(ret_start.get("data"), str)
-            finished = False
-            #get jobinfo and check job status
-            while not finished:
-                jobinfo = self._tm.job_getinfo(jobid=ret.get("data").get("id"))
-                if jobinfo.get("data").get("queueStatus") == 6 or jobinfo.get("data").get("queueStatus") == 7:
-                    finished = True
-                time.sleep(1)
-            self.assertEquals(jobinfo.get("code"), 0)
-            self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
-            index = index + 1
     def listjob_check(self,ret,curpage):
         if ret.get("data").get("totalPages") > curpage:
             self.assertEquals(ret.get("data").get("nextPageNo"), curpage + 1)
