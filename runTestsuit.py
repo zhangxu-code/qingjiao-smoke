@@ -94,8 +94,8 @@ def runsmoke(key=None,env='dev',timestr= None):
     if timestr == None:
         timestr = time.strftime("%Y%m%d%H%M%S")
     begintime = cur_utc_time()
-    #suit = unittest.TestSuite((tm_smoke_suit(), db_smoke_suit(),library_smoke_suit()))
-    suit = unittest.TestSuite((tm_smoke_suit()))
+    suit = unittest.TestSuite((tm_smoke_suit(), db_smoke_suit(),library_smoke_suit()))
+    #suit = unittest.TestSuite((tm_smoke_suit()))
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
     runner.run(suit)
     endtime = cur_utc_time()
