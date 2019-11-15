@@ -15,6 +15,10 @@ pp.reveal(result, ""result"")",,
 a1=pp.ss(""data1"")
 result = a1*a1
 pp.reveal(result, ""result"")",,
+500M,"[{""dataSourceId"":292,""dataSourceMetadataId"":275,""dataServerId"":1,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")",,
 sql_multi_filter,"[{""dataSourceId"":172,""dataSourceMetadataId"":222,""varName"":""gold"",""dataServerId"":1}]","[{""resultVarName"":""a3"",""resultDest"":""1""}]","import privpy as pp
 import sys
 import os
