@@ -149,7 +149,7 @@ class tmTestcases(unittest.TestCase):
             if jobinfo.get("data").get("queueStatus") == 6 or jobinfo.get("data").get("queueStatus") == 7:
                 finished = True
             time.sleep(3)
-            if timeout != None:
+            if timeout != None and timeout != '':
                 trycount = trycount+1
                 if trycount* 3 >= int(timeout):
                     self.assertTrue(False,"job not finished ,timeout:%s"%(str(timeout)))
