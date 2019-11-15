@@ -9,40 +9,6 @@ import os
 import json
 import numpy.testing as npt
 #env = None
-def get_job_csv(env='master',key=None):
-    #global env
-    logging.info(env)
-    value_rows = []
-    csvfiles = os.listdir('./datainput/tm/')
-    csvtype = re.compile(r'_([a-zA-Z]+)_([a-zA-Z]+)\.csv')
-    fw = open('./datainput/tm/jobs.csv','w')
-    writer = csv.writer(fw)
-    fw.write('title,datasource,result,code\n')
-    for csv_name in csvfiles:
-        print(csv_name)
-        if not re.search(csvtype,csv_name):
-            logging.info('skip '+csv_name)
-            continue
-        csvfind = re.search(csvtype,csv_name)
-        if key == None:
-            local_csv_name = csvfind.group(2)
-            expect_csv_name = env
-        else:
-            local_csv_name = csvfind.group(1)+'_'+csvfind.group(2)
-            expect_csv_name = key+'_'+env
-
-        if local_csv_name != expect_csv_name:
-            logging.info('skip '+csv_name)
-            continue
-        logging.info("read job info "+csv_name)
-        fr = open('./datainput/tm/'+csv_name)
-        csvfile = csv.reader(fr)
-        next(csvfile)
-        # csvfile = csv.DictReader(fr)
-        for row in csvfile:
-            writer.writerow(row)
-        fr.close()
-    fw.close()
 
 def job_csv():
     value_rows = []
@@ -107,11 +73,13 @@ class tmTestcases(unittest.TestCase):
     #创建任务的结果校验
     def createjob_ret_check(self,key,ret,code,datasource,result):
         logging.info(ret)
-        self.assertEquals(ret.get("code"), 0)
-        self.assertIsInstance(ret.get("data").get("id"), int)
-        self.assertEquals(ret.get("data").get("name"),
-                          "autotest_%s" % (key))
-        self.assertEquals(ret.get("data").get("code"), code)
+        self.assertEquals(ret.get("code"), 0,msg="createjob:校验 response.code failed %s-%s"%(ret.get("msg"),str(ret.get("subCode"))))
+        self.assertIsInstance(ret.get("data").get("id"), int,msg="createjob: id类型错误 id:%s type:%s"
+                                                                 %(str(ret.get("data").get("id")),str(type(ret.get("data").get("id")))))
+        self.assertEquals(ret.get("data").get("name"),"autotest_%s" % (key),
+                          msg="createjob: 校验jobname错误,cur:%s expect:autotest_%s"%(ret.get("data").get("name"),key))
+        self.assertEquals(ret.get("data").get("code"), code,msg="createjob: 校验code与提交任务的code不一致,code:%s expect:%s"
+                                                                %(ret.get("data").get("code"),code))
         datasource_ret = []
         for data in ret.get("data").get("taskDataSourceVOList"):
             tmp = {}
@@ -126,12 +94,11 @@ class tmTestcases(unittest.TestCase):
             tmp["resultVarName"] = res.get("resultVarName")
             tmp["resultDest"]    = res.get("resultDest")
             result_ret.append(tmp)
-        print(datasource)
-        print(datasource_ret)
-        logging.debug(result)
-        logging.debug(result_ret)
-        self.assertEquals(datasource_ret,datasource)
-        self.assertEquals(result_ret,result)
+        self.assertEquals(datasource_ret,datasource,msg="createjob: 校验 taskDataSourceVOList与预期不符 datasource:%s expect:%s "
+                                                        ""%(json.dumps(datasource_ret),json.dumps(datasource)))
+
+        self.assertEquals(result_ret,result,msg="creaetjob: 校验 taskResultVOList 与预期不符， resultDest：%s expect:%s"
+                                                %(json.dumps(result_ret),json.dumps(result)) )
 
     def createjob_pipline(self,key,datasource,result,code,timeout = None,expect=None):
         ret = self._tm.job_create(key=key, result=result,
@@ -139,8 +106,10 @@ class tmTestcases(unittest.TestCase):
                                   code=code)
         self.createjob_ret_check(key=key, ret=ret, code=code, datasource=datasource, result=result)
         ret_start = self._tm.job_start(ret.get("data").get("id"))
-        self.assertEqual(ret_start.get("code"), 0)
-        self.assertIsInstance(ret_start.get("data"), str)
+        self.assertEqual(ret_start.get("code"), 0,
+                         msg="startjob: 启动任务失败  code:%d msg:%s"%(ret_start.get("code"),ret_start.get("msg")))
+        self.assertIsInstance(ret_start.get("data"), str,
+                              msg="startjob: 校验data 类型失败 data:%s type:%s"%(str(ret_start.get("data")),str(type(ret_start.get("data")))) )
         finished = False
         # get jobinfo and check job status
         trycount = 0
@@ -152,9 +121,11 @@ class tmTestcases(unittest.TestCase):
             if timeout != None and timeout != '':
                 trycount = trycount+1
                 if trycount* 3 >= int(timeout):
-                    self.assertTrue(False,"job not finished ,timeout:%s"%(str(timeout)))
-        self.assertEquals(jobinfo.get("code"), 0)
-        self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
+                    self.assertTrue(False,msg="任务长时间未执行完成 ,timeout:%s"%(str(timeout)))
+        self.assertEquals(jobinfo.get("code"), 0,
+                          msg="getjobinfo: response.code 校验失败 code:%d msg:%s"%(jobinfo.get("code"),jobinfo.get("msg")))
+        self.assertEquals(jobinfo.get("data").get("queueStatus"), 6,
+                          msg="getjobinfo 任务执行失败: queueStatus:%d msg:%s"%(jobinfo.get("data").get("queueStatus"),str(jobinfo.get("msg"))))
         jobresult = self._tm.get_job_result(jobid=ret.get("data").get("id"))
         if expect != '' and expect != None:
             self.check_result(jobresult.get("data"),expect_res=json.loads(expect))
@@ -163,7 +134,8 @@ class tmTestcases(unittest.TestCase):
 
     def check_result(self,result,expect_res):
         for res in result:
-            npt.assert_almost_equal(eval(res.get("result")),expect_res.get(res.get("resultVarName")),decimal=8)
+            npt.assert_almost_equal(eval(res.get("result")),expect_res.get(res.get("resultVarName")),decimal=8,
+                                    err_msg="jobreslut: 校验任务结果与预期结果不一致：curresult:%s expect:%s" %(json.dumps(result),json.dumps(expect_res)))
 
     @ddt.data(*job_csv())
     @ddt.unpack
@@ -307,28 +279,7 @@ class tmTestcases(unittest.TestCase):
         ret = self._tm.list_job(token="123456")
         self.assertEquals(ret.get("code"),1)
         self.assertNotEquals(ret.get("msg"),"成功")
-    def jobstartbylist_pipline_case(self):
-        # list job，然后对第一个已完成的job 重新开始，如没有已完成job assert(false)
-        curpage = 1
-        hasmorejob = True
-        while hasmorejob:
-            ret = self._tm.list_job(page=curpage)
-            self.listjob_check(ret=ret, curpage=curpage)
-            for job in ret.get("data").get("data"):
-                if job.get("queueStatus") == 6:
-                    ret_j = self._tm.job_start(job.get("id"))
-                    self.assertEqual(ret_j.get("code"), 0)
-                    self.assertIsInstance(ret_j.get("data"), str)
-                    finished = False
-                    while not finished:
-                        jobinfo = self._tm.job_getinfo(jobid=job.get("id"))
-                        if jobinfo.get("data").get("queueStatus") == 6 or jobinfo.get("data").get("queueStatus") == 7:
-                            finished = True
-                        time.sleep(1)
-                    self.assertEquals(jobinfo.get("code"), 0)
-                    self.assertEquals(jobinfo.get("data").get("queueStatus"), 6)
-                    hasmorejob = False
-                    break
+
     # 获取job result，三种状态的job类型
     def jobgetresult_job_success_pipline_case(self):
         curpage = 1
