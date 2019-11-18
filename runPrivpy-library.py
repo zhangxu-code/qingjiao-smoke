@@ -56,7 +56,11 @@ def loadAll_suite():
     dis = unittest.TestLoader()
     ptorch = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
 
-    return unittest.TestSuite((array_creation,math_function,psql,ptorch))
+    case_path = (basePath + '/test_basicOperations')
+    dis = unittest.TestLoader()
+    basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+    return unittest.TestSuite((array_creation,math_function,psql,ptorch,basicOperations))
 
 def main(argv):
     del argv
