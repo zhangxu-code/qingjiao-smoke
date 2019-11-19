@@ -106,6 +106,20 @@ def runsmoke(key=None,env='dev',timestr= None):
         if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
             downlog(begintime=begintime,endtime=endtime,filename="./privpy-%s-%s/log.csv" % (key, timestr))
 
+def runregression(key=None,env='dev',timestr = None):
+    logging.info("running regression test suite")
+    if timestr == None:
+        timestr = time.strftime("%Y%m%d%H%M%S")
+    begintime = cur_utc_time()
+    suit = unittest.TestSuite((tm_smoke_suit(), db_smoke_suit()))
+    #suit = unittest.TestSuite((tm_smoke_suit()))
+    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
+    runner.run(suit)
+    endtime = cur_utc_time()
+    if env in ['master','ali']:
+        if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
+            downlog(begintime=begintime,endtime=endtime,filename="./privpy-%s-%s/log.csv" % (key, timestr))
+
 def runheartbeat(key=None,env='dev',timestr= None):
     logging.info('running heartbeat test')
     if timestr == None:
@@ -157,3 +171,6 @@ if __name__ == '__main__':
 
     if conf_args.get("key") == 'db':
         rundb(key=conf_args.get('key'),timestr=conf_args.get('time'),env=conf_args.get('env'))
+
+    if conf_args.get("key") == 'regression':
+        runregression(key=conf_args.get("key"),timestr=conf_args.get("time"),env=conf_args.get("env"))
