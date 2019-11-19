@@ -72,7 +72,10 @@ def library_smoke_suit():
     array_creation = unittest.defaultTestLoader.discover(basePath+'/test_pnumpy', pattern='test_array_creation.py', top_level_dir=None)
     math_function  = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_math_function.py',top_level_dir=None)
     logic_function = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_logic_function.py',top_level_dir=None)
-    return unittest.TestSuite((array_creation,math_function,logic_function))
+    case_path = (basePath + '/test_basicOperations')
+    dis = unittest.TestLoader()
+    basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+    return unittest.TestSuite((array_creation,math_function,logic_function,basicOperations))
 def library_conf(env):
     fr = open("conf.yml")
     conf = yaml.load(fr)
