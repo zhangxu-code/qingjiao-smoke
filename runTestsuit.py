@@ -106,6 +106,17 @@ def runsmoke(key=None,env='dev',timestr= None):
         if post_alarm("privpy-%s-%s" % (key, timestr), env=env):
             downlog(begintime=begintime,endtime=endtime,filename="./privpy-%s-%s/log.csv" % (key, timestr))
 
+def runlocal(key=None,env='dev',timestr= None):
+    logging.info("running smoke test suite")
+    if timestr == None:
+        timestr = time.strftime("%Y%m%d%H%M%S")
+    #begintime = cur_utc_time()
+    suit = unittest.TestSuite((tm_smoke_suit(), db_smoke_suit(), library_smoke_suit()))
+    # suit = unittest.TestSuite((tm_smoke_suit()))
+    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
+    runner.run(suit)
+    #endtime = cur_utc_time()
+
 def runregression(key=None,env='dev',timestr = None):
     logging.info("running regression test suite")
     if timestr == None:
@@ -169,7 +180,7 @@ if __name__ == '__main__':
         fw.write("passwd: %s\n" % (conf_args.get("passwd")))
         fw.write("site: %s\n" % (conf_args.get("site")))
         fw.close()
-
+        runlocal(key=conf_args.get("key"),env=conf_args.get("env"),timestr=conf_args.get("time"))
     else:
         fr = open('conf.yml')
         all_conf = yaml.load(fr)
@@ -178,13 +189,13 @@ if __name__ == '__main__':
         init(site=conf.get('site'),user=conf.get('user'),passwd=conf.get('passwd'),
              dbhost=conf.get('dbhost'),dbport=conf.get('dbport'))
         library_conf(env=conf_args.get("env")+'-'+conf_args.get("key"))
-    if conf_args.get("key") == 'smoke':
-        runsmoke(key=conf_args.get('key'),env=conf_args.get('env'),timestr=conf_args.get('time'))
-    if conf_args.get("key") == 'heartbeat':
-        runheartbeat(key=conf_args.get('key'), env=conf_args.get('env'), timestr=conf_args.get('time'))
+        if conf_args.get("key") == 'smoke':
+            runsmoke(key=conf_args.get('key'),env=conf_args.get('env'),timestr=conf_args.get('time'))
+        if conf_args.get("key") == 'heartbeat':
+            runheartbeat(key=conf_args.get('key'), env=conf_args.get('env'), timestr=conf_args.get('time'))
 
-    if conf_args.get("key") == 'db':
-        rundb(key=conf_args.get('key'),timestr=conf_args.get('time'),env=conf_args.get('env'))
+        if conf_args.get("key") == 'db':
+            rundb(key=conf_args.get('key'),timestr=conf_args.get('time'),env=conf_args.get('env'))
 
-    if conf_args.get("key") == 'regression':
-        runregression(key=conf_args.get("key"),timestr=conf_args.get("time"),env=conf_args.get("env"))
+        if conf_args.get("key") == 'regression':
+            runregression(key=conf_args.get("key"),timestr=conf_args.get("time"),env=conf_args.get("env"))
