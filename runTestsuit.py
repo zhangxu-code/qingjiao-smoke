@@ -156,14 +156,28 @@ if __name__ == '__main__':
     parser.add_argument("--Num",help="create Num jobs,default = 1",default=1)
     parser.add_argument("--time",help="report-${time}",type=str,default=None)
     parser.add_argument("--thread",help="Multithreading",type=int,default=1)
+
+    parser.add_argument("--site",help="中台地址",type=str,default=None)
+    parser.add_argument("--user",help="user",type=str,default=None)
+    parser.add_argument("--passwd",help="passwd" ,type=str,default=None)
     conf_args = vars(parser.parse_args())
-    fr = open('conf.yml')
-    all_conf = yaml.load(fr)
-    fr.close()
-    conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
-    init(site=conf.get('site'),user=conf.get('user'),passwd=conf.get('passwd'),
-         dbhost=conf.get('dbhost'),dbport=conf.get('dbport'))
-    library_conf(env=conf_args.get("env")+'-'+conf_args.get("key"))
+    if conf_args.get("site") != None and conf_args.get("user") != None and conf_args.get("passwd") != None:
+        init(site=conf_args.get('site'), user=conf_args.get('user'), passwd=conf_args.get('passwd'),
+             dbhost=conf_args.get('dbhost'), dbport=conf_args.get('dbport'))
+        fw = open('./taskrunner/conf.yml', 'w')
+        fw.write("user: %s\n" % (conf_args.get("user")))
+        fw.write("passwd: %s\n" % (conf_args.get("passwd")))
+        fw.write("site: %s\n" % (conf_args.get("site")))
+        fw.close()
+
+    else:
+        fr = open('conf.yml')
+        all_conf = yaml.load(fr)
+        fr.close()
+        conf = all_conf.get(conf_args.get("env")+'-'+conf_args.get("key"))
+        init(site=conf.get('site'),user=conf.get('user'),passwd=conf.get('passwd'),
+             dbhost=conf.get('dbhost'),dbport=conf.get('dbport'))
+        library_conf(env=conf_args.get("env")+'-'+conf_args.get("key"))
     if conf_args.get("key") == 'smoke':
         runsmoke(key=conf_args.get('key'),env=conf_args.get('env'),timestr=conf_args.get('time'))
     if conf_args.get("key") == 'heartbeat':
