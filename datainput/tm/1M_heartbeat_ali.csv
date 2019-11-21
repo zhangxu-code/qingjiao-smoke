@@ -1,5 +1,5 @@
 title,datasource,result,code,timeout,expect
-1M-heartbeat,"[{""dataSourceId"":2727,""dataSourceMetadataId"":5837,""dataServerId"":2,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""-1""}]","import privpy as pp
+1M-heartbeat,"[{""dataSourceId"":2755,""dataSourceMetadataId"":5889,""dataServerId"":2,""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""2""}]","import privpy as pp
 a1=pp.ss(""data1"")
 result = a1*a1
 pp.reveal(result, ""result"")",300,
