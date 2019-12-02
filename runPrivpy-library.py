@@ -56,7 +56,7 @@ def loadAll_suite():
     dis = unittest.TestLoader()
     ptorch = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
 
-    case_path = (basePath + '/test_basicOperations')
+    case_path = (basePath + '/test_basic_operations')
     dis = unittest.TestLoader()
     basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
 
