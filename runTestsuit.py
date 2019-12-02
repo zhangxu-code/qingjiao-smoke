@@ -172,9 +172,7 @@ if __name__ == '__main__':
     parser.add_argument("--user",help="user",type=str,default=None)
     parser.add_argument("--passwd",help="passwd" ,type=str,default=None)
     conf_args = vars(parser.parse_args())
-    run = HTMLReport.TestRunner(title="test",report_file_name="test.html")
-    run.run(db_smoke_suit())
-    raise 1
+    
     #while 1:
     #   time.sleep(1)
     if conf_args.get("site") != None and conf_args.get("user") != None and conf_args.get("passwd") != None:
