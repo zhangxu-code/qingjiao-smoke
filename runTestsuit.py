@@ -1,6 +1,6 @@
 #!/user/bin/env python3
 import unittest
-#import HTMLReport
+import HTMLReport
 import json
 import datetime
 import pytz
@@ -59,8 +59,8 @@ def tm_smoke_suit():
     return tmsmokesuit
 
 def db_smoke_suit():
-    dbsomkesuit = unittest.TestLoader().loadTestsFromTestCase(dbengineCases)
-    #dbsomkesuit = unittest.TestSuite()
+    #dbsomkesuit = unittest.TestLoader().loadTestsFromTestCase(dbengineCases)
+    dbsomkesuit = unittest.TestSuite()
     dbsomkesuit.addTest(dbengineCases("describe_gold_case"))
     dbsomkesuit.addTest(dbengineCases("hdfs_gold_case"))
     dbsomkesuit.addTest(dbengineCases("hdfs_filter_gold_case"))
@@ -72,7 +72,7 @@ def library_smoke_suit():
     array_creation = unittest.defaultTestLoader.discover(basePath+'/test_pnumpy', pattern='test_array_creation.py', top_level_dir=None)
     math_function  = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_math_function.py',top_level_dir=None)
     logic_function = unittest.defaultTestLoader.discover(basePath + '/test_pnumpy', pattern='test_logic_function.py',top_level_dir=None)
-    case_path = (basePath + '/test_basicOperations')
+    case_path = (basePath + '/test_basic_operations')
     dis = unittest.TestLoader()
     basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
     return unittest.TestSuite((array_creation,math_function,logic_function,basicOperations))
@@ -172,6 +172,11 @@ if __name__ == '__main__':
     parser.add_argument("--user",help="user",type=str,default=None)
     parser.add_argument("--passwd",help="passwd" ,type=str,default=None)
     conf_args = vars(parser.parse_args())
+    run = HTMLReport.TestRunner(title="test",report_file_name="test.html")
+    run.run(db_smoke_suit())
+    raise 1
+    #while 1:
+    #   time.sleep(1)
     if conf_args.get("site") != None and conf_args.get("user") != None and conf_args.get("passwd") != None:
         init(site=conf_args.get('site'), user=conf_args.get('user'), passwd=conf_args.get('passwd'),
              dbhost=conf_args.get('dbhost'), dbport=conf_args.get('dbport'))
