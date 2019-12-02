@@ -73,13 +73,13 @@ class tmTestcases(unittest.TestCase):
     #创建任务的结果校验
     def createjob_ret_check(self,key,ret,code,datasource,result):
         logging.info(ret)
-        self.assertEquals(ret.get("code"), 0,msg="createjob:校验 response.code failed %s-%s"%(ret.get("msg"),str(ret.get("subCode"))))
+        self.assertEquals(ret.get("code"), 0,msg="createjob:校验 response.code failed jobid:%d  %s-%s"%(ret.get("data").get("id"),ret.get("msg"),str(ret.get("subCode"))))
         self.assertIsInstance(ret.get("data").get("id"), int,msg="createjob: id类型错误 id:%s type:%s"
                                                                  %(str(ret.get("data").get("id")),str(type(ret.get("data").get("id")))))
         self.assertEquals(ret.get("data").get("name"),"autotest_%s" % (key),
-                          msg="createjob: 校验jobname错误,cur:%s expect:autotest_%s"%(ret.get("data").get("name"),key))
-        self.assertEquals(ret.get("data").get("code"), code,msg="createjob: 校验code与提交任务的code不一致,code:%s expect:%s"
-                                                                %(ret.get("data").get("code"),code))
+                          msg="createjob: 校验jobname错误,cur:%s expect:autotest_%s  jobid:%d"%(ret.get("data").get("name"),key,ret.get("data").get("id")))
+        self.assertEquals(ret.get("data").get("code"), code,msg="createjob: 校验code与提交任务的code不一致,code:%s expect:%s jobid:%d"
+                                                                %(ret.get("data").get("code"),code,ret.get("data").get("id")))
         datasource_ret = []
         for data in ret.get("data").get("taskDataSourceVOList"):
             tmp = {}
@@ -94,22 +94,24 @@ class tmTestcases(unittest.TestCase):
             tmp["resultVarName"] = res.get("resultVarName")
             tmp["resultDest"]    = res.get("resultDest")
             result_ret.append(tmp)
-        self.assertEquals(datasource_ret,datasource,msg="createjob: 校验 taskDataSourceVOList与预期不符 datasource:%s expect:%s "
-                                                        ""%(json.dumps(datasource_ret),json.dumps(datasource)))
+        self.assertEquals(datasource_ret,datasource,msg="createjob: 校验 taskDataSourceVOList与预期不符 datasource:%s expect:%s jobid:%d"
+                                                        ""%(json.dumps(datasource_ret),json.dumps(datasource),ret.get("data").get("id")))
 
-        self.assertEquals(result_ret,result,msg="creaetjob: 校验 taskResultVOList 与预期不符， resultDest：%s expect:%s"
-                                                %(json.dumps(result_ret),json.dumps(result)) )
+        self.assertEquals(result_ret,result,msg="creaetjob: 校验 taskResultVOList 与预期不符， resultDest：%s expect:%s jobid:%d"
+                                                %(json.dumps(result_ret),json.dumps(result),ret.get("data").get("id")) )
 
     def createjob_pipline(self,key,datasource,result,code,timeout = None,expect=None):
         ret = self._tm.job_create(key=key, result=result,
                                   datasource=datasource,
                                   code=code)
         self.createjob_ret_check(key=key, ret=ret, code=code, datasource=datasource, result=result)
+        jobid  = ret.get("data").get("id")
         ret_start = self._tm.job_start(ret.get("data").get("id"))
         self.assertEqual(ret_start.get("code"), 0,
-                         msg="startjob: 启动任务失败  code:%d msg:%s"%(ret_start.get("code"),ret_start.get("msg")))
+                         msg="startjob: 启动任务失败  code:%d msg:%s jobid:%d"%(ret_start.get("code"),ret_start.get("msg"),jobid))
         self.assertIsInstance(ret_start.get("data"), str,
-                              msg="startjob: 校验data 类型失败 data:%s type:%s"%(str(ret_start.get("data")),str(type(ret_start.get("data")))) )
+                              msg="startjob: 校验data 类型失败 data:%s type:%s  jobid:%d"%(str(ret_start.get("data")),str(type(ret_start.get("data"))),jobid) )
+        requestid = ret_start.get("data")
         finished = False
         # get jobinfo and check job status
         trycount = 0
@@ -121,21 +123,23 @@ class tmTestcases(unittest.TestCase):
             if timeout != None and timeout != '':
                 trycount = trycount+1
                 if trycount* 3 >= int(timeout):
-                    self.assertTrue(False,msg="任务长时间未执行完成 ,timeout:%s"%(str(timeout)))
+                    self.assertTrue(False,msg="任务长时间未执行完成 ,timeout:%s jobid:%d-requestid:%s"%(str(timeout),jobid,requestid))
         self.assertEquals(jobinfo.get("code"), 0,
-                          msg="getjobinfo: response.code 校验失败 code:%d msg:%s"%(jobinfo.get("code"),jobinfo.get("msg")))
+                          msg="getjobinfo: response.code 校验失败 code:%d msg:%s jobid:%d,requestId:%s"%(jobinfo.get("code"),jobinfo.get("msg"),jobid,requestid))
         self.assertEquals(jobinfo.get("data").get("queueStatus"), 6,
-                          msg="getjobinfo 任务执行失败: queueStatus:%d msg:%s"%(jobinfo.get("data").get("queueStatus"),str(jobinfo.get("msg"))))
+                          msg="getjobinfo 任务执行失败: queueStatus:%d msg:%s  jobid:%d requestId:%s"%
+                              (jobinfo.get("data").get("queueStatus"),str(jobinfo.get("msg")),jobid,requestid))
         jobresult = self._tm.get_job_result(jobid=ret.get("data").get("id"))
         if expect != '' and expect != None:
-            self.check_result(jobresult.get("data"),expect_res=json.loads(expect))
+            self.check_result(jobresult.get("data"),expect_res=json.loads(expect),jobid=jobid,requestId=requestid)
         if 'heartbeat' in key:
             self._tm.del_jobid(jobid=ret.get("data").get("id"))
 
-    def check_result(self,result,expect_res):
+    def check_result(self,result,expect_res,jobid=0,requestId=''):
         for res in result:
             npt.assert_almost_equal(eval(res.get("result")),expect_res.get(res.get("resultVarName")),decimal=5,
-                                    err_msg="jobreslut: 校验任务结果与预期结果不一致：curresult:%s expect:%s" %(json.dumps(result),json.dumps(expect_res)))
+                                    err_msg="jobreslut: 校验任务结果与预期结果不一致：curresult:%s expect:%s jobid:%d requestId:%s"
+                                            %(json.dumps(result),json.dumps(expect_res),jobid,requestId))
 
     @ddt.data(*job_csv())
     @ddt.unpack
