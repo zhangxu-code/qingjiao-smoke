@@ -28,11 +28,16 @@ def cur_utc_time():
     return (curtime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
 
 def downlog(begintime,endtime,filename = 'log.csv'):
-    es = es2csv(host="10.18.0.18",filename=filename)
-    es.query_time(begintime=begintime, endtime=endtime)
-    scrollid = es.scroll()
-    print(scrollid)
-    es.search(scroll_id=scrollid)
+
+    try:
+
+        es = es2csv(host="10.18.0.18",filename=filename)
+        es.query_time(begintime=begintime, endtime=endtime)
+        scrollid = es.scroll()
+        print(scrollid)
+        es.search(scroll_id=scrollid)
+    except Exception as err:
+        logger.info(err)
 
 def login_suit():
     loginsuit = unittest.TestSuite()
@@ -172,7 +177,7 @@ if __name__ == '__main__':
     parser.add_argument("--user",help="user",type=str,default=None)
     parser.add_argument("--passwd",help="passwd" ,type=str,default=None)
     conf_args = vars(parser.parse_args())
-    
+
     #while 1:
     #   time.sleep(1)
     if conf_args.get("site") != None and conf_args.get("user") != None and conf_args.get("passwd") != None:
