@@ -6,11 +6,13 @@ import ddt
 import csv
 import re
 import os
+import HTMLReport
 import json
 import numpy.testing as npt
 #env = None
 
 def job_csv():
+    csv.field_size_limit(1024*1024)
     value_rows = []
     fr = open('./datainput/tm/jobs.csv')
     csvfile = csv.reader(fr)
@@ -131,15 +133,17 @@ class tmTestcases(unittest.TestCase):
                               (jobinfo.get("data").get("queueStatus"),str(jobinfo.get("msg")),jobid,requestid))
         jobresult = self._tm.get_job_result(jobid=ret.get("data").get("id"))
         if expect != '' and expect != None:
+            print(expect)
+            json.loads(expect)
             self.check_result(jobresult.get("data"),expect_res=json.loads(expect),jobid=jobid,requestId=requestid)
         if 'heartbeat' in key:
             self._tm.del_jobid(jobid=ret.get("data").get("id"))
 
     def check_result(self,result,expect_res,jobid=0,requestId=''):
         for res in result:
-            npt.assert_almost_equal(eval(res.get("result")),expect_res.get(res.get("resultVarName")),decimal=5,
-                                    err_msg="jobreslut: 校验任务结果与预期结果不一致：curresult:%s expect:%s jobid:%d requestId:%s"
-                                            %(json.dumps(result),json.dumps(expect_res),jobid,requestId))
+            npt.assert_almost_equal(eval(res.get("result")),eval(expect_res.get(res.get("resultVarName"))),decimal=4,
+                                    err_msg="jobreslut: 校验任务结果与预期结果不一致：curresult: expect: jobid:%d requestId:%s"
+                                            %(jobid,requestId))
 
     @ddt.data(*job_csv())
     @ddt.unpack
@@ -242,7 +246,7 @@ def tm_init(insite,inuser,inpasswd,inenv = 'master'):
 if __name__ == '__main__':
     #tm_init('1','2','3','master')
     #get_job_csv(key='heartbeat')
-
+    '''
     jobs =  (job_csv())
     for job in jobs:
         print(type(job[1]))
@@ -252,17 +256,24 @@ if __name__ == '__main__':
         print(job[5])
         print(type(job[5]))
         #print(r'%s'%(job[3]))
+    '''
+    # master  GIS : [{""dataSourceId"":714,""dataSourceMetadataId"":1156,""dataServerId"":1,""varName"":""dinning_info""}]
+    # dev GIS : [{""dataSourceId"":3196,""dataSourceMetadataId"":6939,""dataServerId"":70,""varName"":""dinning_info""}]
+    tm_init(insite="console.tsingj.local",inuser="smoketest",inpasswd="qwer1234")
+    unittest.main()
 
-    #fw = open('test.txt', 'w')
-    #runner = unittest.TextTestRunner(stream=fw, verbosity=2)
-    #tmTestcases()
-    #suit = unittest.TestSuite()
-    #suit.addTest(tmTestcases(testname=None,inenv='master'))
-    #suit.addTest(tmTestcases('test_jobrun'))
-    #suit1 = unittest.TestLoader().loadTestsFromTestCase(tmTestcases)
-    #logging.info(suit1)
-    #suit1.addTest("test_jobrun")
-    #suit = unittest.TestSuite()
-    #suit.addTest(tmTestcases("test_jobrun"))
-    #print(suit)
-    #runner.run(suit1)
+    suit1 = unittest.TestLoader().loadTestsFromTestCase(tmTestcases)
+    '''
+    suit = unittest.TestSuite(suit1)
+    #suit.addTest(dbengineCases("agg_gold_case"))
+    runner.run(suit)
+    '''
+    # suit.addTest(dbengineCases("agg_case"))
+    runner = HTMLReport.TestRunner(report_file_name='test',
+                                   output_path='./',
+                                   description='login test suite',
+                                   thread_count=1,
+                                   thread_start_wait=3,
+                                   sequential_execution=False,
+                                   lang='cn')
+    runner.run(suit1)
