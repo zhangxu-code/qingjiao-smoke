@@ -12,7 +12,7 @@ import numpy.testing as npt
 #env = None
 
 def job_csv():
-    csv.field_size_limit(1024*1024)
+    csv.field_size_limit(1024*1024*10)
     value_rows = []
     fr = open('./datainput/tm/jobs.csv')
     csvfile = csv.reader(fr)
