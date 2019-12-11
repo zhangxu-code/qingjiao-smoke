@@ -141,7 +141,7 @@ class tmTestcases(unittest.TestCase):
 
     def check_result(self,result,expect_res,jobid=0,requestId=''):
         for res in result:
-            npt.assert_almost_equal(eval(res.get("result")),eval(expect_res.get(res.get("resultVarName"))),decimal=4,
+            npt.assert_almost_equal(eval(res.get("result")),(expect_res.get(res.get("resultVarName"))),decimal=4,
                                     err_msg="jobreslut: 校验任务结果与预期结果不一致：curresult: expect: jobid:%d requestId:%s"
                                             %(jobid,requestId))
 
