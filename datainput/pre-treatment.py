@@ -12,6 +12,7 @@ flags.DEFINE_string('key',None,'key = smoke or heartbeat')
 def get_job_csv(env='master',key=None):
     #global env
     logging.info(env)
+    csv.field_size_limit(1024*1024*10)
     value_rows = []
     csvfiles = os.listdir('./datainput/tm/')
     csvtype = re.compile(r'_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)\.csv')
