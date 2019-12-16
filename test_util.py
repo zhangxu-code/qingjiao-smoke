@@ -25,10 +25,11 @@ def run_task(code):
     return res
 '''
 
-def run_task(code):
-    logger.info(code)
+def run_task(code,name=None):
+    #logger.info(code)
     runner = TaskRunnerAPI()
-    result = runner.run(code=code)
+    #logger.info(name)
+    result = runner.run(code=code,name=name)
     #print('----------')
     logger.info(result)
     for key in result.keys():
