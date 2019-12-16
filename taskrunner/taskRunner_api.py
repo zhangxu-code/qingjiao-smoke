@@ -27,7 +27,7 @@ class TaskRunnerAPI:
         logger.info(self.conf)
         fr.close()
 
-    def run(self,code):
+    def run(self,code,name=None):
         logger.info(threading.current_thread().name)
         #return True
         if not self.login():
@@ -55,7 +55,7 @@ class TaskRunnerAPI:
         datasource_l = []
         datasource["varName"] = "data"
         datasource_l.append(datasource)
-        return  self.job_pipline(datasource=[] ,result=result,code=self.sub_debug_reveal(code=code))
+        return  self.job_pipline(datasource=[] ,result=result,code=self.sub_debug_reveal(code=code),name=name)
 
     def code_reveal(self,code):
         print(code.split('\n'))
@@ -72,9 +72,9 @@ class TaskRunnerAPI:
         re_reveal = re.compile(r'\.debug_reveal\(')
         return re.sub(re_reveal,".reveal(",code)
 
-    def job_pipline(self,datasource,result,code):
+    def job_pipline(self,datasource,result,code,name=None):
         logger.info("start job")
-        jobid = self.job_create(datasource=datasource,result=result,code=code)
+        jobid = self.job_create(datasource=datasource,result=result,code=code,name=name)
         if jobid == False:
             return False
         if not self.job_start(jobid=jobid):
@@ -86,9 +86,13 @@ class TaskRunnerAPI:
         #    self.job_delete(jobid=jobid)
         return result
 
-    def job_create(self,datasource,result,code):
+    def job_create(self,datasource,result,code,name=None):
+        if name == None:
+            jobname = 'privpy-libarary'
+        else:
+            jobname = 'privpy-libarary-'+name
         body = {
-            "name":"privpy-libarary",
+            "name":jobname,
             "code":code,
             "taskDataSourceVOList":datasource,
             "taskResultVOList":result
