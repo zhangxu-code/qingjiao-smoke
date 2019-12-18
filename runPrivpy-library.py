@@ -78,8 +78,8 @@ def main(argv):
     print(discover.countTestCases())
 
 
-    #runner = xmlrunner.XMLTestRunner(output="privpy-library-%s" % (timestr))
-    #runner.run(discover)
+    runner = xmlrunner.XMLTestRunner(output="privpy-library-%s" % (timestr))
+    runner.run(discover)
 
 if __name__ == "__main__":
     app.run(main)
