@@ -2,6 +2,7 @@ import os
 import sys
 from absl import flags,app
 import unittest
+import re
 from taskrunner.taskRunner_api import TaskRunnerAPI
 from xmlrunnerR import xmlrunner
 import yaml
@@ -32,44 +33,26 @@ def conf(env):
     fw.close()
 
 def loadAll_suite():
-
     basePath = os.getcwd() + '/privpy_library/privpy_lib/tests'
-    case_path = (basePath + '/test_pnumpy')
-    dis = unittest.TestLoader()
-    array_creation = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+    alldirs = os.listdir(basePath)
+    case_dir = re.compile(r'^test_[a-zA-Z0-9_]+$')
+    cases = [] #unittest.TestSuite()
+    for tmpdir in alldirs:
+        #logger.info(tmpdir)
+        if re.search(case_dir,tmpdir):
+            logger.info(tmpdir)
+            if "test_ppandas" == tmpdir:
+                logger.info("skip "+tmpdir)
+                continue
+            try:
+                dis = unittest.TestLoader()
+                cases.append( dis.discover(start_dir=basePath+"/"+tmpdir, pattern="test*.py", top_level_dir=None))
+                #cases = unittest.TestSuite(())
+            except Exception as err:
+                logger.error(err)
 
-    case_path = (basePath + '/test_pai')
-    dis = unittest.TestLoader()
-    math_function = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+    return unittest.TestSuite(cases)
 
-
-    #case_path = (basePath + '/test_ppandas')
-    #dis = unittest.TestLoader()
-    #pandas = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
-
-
-    case_path = (basePath + '/test_psql')
-    dis = unittest.TestLoader()
-    psql = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
-
-
-    case_path = (basePath + '/test_ptorch')
-    dis = unittest.TestLoader()
-    ptorch = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
-
-    case_path = (basePath + '/test_basic_operations')
-    dis = unittest.TestLoader()
-    basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
-
-    case_path = (basePath + '/test_phash')
-    dis = unittest.TestLoader()
-    basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
-
-    case_path = (basePath + '/test_putil')
-    dis = unittest.TestLoader()
-    basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
-
-    return unittest.TestSuite((array_creation,math_function,psql,ptorch,basicOperations))
 
 def main(argv):
     del argv
@@ -95,8 +78,8 @@ def main(argv):
     print(discover.countTestCases())
 
 
-    runner = xmlrunner.XMLTestRunner(output="privpy-library-%s" % (timestr))
-    runner.run(discover)
+    #runner = xmlrunner.XMLTestRunner(output="privpy-library-%s" % (timestr))
+    #runner.run(discover)
 
 if __name__ == "__main__":
     app.run(main)
