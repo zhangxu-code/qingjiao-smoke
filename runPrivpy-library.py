@@ -28,6 +28,7 @@ def conf(env):
     fw.write("user: %s\n"%(conf.get(env).get("user")))
     fw.write("passwd: %s\n" % (conf.get(env).get("passwd")))
     fw.write("site: %s\n" % (conf.get(env).get("site")))
+    fw.write("queue: %s"%(conf.get("timestr")))
     fw.close()
 
 def loadAll_suite():
@@ -57,6 +58,14 @@ def loadAll_suite():
     ptorch = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
 
     case_path = (basePath + '/test_basic_operations')
+    dis = unittest.TestLoader()
+    basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+    case_path = (basePath + '/test_phash')
+    dis = unittest.TestLoader()
+    basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
+
+    case_path = (basePath + '/test_putil')
     dis = unittest.TestLoader()
     basicOperations = dis.discover(start_dir=case_path, pattern="test*.py", top_level_dir=None)
 
