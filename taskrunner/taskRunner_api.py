@@ -1,6 +1,7 @@
 import time
 import os
 import sys
+sys.path.append(os.getcwd())
 import re
 #import logger
 import requests
@@ -11,6 +12,7 @@ import json
 import numpy as np
 import numpy.testing as npt
 from loguru import logger
+from util.redis_producer import redis_producer
 #from multiprocessing import Lock
 import threading
 #logger = logger.getLogger()
@@ -26,6 +28,17 @@ class TaskRunnerAPI:
         self.conf = yaml.load(fr)
         logger.info(self.conf)
         fr.close()
+        self.MQ = redis_producer()
+
+    def produces(self,api,time=None,isOK=True):
+        tmp = {}
+        tmp["api"] = api
+        if isOK == False:
+            tmp["isOK"] = False
+        else:
+            tmp["isOK"] = True
+            tmp["time"] = time
+        self.MQ.producer(json.dumps(tmp))
 
     def run(self,code,name=None):
         logger.info(threading.current_thread().name)
@@ -106,6 +119,7 @@ class TaskRunnerAPI:
             url = "https://%s/api/api-tm/task" %(self.conf.get("site"))
             while 1:
                 req = requests.post(url=url,headers=head,data=json.dumps(body),verify=False)
+                self.produces(api="/api/api-tm/task", time=req.elapsed.total_seconds() * 1000, isOK=True)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     logger.info(req.text)
@@ -118,6 +132,7 @@ class TaskRunnerAPI:
                     return False
                 return req.json().get("data").get("id")
         except Exception as err:
+            self.produces(api="/api/api-tm/task", isOK=False)
             logger.error(err)
             logger.error(req.text)
             return False
@@ -132,6 +147,7 @@ class TaskRunnerAPI:
             url = "https://%s/api/api-tm/task/startTask/%s"%(self.conf.get("site"),str(jobid))
             while 1:
                 req = requests.put(url=url,headers=head,verify=False)
+                self.produces(api="/api/api-tm/task/startTask", time=req.elapsed.total_seconds() * 1000, isOK=True)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
@@ -145,6 +161,7 @@ class TaskRunnerAPI:
                 else:
                     return True
         except Exception as err:
+            self.produces(api="/api/api-tm/task/startTask", isOK=False)
             logger.error(err)
         return True
 
@@ -158,6 +175,7 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.delete(url=url, headers=head, verify=False)
+                self.produces(api="/api/api-tm/task", time=req.elapsed.total_seconds() * 1000, isOK=True)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
@@ -169,6 +187,7 @@ class TaskRunnerAPI:
                     return True
 
         except Exception as err:
+            self.produces(api="/api/api-tm/task",  isOK=False)
             logger.error(err)
             logger.error(req.text)
             return False
@@ -184,6 +203,7 @@ class TaskRunnerAPI:
         try:
             while tryCount < 300:
                 req = requests.get(url=url,headers=head,verify=False)
+                self.produces(api="/api/api-tm/task", time=req.elapsed.total_seconds() * 1000, isOK=True)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
@@ -199,6 +219,7 @@ class TaskRunnerAPI:
                 tryCount =  tryCount + 1
 
         except Exception as err:
+            self.produces(api="/api/api-tm/task", isOK=False)
             logger.error(err)
             logger.error(req.text)
             return False
@@ -216,6 +237,7 @@ class TaskRunnerAPI:
             while 1:
                 get_result = True
                 req = requests.get(url=url,headers=head,verify=False)
+                self.produces(api="/api/api-tm/task/getTaskResult", time=req.elapsed.total_seconds() * 1000, isOK=True)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
@@ -245,6 +267,7 @@ class TaskRunnerAPI:
                     continue
                 return result_ditc
         except Exception as err:
+            self.produces(api="/api/api-tm/task/getTaskResult",  isOK=False)
             logger.error(err)
             logger.error(req.text)
             return result_ditc
@@ -263,8 +286,10 @@ class TaskRunnerAPI:
             req = requests.post(url=url, params=data, verify=False)
             # print(req.text)
             self.token = req.json().get("data").get("access_token")
+            self.produces(api="/api/api-sso/token/simpleLogin", time=req.elapsed.total_seconds() * 1000, isOK=True)
         except Exception as err:
             logger.error(err)
+            self.produces(api="/api/api-sso/token/simpleLogin",  isOK=False)
             return False
         return  True
 
@@ -281,6 +306,7 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
+                self.produces(api="/api/api-tm/dataServer", time=req.elapsed.total_seconds() * 1000, isOK=True)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
@@ -298,6 +324,7 @@ class TaskRunnerAPI:
                     return  alive_ds
                 page = page + 1
         except Exception as err:
+            self.produces(api="/api/api-tm/dataServer", isOK=False)
             logger.error(req.text)
             logger.error(err)
             return False
@@ -314,6 +341,7 @@ class TaskRunnerAPI:
         try:
             while 1:
                 req = requests.get(url='%s?page=%s'%(url,str(page)),headers=head,verify=False)
+                self.produces(api="/api/api-tm/dataSourceMetadata", time=req.elapsed.total_seconds() * 1000, isOK=True)
                 logger.info(req.text)
                 if req.json().get("subCode") == 'GLOBAL0004':
                     time.sleep(1)
@@ -334,6 +362,7 @@ class TaskRunnerAPI:
                     return False
                 page = page + 1
         except Exception as err:
+            self.produces(api="/api/api-tm/dataSourceMetadata", isOK=True)
             logger.error(err)
             logger.error(req.text)
             return False
