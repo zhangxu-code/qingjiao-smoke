@@ -64,11 +64,11 @@ class tmJob:
         }
         try:
             req = requests.put(url=url,headers = head,verify=False)
-            self.produces(api="/api/api-tm/task/startTask",time=req.elapsed.total_seconds()*1000,isOK=True)
+            self.produces(api="PUT/api/api-tm/task/startTask",time=req.elapsed.total_seconds()*1000,isOK=True)
             logger.info(req.text)
             return  req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/task/startTask", isOK=False)
+            self.produces(api="PUT/api/api-tm/task/startTask", isOK=False)
             logger.error(err)
 
     def job_getinfo(self,jobid,token = None):
@@ -97,11 +97,11 @@ class tmJob:
         }
         try:
             req = requests.get(url=url,headers = head,verify=False)
-            self.produces(api="/api/api-tm/task/getTaskSendConfig", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-tm/task/getTaskSendConfig", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/task/getTaskSendConfig", isOK=False)
+            self.produces(api="GET/api/api-tm/task/getTaskSendConfig", isOK=False)
             logger.error(err)
 
     def job_create(self,key,datasource = [],result=[],code='',token=None):
@@ -138,6 +138,7 @@ class tmJob:
         }
         try:
             req = requests.post(url=url, headers=head, data=json.dumps(body), verify=False)
+            self.produces(api="POST/api/api-tm/task", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
@@ -257,11 +258,11 @@ class tmJob:
         }
         try:
             req = requests.put(url=url,headers=head,verify=False)
-            self.produces(api="/api/api-tm/task/killServer", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="PUT/api/api-tm/task/killServer", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/task/killServer", isOK=False)
+            self.produces(api="PUT/api/api-tm/task/killServer", isOK=False)
             logger.error(err)
 
     def kill_job_bystatus(self,status,token=None):
@@ -274,11 +275,11 @@ class tmJob:
         }
         try:
             req = requests.put(url=url, headers=head, verify=False)
-            self.produces(api="/api/api-tm/task/killServers", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="PUT/api/api-tm/task/killServers", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/task/killServers", isOK=False)
+            self.produces(api="PUT/api/api-tm/task/killServers", isOK=False)
             logger.error(err)
 
     def task_roles(self,query,token = None):
@@ -291,11 +292,11 @@ class tmJob:
         # data = "page=%d" % (page)
         try:
             req = requests.get(url=url, headers=head, params=query, verify=False)
-            self.produces(api="/api/api-tm/task/getTaskRoles", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-tm/task/getTaskRoles", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/task/getTaskRoles",  isOK=False)
+            self.produces(api="GET/api/api-tm/task/getTaskRoles",  isOK=False)
             logger.error(err)
 
     def getLogs_task(self,query,token=None):
@@ -307,12 +308,12 @@ class tmJob:
         }
         try:
             req = requests.get(url=url, headers=head, params=query, verify=False)
-            self.produces(api="/api/api-track/track/getLogsByRequestIdAndRole", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-track/track/getLogsByRequestIdAndRole", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces(api="/api/api-track/track/getLogsByRequestIdAndRole", isOK=False)
+            self.produces(api="GET/api/api-track/track/getLogsByRequestIdAndRole", isOK=False)
 
     def dataServer(self,query='',token=None):
         url = 'https://%s/api/api-tm/dataServer' % (self.site)
@@ -324,11 +325,11 @@ class tmJob:
         # data = "page=%d" % (page)
         try:
             req = requests.get(url=url, headers=head, params=query, verify=False)
-            self.produces(api="/api/api-tm/dataServer", time=req.elapsed.total_seconds() * 1000,isOK=True)
+            self.produces(api="GET/api/api-tm/dataServer", time=req.elapsed.total_seconds() * 1000,isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/dataServer",  isOK=False)
+            self.produces(api="GET/api/api-tm/dataServer",  isOK=False)
             logger.error(err)
 
     def dataSource(self,query='',token=None):
@@ -341,11 +342,11 @@ class tmJob:
         # data = "page=%d" % (page)
         try:
             req = requests.get(url=url, headers=head, params=query, verify=False)
-            self.produces(api="/api/api-tm/dataSource", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-tm/dataSource", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/dataSource", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-tm/dataSource", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.error(err)
 
     def dataSourceMeatadata(self,query='',token=None):
@@ -358,11 +359,11 @@ class tmJob:
         # data = "page=%d" % (page)
         try:
             req = requests.get(url=url, headers=head, params=query, verify=False)
-            self.produces(api="/api/api-tm/dataSourceMetadata", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-tm/dataSourceMetadata", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/dataSourceMetadata",  isOK=False)
+            self.produces(api="GET/api/api-tm/dataSourceMetadata",  isOK=False)
             logger.error(err)
 
     def job_historySendMsg(self,taskId,token=None):
@@ -375,11 +376,11 @@ class tmJob:
         # data = "page=%d" % (page)
         try:
             req = requests.get(url=url, headers=head, verify=False)
-            self.produces(api="/api/api-tm/task/getHistorySendMsg", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-tm/task/getHistorySendMsg", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/task/getHistorySendMsg",isOK=False)
+            self.produces(api="GET/api/api-tm/task/getHistorySendMsg",isOK=False)
             logger.error(err)
 
     def job_schedule(self,taskId,requestId,index,token=None):
@@ -392,11 +393,11 @@ class tmJob:
         # data = "page=%d" % (page)
         try:
             req = requests.get(url=url, headers=head, verify=False)
-            self.produces(api="/api/api-tm/task/getTaskSchedule", time=req.elapsed.total_seconds() * 1000, isOK=True)
+            self.produces(api="GET/api/api-tm/task/getTaskSchedule", time=req.elapsed.total_seconds() * 1000, isOK=True)
             logger.info(req.text)
             return req.json()
         except Exception as err:
-            self.produces(api="/api/api-tm/task/getTaskSchedule", isOK=False)
+            self.produces(api="GET/api/api-tm/task/getTaskSchedule", isOK=False)
             logger.error(err)
 
 class tm_data:
