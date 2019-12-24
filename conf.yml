@@ -1,5 +1,71 @@
-host: 10.18.0.18
-port: 36379
-passwd: TX6!bC6M
-queue: 20191202214303
-performancechannle: performance
+env192:
+  user: autotest
+  passwd: qwer1234
+  site: console-dev.tsingj.local
+  dbhost: 10.18.0.19
+  dbport: 21050
+env-inspection:
+  user: user
+  passwd: 123456
+  site: debugsaas-inspection.tsingj.local
+
+master-smoke:
+  user: smoketest
+  passwd: qwer1234
+  site: console.tsingj.local
+  dbhost: 10.18.0.19
+  dbport: 21050
+  csvfile: 6_alg_master.csv
+
+dev-smoke:
+  user: smoketest
+  passwd: qwer1234
+  site: console-dev.tsingj.local
+  dbhost: 10.18.0.19
+  dbport: 21050
+  csvfile: 6_alg_master.csv
+
+master-heartbeat:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console.tsingj.local
+  dbhost: 10.18.0.19
+  dbport: 21050
+
+ali-heartbeat:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console.tsingj.com
+
+master-library:
+  user: smokelibrary
+  passwd: 1234qwer
+  site: console.tsingj.local
+
+dev136-library:
+  user: smokelibrary
+  passwd: 1234qwer
+  site: console-dev136.tsingj.local
+
+dev-library:
+  user: smokelibrary
+  passwd: 1234qwer
+  site: console-dev.tsingj.local
+
+dev195-heartbeat:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console-dev195.tsingj.local
+
+dev195-library:
+  user: heartbeat
+  passwd: 1234qwer
+  site: console-dev195.tsingj.local
+
+master-db:
+  dbhost: 10.18.0.19
+  dbport: 21050
+dev-db:
+  dbhost: 10.18.0.80
+  dbport: 21050
+
