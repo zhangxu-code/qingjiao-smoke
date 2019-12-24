@@ -6,7 +6,7 @@ env192:
   dbport: 21050
 env-inspection:
   user: user
-  passwd: 123456
+  passwd: 1234567
   site: debugsaas-inspection.tsingj.local
 
 master-smoke:
