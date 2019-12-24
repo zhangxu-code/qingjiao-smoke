@@ -40,6 +40,9 @@ class TaskRunnerAPI:
             tmp["time"] = time
         self.MQ.producer(json.dumps(tmp))
 
+    def pub_msg(self,msg):
+        self.MQ.pub_performace(msg=msg)
+
     def run(self,code,name=None):
         logger.info(threading.current_thread().name)
         #return True
@@ -87,6 +90,7 @@ class TaskRunnerAPI:
 
     def job_pipline(self,datasource,result,code,name=None):
         logger.info("start job")
+        begin = time.time()
         jobid = self.job_create(datasource=datasource,result=result,code=code,name=name)
         if jobid == False:
             return False
@@ -95,8 +99,13 @@ class TaskRunnerAPI:
         if not  self.job_status(jobid=jobid):
             return  False
         result =  self.job_result(jobid=jobid)
-        #if len(result.keys()) != 0:
-        #    self.job_delete(jobid=jobid)
+        end = time.time()
+        if len(result.keys()) != 0:
+            msg = {}
+            msg["jobname"] = name
+            msg["time"]    = end-begin
+            self.pub_msg(msg=msg)
+            #self.job_delete(jobid=jobid)
         return result
 
     def job_create(self,datasource,result,code,name=None):

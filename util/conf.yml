@@ -1,4 +1,5 @@
 host: 10.18.0.18
-port: 36379
+port: 6379
 passwd: TX6!bC6M
-queue: library
+queue: 20191202214303
+performancechannle: performance
