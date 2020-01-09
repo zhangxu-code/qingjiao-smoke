@@ -1,12 +1,6 @@
-env192:
-  user: autotest
-  passwd: qwer1234
-  site: console-dev.tsingj.local
-  dbhost: 10.18.0.19
-  dbport: 21050
 env-inspection:
   user: user
-  passwd: 1234567
+  passwd: 123456
   site: debugsaas-inspection.tsingj.local
 
 master-smoke:
@@ -47,6 +41,11 @@ dev136-library:
   passwd: 1234qwer
   site: console-dev136.tsingj.local
 
+CI-library:
+  user: admin
+  passwd: 1234qwer
+  site: 10.88.200.187:30443
+
 dev-library:
   user: smokelibrary
   passwd: 1234qwer
@@ -58,7 +57,7 @@ dev195-heartbeat:
   site: console-dev195.tsingj.local
 
 dev195-library:
-  user: heartbeat
+  user: smokelibrary
   passwd: 1234qwer
   site: console-dev195.tsingj.local
 
@@ -68,4 +67,3 @@ master-db:
 dev-db:
   dbhost: 10.18.0.80
   dbport: 21050
-
