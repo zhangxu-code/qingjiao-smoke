@@ -69,7 +69,7 @@ def db_smoke_suit():
     dbsomkesuit.addTest(dbengineCases("describe_gold_case"))
     dbsomkesuit.addTest(dbengineCases("hdfs_gold_case"))
     dbsomkesuit.addTest(dbengineCases("hdfs_filter_gold_case"))
-
+    dbsomkesuit.addTest(dbengineCases("test_agg_case"))
     return dbsomkesuit
 
 def library_smoke_suit():
