@@ -1,0 +1,135 @@
+{
+  "$schema": "GET/api/api-tm/task/v1/getExecutorTasks",
+  "title": "get running task response",
+  "description": "get running task response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "required": ["id", "name", "description", "code", "computeServerVOList", "taskDataSourceVOList",
+        "taskResultVOList", "requestId", "queueStatus", "cluster", "lastExecTime"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": ["null","string"]
+        },
+        "code": {
+          "type": "string"
+        },
+        "requestId": {
+          "type": "string"
+        },
+        "queueStatus": {
+          "type": "integer"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "lastExecTime": {
+          "type": "string",
+          "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+        },
+        "computeServerVOList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "type", "updateTime", "clusterName", "region", "computeServerStatus"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "integer",
+                "enum": [1, 2, 3, 4, 5]
+              },
+              "updateTime": {
+                "type": "string",
+                "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+              },
+              "clusterName": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              },
+              "computeServerStatus": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "taskDataSourceVOList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["metaId", "varName","partitionSize"],
+            "additionalProperties": false,
+            "proerties": {
+              "metaId": {
+                "type": "integer"
+              },
+              "varName": {
+                "type": "string",
+                "partern": "[a-zA-Z]{1}[a-zA-Z0-9_]*"
+              },
+              "partitionSize": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "taskResultVOList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["resultDest", "resultVarName"],
+            "additionalProperties": false,
+            "properties": {
+              "resultVarName": {
+                "type": "string",
+                "partern": "[a-zA-Z]{1}[a-zA-Z0-9_]*"
+              },
+              "resultDest": {
+                "type": "string",
+                "partern": "[0-9]+"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

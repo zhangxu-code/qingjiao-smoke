@@ -1,0 +1,80 @@
+{
+  "$schema": "GET/api/api-tm/task/v1/dataServer",
+  "title": "get running task response",
+  "description": "get running task response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [0,1]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": ["null", "string"]
+    },
+    "data": {
+      "type": "object",
+      "required": ["pageNo", "pageSize", "totalRows", "nextPageNo", "totalPages", "previousPageNo", "data"],
+      "additionalProperties": false,
+      "properties": {
+        "pageNo": {
+          "type": "integer",
+          "mininum": 0
+        },
+        "pageSize":{
+          "type": "integer",
+          "mininum": 0
+        },
+        "totalRows": {
+          "type": "integer",
+          "mininum": 0
+        },
+        "nextPageNo": {
+          "type": "integer",
+          "mininum": 0
+        },
+        "totalPages": {
+          "type": "integer",
+          "mininum": 0
+        },
+        "previousPageNo": {
+          "type": "integer",
+          "mininum": 0
+        },
+        "data": {
+          "type": "arrary",
+          "items": {
+            "type": "object",
+            "required": ["metaId", "key", "keyShape", "keyType", "dataSetName", "dataSetId", "dsId", "dsName", "isCache", "isDelete"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "mininum": 0
+              },
+              "name": {
+                "type": "string"
+              },
+              "dataServerId": {
+                "type": "integer"
+              },
+              "isDelete": {
+                "type": "integer",
+                "enum": [0, 1]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "POST/api/api-tm/task/v1",
+  "title": "create job response",
+  "description": "create job response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [0,1]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": ["null", "string"]
+    },
+    "data": {
+      "type": "object",
+      "required": ["id","requestId"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "mininum": 0
+        },
+        "requestId": {
+          "type": ["null","string"],
+
+        }
+      }
+    }
+  }
+}

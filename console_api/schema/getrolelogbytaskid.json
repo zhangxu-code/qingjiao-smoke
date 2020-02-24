@@ -1,0 +1,37 @@
+{
+  "$schema": "GET/api/api-track/track/getLogsByTaskIdAndRole",
+  "title": "get task log bu taskid  response",
+  "description": "get task log by taskid response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
