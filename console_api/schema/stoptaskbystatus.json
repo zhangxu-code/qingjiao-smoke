@@ -1,0 +1,28 @@
+{
+  "$schema": "PUT/api/api-tm/task/v1/stopByStatus",
+  "title": "stop by status job response",
+  "description": "stop by status job response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [0,1]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": ["null", "string"]
+    },
+    "data": {
+      "type": "bool"
+    }
+  }
+}

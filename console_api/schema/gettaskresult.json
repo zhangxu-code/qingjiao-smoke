@@ -1,0 +1,51 @@
+{
+  "$schema": "GET/api/api-tm/taskResult/v1",
+  "title": "get task result response",
+  "description": "get task result response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "required": ["id", "result", "updateTime" ,"resultVarName"],
+      "additionalProperties": false,
+      "proerties": {
+        "id": {
+          "type": "integer"
+        },
+        "result": {
+          "type": "string"
+        },
+        "updateTime": {
+          "type": "string"
+        },
+        "resultVarName": {
+          "type": "string",
+          "partern": "[a-zA-Z]{1}[a-zA-Z0-9_]*"
+        }
+      }
+    }
+  }
+}

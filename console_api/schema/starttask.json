@@ -1,0 +1,29 @@
+{
+  "$schema": "PUT/api/api-tm/task/v1",
+  "title": "modify job response",
+  "description": "modify job response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [0,1]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": ["null", "string"]
+    },
+    "data": {
+      "type": ["null", "string"],
+      "pattern": "[0-9a-zA-Z]{24}"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "GET/api/api-tm/task/v1/getTaskRoles",
+  "title": "get task roles  response",
+  "description": "get task roles response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

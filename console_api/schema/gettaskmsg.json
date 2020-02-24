@@ -1,0 +1,48 @@
+{
+  "$schema": "GET/api/api-tm/task/v1/getExecMsg",
+  "title": "get task msg response",
+  "description": "get running task msg response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "required": ["type", "result", "createTime"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["waiting", "resourceSuccess", "prepareStartTc", "startTcSuccess", "running", "nodeSuccess", "taskSuccess"]
+        },
+        "result": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
