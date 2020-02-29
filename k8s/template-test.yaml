@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-console-test
+  namespace: {{ $.Values.common.namespace }}
+  labels:
+    app: {{ .Release.Name }}-console-test
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}-console-test
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-console-test
+        image: registry.tsingj.local/console_test:latest
+        env:
+        - name: consolesite
+          value: "{{ .Values.mid.env.dm_mid_user }}"
+        - name: consoleuser
+          value: "{{ .Values.mid.env.dm_mid_password }}"
+        - name: cosnolepasswd
+          value: {{ .Values.mid.env.dm_mid_server }}
+        - name: key
+          value: "poc"
+        command: ["python", "run.py"]
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: registrysecret

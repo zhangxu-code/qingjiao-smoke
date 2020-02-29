@@ -1,7 +1,7 @@
 {
-  "$schema": "GET/api/api-tm/task/v1/dataServer",
-  "title": "get running task response",
-  "description": "get running task response",
+  "$schema": "GET/api/api-tm/v1/task",
+  "title": "get task response",
+  "description": "get task response",
   "type": "object",
   "required": [
     "code",
@@ -54,38 +54,38 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["metaId", "key", "keyType", "dataSetName", "dataSetId", "dataServerId", "dsName", "isCache", "isDelete"],
+            "required": ["id", "name", "requestId", "cluster", "reqCreateTime" ,"reqExecTime", "reqUpdateTime", "queueStatus"],
             "additionalProperties": false,
             "properties": {
-              "metaId": {
+              "id": {
+                "type": "integer",
+                "mininum": 0
+              },
+              "name": {
                 "type": "string"
               },
-              "key": {
-                "type": "string"
-              },
-              "keyType": {
+              "requestId": {
                 "type": "string",
-                "enum": ["double","int","string", "int32", "int64"]
+                "partern": "[0-9a-zA-Z]{24}"
               },
-              "dataSetName": {
-                "type": "string"
+              "cluster": {
+                "type": ["string", "null"]
               },
-              "dataSetId":{
-                "type": "integer"
+              "reqCreateTime": {
+                "type": "string",
+                "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
               },
-              "dataServerId": {
-                "type": "integer"
-              },
-              "dsName": {
-                "type": "string"
-              },
-              "isCache": {
+              "reqExecTime": {
                 "type": "integer",
-                "enum": [0, 1]
+                "mininum": 0
               },
-              "isDelete": {
+              "reqUpdateTime": {
+                "type": "string",
+                "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+              },
+              "queueStatus": {
                 "type": "integer",
-                "enum": [0, 1]
+                "enum": [0, 2, 4, 6, 7, 8]
               }
             }
           }

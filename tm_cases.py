@@ -43,6 +43,7 @@ class tmTestcases(unittest.TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         None
+
     def jobstartcase(self):
         jobid_l = conf_args.get("jobid").split(',')
         for jobid in jobid_l:

@@ -22,7 +22,7 @@
       "type": ["null", "string"]
     },
     "data": {
-      "type": "bool"
+      "type": "boolean"
     }
   }
 }

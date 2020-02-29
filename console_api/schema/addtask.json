@@ -31,8 +31,7 @@
           "mininum": 0
         },
         "requestId": {
-          "type": ["null","string"],
-
+          "type": ["null","string"]
         }
       }
     }

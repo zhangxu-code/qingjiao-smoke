@@ -47,6 +47,8 @@ class casefinder:
         :param comment:
         :return:
         """
+        if comment == None:
+            return None
         for _ in comment.split("\n"):
             if re.search(r'^\[[\w]+\]', _.strip()):
                 return _.strip()
@@ -67,13 +69,14 @@ class casefinder:
                         if obj.__base__ == unittest.TestCase:
                             tmp_dict = casespath_dict
                             # 如果为unittest.TestCase 子类，则按文件路径组织字典结构
-                            for i in range(len(modle.split("/"))):
-                                if i == len(modle.split("/")) - 1:
-                                    tmp_dict[os.path.splitext(modle.split("/")[i])[0]] = {}
-                                    tmp_dict = tmp_dict.get(os.path.splitext(modle.split("/")[i])[0])
+                            path_list = modle.split("/")
+                            for i in range(len(path_list)):
+                                if i == len(path_list) - 1:
+                                    tmp_dict[os.path.splitext(path_list[i])[0]] = {}
+                                    tmp_dict = tmp_dict.get(os.path.splitext(path_list[i])[0])
                                 else:
-                                    tmp_dict[modle.split("/")[i]] = {}
-                                    tmp_dict = tmp_dict.get(modle.split("/")[i])
+                                    tmp_dict[path_list[i]] = {}
+                                    tmp_dict = tmp_dict.get(path_list[i])
                             tmp_dict[obj.__name__] = self.find_cls(obj)
                             cases_dict[modle[:-3].replace('/', '.')] = tmp_dict
             except Exception as err:
@@ -91,7 +94,10 @@ class casefinder:
         logger.info(casespath_dict)
         return cases
 
-    def key_match(self, key, method_key):
+    def key_match(self, key, comment):
+        if comment == None:
+            return True
+        method_key = re.findall(r'\[[\w]+\]', comment)
         method_key_f = []
         for _ in method_key:
             method_key_f.append(_[1:-1])
@@ -108,7 +114,7 @@ class casefinder:
         else:
             return False
 
-    def findcases_bypath(self, path, key):
+    def findcases_bypath(self, path, key=None):
         if os.path.isdir(path):
             pyfiles = self.find_py(path)
         elif os.path.isfile(path):
@@ -128,7 +134,7 @@ class casefinder:
                                 method, comment = method_case.popitem()
                                 logger.info(method)
                                 logger.info(comment)
-                                if self.key_match(key, re.findall(r'\[[\w]+\]', comment)):
+                                if self.key_match(key, comment):
                                     suite.addTest(obj(method))
                         #for fun in dir(obj):
                         #    if re.search(re.compile(r'^test'), fun.lower()):

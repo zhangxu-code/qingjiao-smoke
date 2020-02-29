@@ -1,0 +1,66 @@
+{
+  "$schema": "/api/api-tm/v1/dataSourceMetadata/findDataSourceMetadataPara\n\n",
+  "title": "get metaId response",
+  "description": "get metaId response",
+  "type": "object",
+  "required": [
+    "code",
+    "data",
+    "msg",
+    "subCode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "subCode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "required": ["metaId", "key", "keyType", "dataSetId", "dataSetName", "dataServerId", "dsName", "isCache", "isDelete"],
+      "additionalProperties": false,
+      "properties": {
+        "metaId": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "keyType": {
+          "type": "string"
+        },
+        "dataSetId": {
+          "type": "integer"
+        },
+        "dataSetName": {
+          "type": "string"
+        },
+        "dataServerId": {
+          "type": "integer"
+        },
+        "dsName": {
+          "type": "string"
+        },
+        "isCache": {
+          "type": ["null","integer"]
+        },
+        "isDelete": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      }
+    }
+  }
+}
