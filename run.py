@@ -35,12 +35,11 @@ def main(argv):
         timestr = FLAGS.timestr
     else:
         timestr = time.strftime("%Y%m%d%H%M%S")
-
     finder = caseFinder.casefinder()
     suite = finder.findcases_bypath(path=os.getcwd() + "/" + json.loads(FLAGS.args).get("path"), key=json.loads(FLAGS.args).get("key"))
     #logger.info(finder.find_bypath(path=os.getcwd() + '/console_api'))
     logger.info(suite)
-    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (json.loads(FLAGS.args).get("type"), timestr))
+    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (FLAGS.type, timestr))
     runner.run(suite)
 
 if __name__ == '__main__':
