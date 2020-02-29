@@ -51,21 +51,37 @@
           "mininum": 0
         },
         "data": {
-          "type": "arrary",
+          "type": "array",
           "items": {
             "type": "object",
-            "required": ["metaId", "key", "keyShape", "keyType", "dataSetName", "dataSetId", "dsId", "dsName", "isCache", "isDelete"],
+            "required": ["metaId", "key", "keyType", "dataSetName", "dataSetId", "dataServerId", "dsName", "isCache", "isDelete"],
             "additionalProperties": false,
             "properties": {
-              "id": {
-                "type": "integer",
-                "mininum": 0
-              },
-              "name": {
+              "metaId": {
                 "type": "string"
+              },
+              "key": {
+                "type": "string"
+              },
+              "keyType": {
+                "type": "string",
+                "enum": ["double","int","string", "int32", "int64"]
+              },
+              "dataSetName": {
+                "type": "string"
+              },
+              "dataSetId":{
+                "type": "integer"
               },
               "dataServerId": {
                 "type": "integer"
+              },
+              "dsName": {
+                "type": "string"
+              },
+              "isCache": {
+                "type": "integer",
+                "enum": [0, 1]
               },
               "isDelete": {
                 "type": "integer",

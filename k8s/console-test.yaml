@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: console-test
+  namespace: default
+  labels:
+    app: console-test
+spec:
+  template:
+    metadata:
+      labels:
+        app: console-test
+    spec:
+      containers:
+      - name: console-test
+        image: registry.tsingj.local/console_test:latest
+        env:
+        - name: consolesite
+          value: "console-dev.tsingj.local"
+        - name: consoleuser
+          value: "smoketest"
+        - name: cosnolepasswd
+          value: "qwer1234"
+        - name: key
+          value: "poc"
+        command: ["python", "run.py"]
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: registrysecret

@@ -51,7 +51,7 @@
           "mininum": 0
         },
         "data": {
-          "type": "arrary",
+          "type": "array",
           "items": {
             "type": "object",
             "required": ["id", "name", "dataServerId", "isDelete"],

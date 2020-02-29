@@ -40,6 +40,7 @@ class ConsoleAPI:
         self.MQ = redis_producer()
 
     def produces(self, api, time=None, length=None, isOK=True):
+        return True
         tmp = {"api": api}
         if isOK is False:
             tmp["isOK"] = False
@@ -52,11 +53,15 @@ class ConsoleAPI:
             logger.error(err)
 
     def add_task(self, token=None, job_data=None):
-        url = "https://%s/api/api-tm/task/v1" % self.site
+        url = "https://%s/api/api-tm/v1/task" % self.site
         if not token:
             token = self.token
-        head = {"Authorization": "bearer %s" % token}
+        head = {"Authorization": "bearer %s" % token,
+                "Content-Type":"application/json"}
         try:
+            logger.info(url)
+            logger.info(head)
+            logger.info(job_data)
             req = requests.post(url=url, data=job_data, headers=head, verify=False)
             self.produces(
                 "POST/api/api-tm/task/v1",
@@ -70,11 +75,14 @@ class ConsoleAPI:
             return False
 
     def modify_task(self, token=None, job_data=None):
-        url = "https://%s/api/api-tm/task/v1" % self.site
+        url = "https://%s/api/api-tm/v1/task" % self.site
         if not token:
             token = self.token
-        head = {"Authorization": "bearer %s" % token}
+        head = {"Authorization": "bearer %s" % token,
+                "Content-Type":"application/json"}
         try:
+            logger.info(url)
+            logger.info(job_data)
             req = requests.put(url=url, data=job_data, headers=head, verify=False)
             self.produces(
                 "PUT/api/api-tm/task/v1",
@@ -88,7 +96,7 @@ class ConsoleAPI:
             return False
 
     def delete_task(self, token=None, jobid=None):
-        url = "https://%s/api/api-tm/task/v1" % self.site
+        url = "https://%s/api/api-tm/v1/task" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
@@ -97,50 +105,50 @@ class ConsoleAPI:
                 url="%s/%d" % (url, jobid), headers=head, verify=False
             )
             self.produces(
-                "DELETE/api/api-tm/task/v1",
+                "DELETE/api/api-tm/v1/task",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("DELETE/api/api-tm/task/v1", isOK=False)
+            self.produces("DELETE/api/api-tm/v1/task", isOK=False)
             return False
 
     def start_task(self, token=None, jobid=None):
-        url = "https://%s/api/api-tm/task/v1/start" % self.site
+        url = "https://%s/api/api-tm/v1/task/start" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
             req = requests.put(url="%s/%d" % (url, jobid), headers=head, verify=False)
             self.produces(
-                "PUT/api/api-tm/task/v1/start",
+                "PUT/api/api-tm/v1/task/start",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("PUT/api/api-tm/task/v1/start", isOK=False)
+            self.produces("PUT/api/api-tm/v1/task/start", isOK=False)
             return False
 
     def stop_task(self, token=None, data=None):
-        url = "https://%s/api/api-tm/task/v1/stop" % self.site
+        url = "https://%s/api/api-tm/v1/task/stop" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
             req = requests.put(url=url, data=data, headers=head, verify=False)
             self.produces(
-                "PUT/api/api-tm/task/v1/stop",
+                "PUT/api/api-tm/v1/task/stop",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("PUT/api/api-tm/task/v1/stop", isOK=False)
+            self.produces("PUT/api/api-tm/v1/task/stop", isOK=False)
             return False
 
     def stop_task_bystatus(self, token=None, status=None):
@@ -180,12 +188,17 @@ class ConsoleAPI:
             return False
 
     def query_task(self, token=None, query=None):
-        url = "https://%s/api/api-tm/task/v1" % self.site
+        url = "https://%s/api/api-tm/v1/task" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.get(url=url, data=query, headers=head, verify=False)
+            if query:
+                url = "%s?%s" % (url, query)
+            else:
+                url = url
+            logger.info(url)
+            req = requests.get(url=url, headers=head, verify=False)
             self.produces(
                 "GET/api/api-tm/task/v1",
                 time=req.elapsed.total_seconds() * 1000,
@@ -198,21 +211,21 @@ class ConsoleAPI:
             return False
 
     def get_task(self, token=None, taskid=None):
-        url = "https://%s/api/api-tm/task/v1" % self.site
+        url = "https://%s/api/api-tm/v1/task" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s/%d" % (url, taskid), headers=head, verify=False)
+            req = requests.get(url="%s/%d" % (url, taskid), headers=head, verify=False)
             self.produces(
-                "GET/api/api-tm/task/v1/taskid",
+                "GET/api/api-tm/v1/task/taskid",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("GET/api/api-tm/task/v1/taskid", isOK=False)
+            self.produces("GET/api/api-tm/v1/task/taskid", isOK=False)
             return False
 
     def get_task_result(self, token=None, taskid=None):
@@ -345,12 +358,18 @@ class ConsoleAPI:
             self.produces("GET/api/api-tm/v1/dataServer", isOK=False)
 
     def query_dataset(self, token=None, query=None):
-        url = "https://%s/api/api-tm/dataSource" % self.site
+        url = "https://%s/api/api-tm/v1/dataSet" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s?%d" % (url, query), headers=head, verify=False)
+            if query:
+                url = "%s?%s" % (url, query)
+            else:
+                url = url
+            logger.info(url)
+            logger.info(head)
+            req = requests.get(url=url, headers=head, verify=False)
             self.produces(
                 "GET/api/api-tm/dataSource",
                 time=req.elapsed.total_seconds() * 1000,
@@ -362,12 +381,17 @@ class ConsoleAPI:
             self.produces("GET/api/api-tm/dataSource", isOK=False)
 
     def query_metadata(self, token=None, query=None):
-        url = "https://%s/api/api-tm/dataSourceMetadata" % self.site
+        url = "https://%s/api/api-tm/v1/dataSourceMetadata" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s?%d" % (url, query), headers=head, verify=False)
+            if query:
+                url = "%s?%s" % (url, query)
+            else:
+                url = url
+            logger.info(url)
+            req = requests.get(url=url, headers=head, verify=False)
             self.produces(
                 "GET/api/api-tm/dataSourceMetadata",
                 time=req.elapsed.total_seconds() * 1000,
@@ -378,20 +402,25 @@ class ConsoleAPI:
             logger.error(err)
             self.produces("GET/api/api-tm/dataSourceMetadata", isOK=False)
 
-    def query_metadata_byname(self, token, query=None):
-        url = "https://%s/api/api-tm/dataSourceMetadata/findDataSourceMetadataPara" % self.site
+    def query_metadata_byname(self, token=None, query=None):
+        url = "https://%s/api/api-tm/v1/dataSourceMetadata/findDataSourceMetadataPara" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s?%d" % (url, query), headers=head, verify=False)
+            if query:
+                url = "%s?%s" % (url, query)
+            else:
+                url = url
+            logger.info(url)
+            req = requests.get(url=url, headers=head, verify=False)
             self.produces(
-                "GET/api/api-tm/dataSourceMetadata/findDataSourceMetadataPara",
+                "GET/api/api-tm/v1/dataSourceMetadata/findDataSourceMetadataPara",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("GET/api/api-tm/dataSourceMetadata/findDataSourceMetadataPara", isOK=False)
+            self.produces("GET/api/api-tm/v1/dataSourceMetadata/findDataSourceMetadataPara", isOK=False)
 

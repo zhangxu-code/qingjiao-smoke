@@ -9,7 +9,6 @@ Date    2020-02-20
 import os
 import sys
 sys.path.append(os.getcwd())
-import yaml
 import unittest
 import json
 import jsonschema
@@ -77,18 +76,20 @@ class QueryDS(unittest.TestCase):
         logger.info("query ds pagesize 20")
         response = self.client.query_ds(query="pageSize=20")
         logger.info(response)
-        if isinstance(self.check_schema(resp=response)):
+        if isinstance(self.check_schema(resp=response), str):
             self.assertTrue(False, "jsonschema check failed")
         self.assertEqual(response.get("data").get("pageSize"), 20,msg="expect pageSize = 20")
         self.assertLessEqual(len(response.get("data").get("data")), 20,
                              msg="check len(data) <= pageSize")
         while response.get("data").get("pageNo") < response.get("data").get("totalPages"):
-            query = "page=%d" % response.get("data").get("nextPageNo")
+            query = "page=%d&pageSize=20" % response.get("data").get("nextPageNo")
             response = self.client.query_ds(query=query)
             logger.info(response)
             if isinstance(self.check_schema(response), str):
                 self.assertTrue(False, "jsonschema check failed")
-            self.assertLessEqual(len(response.get("data").get("data")), response.get("data").get("pageSize"),
+            self.assertLessEqual(len(response.get("data").get("data")), 20,
+                                 msg="check len(data) <= pageSize")
+            self.assertLessEqual(len(response.get("data").get("data")), 20,
                                  msg="check len(data) <= pageSize")
         self.assertLessEqual(response.get("data").get("nextPageNo"), response.get("data").get("totalPages"),
                          msg="查询到最后一页，check nextPageNo <= totalPages")
@@ -101,6 +102,26 @@ class QueryDS(unittest.TestCase):
         logger.info("query ds page = -1")
         response = self.client.query_ds(query="page=-1")
         logger.info(response)
+        if isinstance(self.check_schema(resp=response), str):
+            self.assertTrue(False, "jsonschema check failed")
+
+
+    def test_queryds_page_outmax(self):
+        """
+        [all] queryds page = totalpage + 1
+        :return:
+        """
+        logger.info("query ds page = totalpage + 1")
+        response = self.client.query_ds()
+        logger.info(response)
+        if isinstance(self.check_schema(resp=response), str):
+            self.assertTrue(False, "jsonschema check failed")
+        response = self.client.query_ds(query="page=%d" % (response.get("data").get("totalPages") + 1))
+        logger.info(response)
+        if isinstance(self.check_schema(resp=response), str):
+            self.assertTrue(False, "jsonschema check failed")
+
+
 
 if __name__ == '__main__':
     #os.environ["consolesite"] = "console-dev.tsingj.local"
