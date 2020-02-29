@@ -19,7 +19,8 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string(name="args",
                     default='{"site":"console-dev.tsingj.com","user":"heartbeat","passwd":"qwer1234","path":"job","csvfiles":"heartbeat_ali_metaid.csv"}',
                     help="json args")
-flags.DEFINE_string(name="timestr", default=None,help=None)
+flags.DEFINE_string(name="timestr", default=None, help=None)
+flags.DEFINE_string(name="type", default="test", help=None)
 
 def main(argv):
     # caseFinder.find_bypath(os.getcwd() + '/console_api')
@@ -39,7 +40,7 @@ def main(argv):
     suite = finder.findcases_bypath(path=os.getcwd() + "/" + json.loads(FLAGS.args).get("path"), key=json.loads(FLAGS.args).get("key"))
     #logger.info(finder.find_bypath(path=os.getcwd() + '/console_api'))
     logger.info(suite)
-    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (key, timestr))
+    runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (json.loads(FLAGS.args).get("type"), timestr))
     runner.run(suite)
 
 if __name__ == '__main__':
