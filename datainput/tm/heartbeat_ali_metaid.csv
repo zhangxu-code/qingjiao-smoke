@@ -1,0 +1,5 @@
+title,datasource,result,code,timeout,expect
+1M-heartbeat,"[{""dataSet"":""nyc_tlc_data_1M"",""key"":""tlc_1M"",""ds"":""dev-c1"",""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""dev-c1""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")",300,
