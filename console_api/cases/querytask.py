@@ -218,3 +218,13 @@ class queryTask(unittest.TestCase):
             self.assertTrue(False, "jsonschema check failed")
         self.assertEqual(response.get("data").get("totalRows"), 0, msg="expect total rows = 0")
 
+    def test_querytask_byid_0(self):
+        """
+        [poc] query task by id = 0
+        :return:
+        """
+        response = self.client.query_task(query="id=0")
+        logger.info(response)
+        if isinstance(self.check_schema(resp=response), str):
+            self.assertTrue(False, "jsonschema check failed")
+        self.assertEqual(response.get("data").get("totalRows"), 0, msg="expect total rows = 0")

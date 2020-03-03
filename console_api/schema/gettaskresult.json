@@ -29,21 +29,24 @@
     },
     "data": {
       "type": "object",
-      "required": ["id", "result", "updateTime" ,"resultVarName"],
       "additionalProperties": false,
-      "proerties": {
+      "required": ["id", "result", "updateTime" ,"resultVarName", "resultDest"],
+      "properties": {
         "id": {
           "type": "integer"
         },
         "result": {
-          "type": "string"
+          "type": ["null","string"]
         },
         "updateTime": {
           "type": "string"
         },
         "resultVarName": {
-          "type": "string",
+          "type": ["null","string"],
           "partern": "[a-zA-Z]{1}[a-zA-Z0-9_]*"
+        },
+        "resultDest": {
+          "type": ["null","string"]
         }
       }
     }

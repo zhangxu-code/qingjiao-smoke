@@ -137,7 +137,8 @@ class ConsoleAPI:
         url = "https://%s/api/api-tm/v1/task/stop" % self.site
         if not token:
             token = self.token
-        head = {"Authorization": "bearer %s" % token}
+        head = {"Authorization": "bearer %s" % token,
+                "Content-Type":"application/json"}
         try:
             req = requests.put(url=url, data=data, headers=head, verify=False)
             self.produces(
@@ -229,57 +230,58 @@ class ConsoleAPI:
             return False
 
     def get_task_result(self, token=None, taskid=None):
-        url = "https://%s/api/api-tm/taskResult/v1" % self.site
+        url = "https://%s/api/api-tm/v1/taskResult" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s/%d" % (url, taskid), headers=head, verify=False)
+            req = requests.get(url="%s/%d" % (url, taskid), headers=head, verify=False)
             self.produces(
-                "GET/api/api-tm/taskResult/v1",
+                "GET/api/api-tm/v1/taskResult",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("GET/api/api-tm/taskResult/v1", isOK=False)
+            self.produces("GET/api/api-tm/v1/taskResult", isOK=False)
             return False
 
     def get_task_msg(self, token=None, query=None):
-        url = "https://%s/api/api-tm/task/v1/getExecMsg" % self.site
+        url = "https://%s/api/api-tm/v1/task/getExecMsg" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s?%s" % (url, query), headers=head, verify=False)
+            req = requests.get(url="%s?%s" % (url, query), headers=head, verify=False)
             self.produces(
-                "GET/api/api-tm/task/v1/getExecMsg",
+                "GET/api/api-tm/v1/task/getExecMsg",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("GET/api/api-tm/task/v1/getExecMsg", isOK=False)
+            self.produces("GET/api/api-tm/v1/task/getExecMsg", isOK=False)
             return False
 
     def get_history_msg(self, token=None, taskid=None):
-        url = "https://%s/api/api-tm/task/v1/getHistoryExecMsg" % self.site
+        url = "https://%s/api/api-tm/v1/task/getHistoryExecMsg" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s/%d" % (url, taskid), headers=head, verify=False)
+            logger.info(url)
+            req = requests.get(url="%s/%d" % (url, taskid), headers=head, verify=False)
             self.produces(
-                "GET/api/api-tm/task/v1/getHistoryExecMsg",
+                "GET/api/api-tm/v1/task/getHistoryExecMsg",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("GET/api/api-tm/task/v1/getHistoryExecMsg", isOK=False)
+            self.produces("GET/api/api-tm/v1/task/getHistoryExecMsg", isOK=False)
 
     def get_role_log_byrequestid(self, token=None, query=None):
         url = "https://%s/api/api-track/track/getLogsByRequestIdAndRole" % self.site
@@ -287,7 +289,7 @@ class ConsoleAPI:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s?%d" % (url, query), headers=head, verify=False)
+            req = requests.get(url="%s?%d" % (url, query), headers=head, verify=False)
             self.produces(
                 "GET/api/api-track/track/getLogsByRequestIdAndRole",
                 time=req.elapsed.total_seconds() * 1000,
@@ -306,7 +308,7 @@ class ConsoleAPI:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s?%d" % (url, query), headers=head, verify=False)
+            req = requests.get(url="%s?%s" % (url, query), headers=head, verify=False)
             self.produces(
                 "GET/api/api-track/track/getLogsByTaskIdAndRole",
                 time=req.elapsed.total_seconds() * 1000,
@@ -318,21 +320,21 @@ class ConsoleAPI:
             self.produces("GET/api/api-track/track/getLogsByTaskIdAndRole", isOK=False)
 
     def get_task_roles(self, token=None, query=None):
-        url = "https://%s/api/api-tm/task/v1/getTaskRoles" % self.site
+        url = "https://%s/api/api-tm/v1/task/getTaskRoles" % self.site
         if not token:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.post(url="%s?%d" % (url, query), headers=head, verify=False)
+            req = requests.get(url="%s?%s" % (url, query), headers=head, verify=False)
             self.produces(
-                "GET/api/api-tm/task/v1/getTaskRoles",
+                "GET/api/api-tm/v1/task/getTaskRoles",
                 time=req.elapsed.total_seconds() * 1000,
                 isOK=True,
             )
             return req.json()
         except Exception as err:
             logger.error(err)
-            self.produces("GET/api/api-tm/task/v1/getTaskRoles", isOK=False)
+            self.produces("GET/api/api-tm/v1/task/getTaskRoles", isOK=False)
 
     def query_ds(self, token=None, query=None):
         url = "https://%s/api/api-tm/v1/dataServer" % self.site

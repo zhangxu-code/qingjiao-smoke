@@ -37,10 +37,11 @@
           "enum": ["waiting", "resourceSuccess", "prepareStartTc", "startTcSuccess", "running", "nodeSuccess", "taskSuccess"]
         },
         "result": {
-          "type": "string"
+          "type": ["null","string"]
         },
         "createTime": {
-          "type": "integer"
+          "type": "string",
+          "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
         }
       }
     }

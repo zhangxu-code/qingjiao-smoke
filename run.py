@@ -17,7 +17,12 @@ from finder import caseFinder
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string(name="args",
-                    default='{"site":"console-dev.tsingj.com","user":"heartbeat","passwd":"qwer1234","path":"job","csvfiles":"heartbeat_ali_metaid.csv"}',
+                    default='{"site":"console-dev.tsingj.local",\
+                    "user":"smoketest", \
+                    "passwd":"qwer1234",\
+                    "path":"console_api",\
+                    "csvfiles":"heartbeat_ali_metaid.csv",\
+                    "key":"test"}',
                     help="json args")
 flags.DEFINE_string(name="timestr", default=None, help=None)
 flags.DEFINE_string(name="type", default="test", help=None)

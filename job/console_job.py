@@ -98,7 +98,7 @@ class job(unittest.TestCase):
 
     @ddt.data(*jobcsv())
     @ddt.unpack
-    def test_jobrun(self, title, datasource, result, code, timeout, expect):
+    def test_jobrun(self, title, key, datasource, result, code, timeout, expect):
         """
         [dtt] ddt驱动任务测试
         :param title:
