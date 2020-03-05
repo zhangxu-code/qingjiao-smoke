@@ -20,7 +20,6 @@ import ddt
 from tm.consoleapi import ConsoleAPI
 
 
-
 def jobcsv():
     logger.info("get job.csv")
     jobs = []
@@ -29,16 +28,21 @@ def jobcsv():
     logger.info(csvfiles)
     for file in csvfiles.split(","):
         fr = open("./datainput/tm/"+file)
-        csvfile = csv.reader(fr)
-        next(csvfile)
+        reader = csv.reader(fr)
+        fieldnames = next(reader)
+        csvfile = csv.DictReader(fr, fieldnames=fieldnames)
+        #next(csvfile)
         for row in csvfile:
-            jobs.append(row)
+            logger.info(dict(row))
+            jobs.append([row.get("title"), dict(row)])
         fr.close()
+    logger.info(jobs)
     return jobs
 
 
 @ddt.ddt
 class job(unittest.TestCase):
+    namespace = None
     @classmethod
     def setUpClass(cls) -> None:
         logger.info("setup")
@@ -47,6 +51,7 @@ class job(unittest.TestCase):
         #                        user=conf.get("user"), passwd=conf.get("passwd"))
         cls.client = ConsoleAPI(site=os.getenv("consolesite"),
                                 user=os.getenv("consoleuser"), passwd=os.getenv("consolepasswd"))
+        cls.namespace = os.getenv("namespace")
 
     def check_schema(self, resp):
         """
@@ -66,13 +71,20 @@ class job(unittest.TestCase):
             return str(err)
 
     def getmetaid(self, datasource):
+        logger.info(datasource)
         datasource_metaid = []
         try:
             for data in datasource:
                 tmp = {}
                 tmp["varName"] = data.get("varName")
+                if "${namespace}" in data.get("dsId"):
+                    ds = data.get("dsId").replace("${namespace}", self.namespace)
+                else:
+                    ds = data.get("dsId")
+                logger.info(ds)
+                logger.info(data)
                 response = self.client.query_metadata_byname(query="dsName=%s&dataSetName=%s&key=%s"
-                                            % (data.get("ds"), data.get("dataSet"), data.get("key")))
+                                            % (ds, data.get("dataSet"), data.get("key")))
                 logger.info(response)
                 tmp["metaId"] = response.get("data").get("metaId")
                 datasource_metaid.append(tmp)
@@ -83,6 +95,8 @@ class job(unittest.TestCase):
 
     def getdsid(self,dsname):
         logger.info("get dsid")
+        if "${namespace}" in dsname:
+            dsname =dsname.replace("${namespace}", self.namespace)
         page = 0
         try:
             while 1:
@@ -96,24 +110,29 @@ class job(unittest.TestCase):
         except Exception as err:
             logger.info(err)
 
-    @ddt.data(*jobcsv())
-    @ddt.unpack
-    def test_jobrun(self, title, key, datasource, result, code, timeout, expect):
-        """
-        [dtt] ddt驱动任务测试
-        :param title:
-        :param datasource:
-        :param result:
-        :param code:
-        :param timeout:
-        :param expect:
-        :return:
-        """
-        logger.info("start job timeout=%d" % int(timeout))
-        datasource_metaid = self.getmetaid(json.loads(datasource))
+    def jobdata_json(self, jsonfile):
+        fr = open("./datainput/tm/jobjson/10M.json")
+        data = json.load(fr)
+        fr.close()
+        logger.info(data)
+        body = {
+            "name": data.get("name"),
+            "code": data.get("code"),
+            "taskResultVOList": data.get("taskResultVOList")
+        }
+        datasource = self.getmetaid(data.get("taskDataSourceVOList"))
+
+        for result in data.get("taskResultVOList"):
+            if "${namespace}" in result.get("resultDest"):
+                result["resultDest"] = result.get("resultDest").replace("${namespace}", self.namespace)
+        body["taskDataSourceVOList"] = datasource
+        return body
+
+    def jobdata_dict(self, data):
+        datasource_metaid = self.getmetaid(data.get("datasource"))
         logger.info(datasource_metaid)
         self.assertIsInstance(datasource_metaid, list, msg="get metaid failed")
-        result_dict = json.loads(result)
+        result_dict = data.get("result")
         for tmpres in result_dict:
             dsid = self.getdsid(tmpres.get("resultDest"))
             self.assertIsInstance(dsid, str, msg="get dsid failed")
@@ -121,11 +140,30 @@ class job(unittest.TestCase):
         logger.info(result_dict)
 
         jobbody = {
-            "name": title,
+            "name": data.get("title"),
             "taskDataSourceVOList": datasource_metaid,
             "taskResultVOList": result_dict,
-            "code": code
+            "code": data.get("code")
         }
+        return jobbody
+
+    @ddt.data(*jobcsv())
+    @ddt.unpack
+    def test_jobrun(self, title, data): #title, key, datasource, result, code, timeout, expect):
+        """
+        [ddt] ddt驱动任务测试
+        :param data
+        :return:
+        """
+        logger.info(data)
+        logger.info("start job timeout=%d" % int(data.get("timeout")))
+        #logger.info(title)
+
+        if data.get("json"):
+            jobbody = self.jobdata_json(jsonfile=data.get("json"))
+        else:
+            jobbody = self.jobdata_dict(data=data)
+        logger.info(jobbody)
         response = self.client.add_task(job_data=json.dumps(jobbody))
         logger.info(response)
         if isinstance(self.check_schema(response), str):
@@ -135,18 +173,18 @@ class job(unittest.TestCase):
         logger.info(response)
         self.assertEqual(response.get("code"), 0, msg="start job failed")
         timecount = 0
-        while timecount < int(timeout):
+        while timecount < int(data.get("timeout")):
             response = self.client.get_task(taskid=taskid)
             logger.info(response)
             if response.get("data").get("queueStatus") < 6:
-                time.sleep(30)
+                time.sleep(10)
                 timecount = timecount + 30
                 continue
             else:
                 self.assertEqual(response.get("data").get("queueStatus"), 6, msg="expect task success")
                 break
-        response = self.client.delete_task(jobid=taskid)
-        logger.info(response)
+        #response = self.client.delete_task(jobid=taskid)
+        #logger.info(response)
         self.assertEqual(response.get("code"), 0, msg="delete job expect code = 0")
 
 """

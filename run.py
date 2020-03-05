@@ -17,13 +17,9 @@ from finder import caseFinder
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string(name="args",
-                    default='{"site":"console-dev.tsingj.local",\
-                    "user":"smoketest", \
-                    "passwd":"qwer1234",\
-                    "path":"console_api",\
-                    "csvfiles":"heartbeat_ali_metaid.csv",\
-                    "key":"test"}',
+                    default=None,
                     help="json args")
+flags.DEFINE_string(name="json", default=None, help="read env from json")
 flags.DEFINE_string(name="timestr", default=None, help=None)
 flags.DEFINE_string(name="type", default="test", help=None)
 
@@ -35,15 +31,34 @@ def main(argv):
         os.environ["consoleuser"] = conf.get("user")
         os.environ["consolepasswd"] = conf.get("passwd")
         os.environ["csvfiles"] = conf.get("csvfiles")
-        key = conf.get("key")
+        os.environ["namespace"] = conf.get("namespace")
+        os.environ["path"] = conf.get("path")
+        os.environ["key"] = conf.get("key")
+    elif FLAGS.json:
+        fr = open(FLAGS.json)
+        conf = json.load(fr)
+        fr.close()
+        os.environ["consolesite"] = conf.get("site")
+        os.environ["consoleuser"] = conf.get("user")
+        os.environ["consolepasswd"] = conf.get("passwd")
+        os.environ["csvfiles"] = conf.get("csvfiles")
+        os.environ["namespace"] = conf.get("namespace")
+        os.environ["path"] = conf.get("path")
+        os.environ["key"] = conf.get("key")
+
+    print(os.environ)
+    #return True
     if FLAGS.timestr:
         timestr = FLAGS.timestr
     else:
         timestr = time.strftime("%Y%m%d%H%M%S")
     finder = caseFinder.casefinder()
-    suite = finder.findcases_bypath(path=os.getcwd() + "/" + json.loads(FLAGS.args).get("path"), key=json.loads(FLAGS.args).get("key"))
+    suit_list = []
+    for path in os.environ["path"].split(','):
+        tmp = (finder.findcases_bypath(path=os.getcwd() + "/" + path, key=os.environ["key"]))
     #logger.info(finder.find_bypath(path=os.getcwd() + '/console_api'))
-    logger.info(suite)
+    suite = unittest.TestSuite(suit_list)
+    logger.info(suite.countTestCases())
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (FLAGS.type, timestr))
     runner.run(suite)
 

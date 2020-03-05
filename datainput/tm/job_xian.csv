@@ -1,0 +1,14 @@
+title,key,datasource,result,code,timeout,expect
+10M-test,heartbeat,"[{""dataSet"":""nyc_tlc_data_10M"",""key"":""tlc_10M"",""ds"":""${namespace}-c2"",""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""${namespace}-c2""}]","import privpy as pp\na1=pp.ss(\"data\")\nresult = a1*a1\npp.reveal(result, \"result\")",300,
+100M-test,heartbeat,"[{""dataSet"":""nyc_tlc_data_100M"",""key"":""tlc_100M"",""ds"":""${namespace}-c2"",""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""${namespace}-c2""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")",300,
+500M-test,heartbeat,"[{""dataSet"":""nyc_tlc_data_500M"",""key"":""tlc_500M"",""ds"":""${namespace}-c2"",""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""${namespace}-c2""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")",300,
+1G-test,heartbeat,"[{""dataSet"":""nyc_tlc_data_1G"",""key"":""tlc_1G"",""ds"":""${namespace}-c2"",""varName"":""data1""}]","[{""resultVarName"":""result"",""resultDest"":""${namespace}-c2""}]","import privpy as pp
+a1=pp.ss(""data1"")
+result = a1*a1
+pp.reveal(result, ""result"")",300,

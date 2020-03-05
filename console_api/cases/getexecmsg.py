@@ -115,12 +115,14 @@ pp.reveal(data, "result")
         logger.info(response)
         self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
         index = 0
-        while index < 10:
+        tasktype = ''
+        while tasktype != "taskSuccess" and tasktype != "taskFail":
             response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid, index))
             logger.info(response)
             if isinstance(self.check_schema(resp=response), str):
                 self.assertTrue(False, "jsonschema check failed")
             self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
+            tasktype = response.get("data").get("type")
             index = index + 1
 
     def test_getmsg_requestid(self):
@@ -134,12 +136,14 @@ pp.reveal(data, "result")
         self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
         requestid = response.get("data")
         index = 0
-        while index < 10:
+        tasktype = ''
+        while tasktype != "taskSuccess" and tasktype != "taskFail":
             response = self.client.get_task_msg(query="requestId=%s&index=%d" % (requestid, index))
             logger.info(response)
             if isinstance(self.check_schema(resp=response), str):
                 self.assertTrue(False, "jsonschema check failed")
             self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
+            tasktype = response.get("data").get("type")
             index = index + 1
 
     def test_getmsg_id_notexist(self):
@@ -152,12 +156,14 @@ pp.reveal(data, "result")
         #logger.info(response)
         #self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
         index = 0
-        while index < 10:
+        tasktype = ''
+        while tasktype != "taskSuccess" and tasktype != "taskFail":
             response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid+9999, index))
             logger.info(response)
             if isinstance(self.check_schema(resp=response), str):
                 self.assertTrue(False, "jsonschema check failed")
             self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
+            tasktype = response.get("data").get("type")
             index = index + 1
 
     def test_getmsg_requestid_notexist(self):
@@ -170,12 +176,14 @@ pp.reveal(data, "result")
         #logger.info(response)
         #self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
         index = 0
-        while index < 10:
+        tasktype = ''
+        while tasktype != "taskSuccess" and tasktype != "taskFail":
             response = self.client.get_task_msg(query="requestId=hahahahahihihi&index=%d" % index)
             logger.info(response)
             if isinstance(self.check_schema(resp=response), str):
                 self.assertTrue(False, "jsonschema check failed")
             self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
+            tasktype = response.get("data").get("type")
             index = index + 1
 
     def test_getmsg_tasknotrun(self):
@@ -188,12 +196,14 @@ pp.reveal(data, "result")
         # logger.info(response)
         # self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
         index = 0
-        while index < 10:
+        tasktype = ''
+        while tasktype != "taskSuccess" and tasktype != "taskFail":
             response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid, index))
             logger.info(response)
             if isinstance(self.check_schema(resp=response), str):
                 self.assertTrue(False, "jsonschema check failed")
             self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
+            tasktype = response.get("data").get("type")
             index = index + 1
 
     def test_getmsg_id_outindex(self):
@@ -206,13 +216,15 @@ pp.reveal(data, "result")
         logger.info(response)
         self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
         index = 0
-        while index < 10:
+        tasktype = ''
+        while tasktype != "taskSuccess" and tasktype != "taskFail":
             response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid, index))
             logger.info(response)
             if isinstance(self.check_schema(resp=response), str):
                 self.assertTrue(False, "jsonschema check failed")
             self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
+            tasktype = response.get("data").get("type")
             index = index + 1
-        response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid, 11))
+        response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid, index))
         logger.info(response)
         self.assertEqual(response.get("code"), 1, msg="getExecMsg expect code = 1")

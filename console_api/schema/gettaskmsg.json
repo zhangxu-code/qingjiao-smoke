@@ -34,7 +34,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["waiting", "resourceSuccess", "prepareStartTc", "startTcSuccess", "running", "nodeSuccess", "taskSuccess"]
+          "enum": ["waiting", "resourceSuccess", "prepareStartTc", "startTcSuccess", "running", "nodeSuccess", "taskSuccess", "taskFail"]
         },
         "result": {
           "type": ["null","string"]
