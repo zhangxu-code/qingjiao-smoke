@@ -111,8 +111,8 @@ pp.reveal(data, "result")
         }
         response = self.client.add_task(job_data=json.dumps(self.taskbody))
         logger.info(response)
-        if isinstance(self.check_schema(self, resp=response), str):
-            self.assertTrue(False, "jsonschema check failed")
+        #if isinstance(self.check_schema(self, resp=response), str):
+        #    self.assertTrue(False, "jsonschema check failed")
         self.taskid = response.get("data").get("id")
 
     def test_modify_task_name(self):
@@ -195,3 +195,39 @@ pp.reveal(data, "result")
                          msg="expect taskResultVOList = None")
         self.taskbody["taskResultVOList"] = latestdatasource
 
+    def test_modify_task_noname(self):
+        """
+        [all] modify task change name
+        :return:
+        """
+        lastname = self.taskbody["name"]
+        self.taskbody.pop("name")
+        self.taskbody["id"] = self.taskid
+        logger.info(self.taskbody)
+        response = self.client.modify_task(job_data=json.dumps(self.taskbody))
+        logger.info(response)
+        #if isinstance(self.check_schema(resp=response), str):
+        #    self.assertTrue(False, "jsonschema check failed")
+        self.assertEqual(response.get("code"), 1, msg="expect code = 1")
+        self.assertIsInstance(response.get("subCode"), str, msg="expect subCode = Str")
+        #self.assertEqual(response.get("subCode"), str, msg="expect subCode = Null")
+
+        self.taskbody["name"] = lastname
+
+    def test_modify_task_nocode(self):
+        """
+        [all] modify task change name
+        :return:
+        """
+        lastcode = self.taskbody["code"]
+        self.taskbody.pop("code")
+        self.taskbody["id"] = self.taskid
+        logger.info(self.taskbody)
+        response = self.client.modify_task(job_data=json.dumps(self.taskbody))
+        logger.info(response)
+        #if isinstance(self.check_schema(resp=response), str):
+        #    self.assertTrue(False, "jsonschema check failed")
+        self.assertEqual(response.get("code"), 1, msg="expect code = 1")
+        self.assertIsInstance(response.get("subCode"), str, msg="expect subCode = Str")
+        #self.assertEqual(response.get("subCode"), str, msg="expect subCode = Null")
+        self.taskbody["code"] = lastcode

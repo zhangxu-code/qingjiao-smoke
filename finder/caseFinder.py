@@ -61,13 +61,17 @@ class casefinder:
         for _py in files_py:
             try:
                 modle = _py[len(os.getcwd()):].lstrip('/')
-                logger.info(modle[:-3].replace('/', '.'))
                 tmp_mod = importlib.import_module(modle[:-3].replace('/', '.'))
-                logger.info(type(tmp_mod))
                 for name, obj in inspect.getmembers(tmp_mod):
                     if inspect.isclass(obj):
                         if obj.__base__ == unittest.TestCase:
-                            tmp_dict = casespath_dict
+                            '''文件路径作为一级key， 类名作为二级key'''
+                            if modle[:-3].replace('/', '.') in casespath_dict.keys():
+                                casespath_dict[modle[:-3].replace('/', '.')][name] = []
+                            else:
+                                casespath_dict[modle[:-3].replace('/', '.')] = {}
+                            logger.info(modle[:-3].replace('/', '.'))
+                            tmp_dict = cases_dict
                             # 如果为unittest.TestCase 子类，则按文件路径组织字典结构
                             path_list = modle.split("/")
                             for i in range(len(path_list)):
@@ -77,8 +81,9 @@ class casefinder:
                                 else:
                                     tmp_dict[path_list[i]] = {}
                                     tmp_dict = tmp_dict.get(path_list[i])
-                            tmp_dict[obj.__name__] = self.find_cls(obj)
-                            cases_dict[modle[:-3].replace('/', '.')] = tmp_dict
+                            casespath_dict[modle[:-3].replace('/', '.')][name] = self.find_cls(obj)
+                            tmp_dict = casespath_dict[modle[:-3].replace('/', '.')][name]
+                            #cases_dict[modle[:-3].replace('/', '.')] = tmp_dict
             except Exception as err:
                 logger.error(err)
                 logger.info(_py)
@@ -121,19 +126,19 @@ class casefinder:
             pyfiles = path
         cases_dict, casespath_dict = self.find_cases(pyfiles)
         suite = unittest.TestSuite()
-        for pathkey in cases_dict.keys():
+        for pathkey in casespath_dict.keys():
             filename = pathkey.split('.')[-1]
             logger.info(pathkey)
             #logger.info(cls)
             module_packge = importlib.import_module(pathkey)
-            for cls in cases_dict.get(pathkey):
+            for cls in casespath_dict.get(pathkey):
                 for name, obj in inspect.getmembers(module_packge):
                     if inspect.isclass(obj):
                         if name == cls:
-                            for method_case in cases_dict.get(pathkey).get(cls):
+                            for method_case in casespath_dict.get(pathkey).get(cls):
                                 method, comment = method_case.popitem()
-                                logger.info(method)
-                                logger.info(comment)
+                                #logger.info(method)
+                                #logger.info(comment)
                                 if self.key_match(key, comment):
                                     suite.addTest(obj(method))
                         #for fun in dir(obj):

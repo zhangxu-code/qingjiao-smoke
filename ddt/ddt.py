@@ -125,18 +125,26 @@ def mk_test_name(name, value, index=0):
     # Add zeros before index to keep order
     index = "{0:0{1}}".format(index + 1, index_len)
     #if not is_trivial(value):
-    if not is_trivial(value) and type(value) is not dict:
+    if not is_trivial(value) and type(value) is not dict and type(value) is not list:
         return "{0}_{1}".format(name, index)
     if isinstance(value,dict):
         try:
             value = value["title"]
         except:
             return "{0}_{1}".format(name,index)
-    try:
-        value = str(value[0])
-    except UnicodeEncodeError:
-        # fallback for python2
-        value = value.encode('ascii', 'backslashreplace')
+
+    elif isinstance(value, list):
+        try:
+            value = str(value[0])
+        except UnicodeEncodeError:
+            # fallback for python2
+            value = value.encode('ascii', 'backslashreplace')
+    else:
+        try:
+            value = str(value[0])
+        except UnicodeEncodeError:
+            # fallback for python2
+            value = value.encode('ascii', 'backslashreplace')
     #test_name = "{0}_{1}_{2}".format(name, index, value)
 
     test_name = "{0}_{1}_{2}".format(name, index, value)

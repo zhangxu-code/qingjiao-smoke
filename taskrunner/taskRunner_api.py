@@ -23,11 +23,15 @@ class TaskRunnerAPI:
     conf = None
     token = None
     def __init__(self):
+        self.conf = {}
         logger.info("runner init")
-        fr = open('./taskrunner/conf.yml')
-        self.conf = yaml.load(fr)
-        logger.info(self.conf)
-        fr.close()
+        self.conf["site"] = os.getenv("consolesite")
+        self.conf["user"] = os.getenv("consoleuser")
+        self.conf["passwd"] = os.getenv("consolepasswd")
+        #fr = open('./taskrunner/conf.yml')
+        #self.conf = yaml.load(fr)
+        #logger.info(self.conf)
+        #fr.close()
         self.MQ = redis_producer()
 
     def produces(self,api,time=None,isOK=True):
@@ -125,7 +129,10 @@ class TaskRunnerAPI:
         }
         logger.info(body)
         try:
-            url = "https://%s/api/api-tm/task" %(self.conf.get("site"))
+            if "http://" in self.conf.get("site"):
+                url = "%s/api/api-tm/task" % self.conf.get("site")
+            else:
+                url = "https://%s/api/api-tm/task" %(self.conf.get("site"))
             while 1:
                 req = requests.post(url=url,headers=head,data=json.dumps(body),verify=False)
                 self.produces(api="POST/api/api-tm/task", time=req.elapsed.total_seconds() * 1000, isOK=True)
@@ -153,7 +160,11 @@ class TaskRunnerAPI:
         }
 
         try:
-            url = "https://%s/api/api-tm/task/startTask/%s"%(self.conf.get("site"),str(jobid))
+            if "http://" in self.conf.get("site"):
+                url = "%s/api/api-tm/task/startTask" % self.conf.get("site")
+            else:
+                url = "https://%s/api/api-tm/task/startTask" %(self.conf.get("site"))
+            url = "%s/%s"%(url,str(jobid))
             while 1:
                 req = requests.put(url=url,headers=head,verify=False)
                 self.produces(api="PUT/api/api-tm/task/startTask", time=req.elapsed.total_seconds() * 1000, isOK=True)
@@ -180,7 +191,11 @@ class TaskRunnerAPI:
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
         }
-        url = 'https://%s/api/api-tm/task/%s' % (self.conf.get("site"), str(jobid))
+        if "http://" in self.conf.get("site"):
+            url = "%s/api/api-tm/task" % self.conf.get("site")
+        else:
+            url = "https://%s/api/api-tm/task" % (self.conf.get("site"))
+        url = '%s/%s' % (url, str(jobid))
         try:
             while 1:
                 req = requests.delete(url=url, headers=head, verify=False)
@@ -207,7 +222,11 @@ class TaskRunnerAPI:
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
         }
-        url = 'https://%s/api/api-tm/task/%s' % (self.conf.get("site"), str(jobid))
+        if "http://" in self.conf.get("site"):
+            url = "%s/api/api-tm/task" % self.conf.get("site")
+        else:
+            url = "https://%s/api/api-tm/task" % (self.conf.get("site"))
+        url = '%s/%s' % (url, str(jobid))
         tryCount = 0
         try:
             while tryCount < 300:
@@ -235,7 +254,11 @@ class TaskRunnerAPI:
 
     def job_result(self,jobid):
         logger.info("get job result")
-        url =  "https://%s/api/api-tm/task/getTaskResult/%s" %(self.conf.get("site"),str(jobid))
+        if "http://" in self.conf.get("site"):
+            url = "%s/api/api-tm/task/getTaskResult" % self.conf.get("site")
+        else:
+            url = "https://%s/api/api-tm/task/getTaskResult" % (self.conf.get("site"))
+        url = '%s/%s' % (url, str(jobid))
         head = {
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
@@ -284,7 +307,10 @@ class TaskRunnerAPI:
     def login(self):
         threadname = threading.current_thread().name
         logger.info("login :%s"%(self.conf.get("site")))
-        url = 'https://%s/api/api-sso/token/simpleLogin' % (self.conf.get("site"))
+        if "http://" in self.conf.get("site"):
+            url = "%s/api/api-sso/token/simpleLogin" % self.conf.get("site")
+        else:
+            url = "https://%s/api/api-sso/token/simpleLogin" % (self.conf.get("site"))
         if 'multiRun' in threadname:
             username = self.conf.get("user")+str((int(threadname.split('_')[-1])+1)%(int(self.conf.get("thread"))))
         else:
@@ -305,7 +331,10 @@ class TaskRunnerAPI:
 
     def find_allalive_ds(self):
         logger.info("find ds")
-        url  = 'https://%s/api/api-tm/dataServer'%(self.conf.get("site"))
+        if "http://" in self.conf.get("site"):
+            url = "%s/api/api-tm/dataServer" % self.conf.get("site")
+        else:
+            url = "https://%s/api/api-tm/dataServer" % (self.conf.get("site"))
         head = {
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"
@@ -341,7 +370,10 @@ class TaskRunnerAPI:
     def find_metadata(self,aliveds = []):
         datasource = {}
         logger.info("find metadata")
-        url = 'https://%s/api/api-tm/dataSourceMetadata' %(self.conf.get("site"))
+        if "http://" in self.conf.get("site"):
+            url = "%s/api/api-tm/dataSourceMetadata" % self.conf.get("site")
+        else:
+            url = "https://%s/api/api-tm/dataSourceMetadata" % (self.conf.get("site"))
         head = {
             "Authorization": "bearer %s" % (self.token),
             "Content-Type": "application/json"

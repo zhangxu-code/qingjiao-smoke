@@ -29,7 +29,7 @@
     },
     "data": {
       "type": "object",
-      "required": ["id", "name", "description", "code", "computeServerVOList", "taskDataSourceVOList",
+      "required": ["id", "name", "description", "code", "createTime", "computeServerVOList", "taskDataSourceVOList",
         "taskResultVOList", "requestId", "queueStatus", "cluster", "lastExecTime"],
       "additionalProperties": false,
       "properties": {
@@ -40,21 +40,25 @@
           "type": "string"
         },
         "description": {
-          "type": ["null","string"]
+          "type": ["null", "string"]
         },
         "code": {
           "type": "string"
         },
         "requestId": {
-          "type": "string"
+          "type": ["null", "string"]
         },
         "queueStatus": {
           "type": "integer"
         },
         "cluster": {
-          "type": "string"
+          "type": ["null", "string"]
         },
         "lastExecTime": {
+          "type": ["null","string"],
+          "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+        },
+        "createTime": {
           "type": "string",
           "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
         },
@@ -96,7 +100,6 @@
           "items": {
             "type": "object",
             "required": ["metaId", "varName","partitionSize"],
-            "additionalProperties": false,
             "proerties": {
               "metaId": {
                 "type": "integer"
@@ -106,7 +109,7 @@
                 "partern": "[a-zA-Z]{1}[a-zA-Z0-9_]*"
               },
               "partitionSize": {
-                "type": "string"
+                "type": ["null","string"]
               }
             }
           }
@@ -116,7 +119,6 @@
           "items": {
             "type": "object",
             "required": ["resultDest", "resultVarName"],
-            "additionalProperties": false,
             "properties": {
               "resultVarName": {
                 "type": "string",

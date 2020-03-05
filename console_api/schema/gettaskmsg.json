@@ -34,13 +34,14 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["waiting", "resourceSuccess", "prepareStartTc", "startTcSuccess", "running", "nodeSuccess", "taskSuccess"]
+          "enum": ["waiting", "resourceSuccess", "prepareStartTc", "startTcSuccess", "running", "nodeSuccess", "taskSuccess", "taskFail"]
         },
         "result": {
-          "type": "string"
+          "type": ["null","string"]
         },
         "createTime": {
-          "type": "integer"
+          "type": "string",
+          "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
         }
       }
     }

@@ -1,0 +1,18 @@
+{
+  "name": "1G-test",
+  "code": "import privpy as pp\na1=pp.ss(\"data\")\nresult = a1*a1\npp.reveal(result, \"result\")",
+  "taskDataSourceVOList": [
+    {
+      "varName": "data",
+      "dataSet": "nyc_tlc_data_1G",
+      "dsId": "${namespace}-c2",
+      "key": "tlc_1G"
+    }
+  ],
+  "taskResultVOList": [
+    {
+      "resultVarName": "result",
+      "resultDest": "${namespace}-c2"
+    }
+  ]
+}
