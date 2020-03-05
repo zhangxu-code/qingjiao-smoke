@@ -47,7 +47,6 @@ def main(argv):
         os.environ["key"] = conf.get("key")
 
     print(os.environ)
-    #return True
     if FLAGS.timestr:
         timestr = FLAGS.timestr
     else:
@@ -55,7 +54,7 @@ def main(argv):
     finder = caseFinder.casefinder()
     suit_list = []
     for path in os.environ["path"].split(','):
-        tmp = (finder.findcases_bypath(path=os.getcwd() + "/" + path, key=os.environ["key"]))
+        suit_list.append(finder.findcases_bypath(path=os.getcwd() + "/" + path, key=os.environ["key"]))
     #logger.info(finder.find_bypath(path=os.getcwd() + '/console_api'))
     suite = unittest.TestSuite(suit_list)
     logger.info(suite.countTestCases())

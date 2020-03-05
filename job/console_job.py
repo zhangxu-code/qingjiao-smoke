@@ -55,7 +55,7 @@ class job(unittest.TestCase):
 
     def check_schema(self, resp):
         """
-        json schema check
+        [ddt] json schema check
         :param resp:
         :return:
         """
@@ -111,7 +111,7 @@ class job(unittest.TestCase):
             logger.info(err)
 
     def jobdata_json(self, jsonfile):
-        fr = open("./datainput/tm/jobjson/10M.json")
+        fr = open("./datainput/tm/jobjson/" + jsonfile)
         data = json.load(fr)
         fr.close()
         logger.info(data)
