@@ -17,6 +17,8 @@ import yaml
 from loguru import logger
 sys.path.append(os.getcwd())
 from tm.consoleapi import ConsoleAPI
+from console_api.cases.util import util
+
 
 class GetTaskRoles(unittest.TestCase):
     code = """
@@ -51,40 +53,15 @@ pp.reveal(data, "result")
             logger.error(err)
             return str(err)
 
-    def get_dataserverid(self):
-        response = self.client.query_ds()
-        logger.info(response)
-        try:
-            randint = random.randint(1, len(response.get("data").get("data"))) - 1
-            return response.get("data").get("data")[randint].get("id"), \
-                   response.get("data").get("data")[randint].get("dsId")
-        except Exception as err:
-            logger.error(err)
-            return False
-
-    def get_metaid(self):
-        fr = open("./console_api/conf.yaml")
-        conf = yaml.load(fr)
-        fr.close()
-        try:
-            response = self.client.query_metadata_byname(query="dsName=%s&dataSetName=%s&key=%s" % (
-                conf.get("dataServer"), conf.get("dataSet"), conf.get("key")))
-            logger.info(response)
-            self.assertEqual(response.get("code"), 0, msg="expect code = 0")
-            return response.get("data").get("metaId")
-        except Exception as err:
-            logger.error(err)
-            return False
-
     def addtask(self, data=None):
         """
         [poc]  add task
         :return:
         """
-        dataserverId, dsid = self.get_dataserverid()
+        dataserverId, dsid = util.getdsid(self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        metaid = self.get_metaid()
+        metaid = util.getmetaId(self.client)
         if metaid is False:
             self.assertTrue(False, msg="get metaid failed")
         self.taskbody = {

@@ -26,6 +26,8 @@ def jobcsv():
     csvfiles = os.getenv("csvfiles")
     csv.field_size_limit(1024 * 1024 * 10)
     logger.info(csvfiles)
+    if csvfiles is None:
+        return [False,False]
     for file in csvfiles.split(","):
         fr = open("./datainput/tm/"+file)
         reader = csv.reader(fr)
@@ -149,7 +151,7 @@ class job(unittest.TestCase):
 
     @ddt.data(*jobcsv())
     @ddt.unpack
-    def test_jobrun(self, title, data): #title, key, datasource, result, code, timeout, expect):
+    def test_jobrun(self, title, data):
         """
         [ddt] ddt驱动任务测试
         :param data

@@ -17,6 +17,7 @@ import warnings
 from loguru import logger
 sys.path.append(os.getcwd())
 from tm.consoleapi import ConsoleAPI
+from console_api.cases.util import util
 
 class ModifyTask(unittest.TestCase):
     code = """
@@ -53,51 +54,14 @@ pp.reveal(data, "result")
             logger.error(err)
             return str(err)
 
-    def get_dataserverid(self):
-        response = self.client.query_ds()
-        try:
-            randint = random.randint(1, len(response.get("data").get("data"))) - 1
-            return response.get("data").get("data")[randint].get("id"), \
-                   response.get("data").get("data")[randint].get("name")
-        except Exception as err:
-            logger.error(err)
-            return False
-
-    def get_dataset(self, dataserverid):
-        response = self.client.query_dataset(query="dataServerId=%d" % dataserverid)
-        logger.info(response)
-        try:
-            randint = random.randint(1, len(response.get("data").get("data"))) - 1
-            return response.get("data").get("data")[randint].get("id"), \
-                   response.get("data").get("data")[randint].get("name")
-        except Exception as err:
-            logger.error(err)
-            return False
-
-    def get_metadata_key(self, dataserverid, datasetid):
-        response = self.client.query_metadata(query="dataServerId=%d&dataSetId=%d" % (dataserverid, datasetid))
-        logger.info(response)
-        try:
-            randint = random.randint(1, len(response.get("data").get("data"))) - 1
-            return response.get("data").get("data")[randint].get("key"), \
-                   response.get("data").get("data")[randint].get("metaId")
-        except Exception as err:
-            logger.error(err)
-            return False
-
     def addtask(self, data=None):
         """
         [poc]  add task
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
-        if dataserverId is False:
-            self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        dataserverId, dsname = util.getdsid(self.client)
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         self.taskbody = {
             "code": self.code,
@@ -192,7 +156,7 @@ pp.reveal(data, "result")
 
     def test_deletetask_deleted(self):
         """
-        [all] delete task 重复删除
+        [exception] delete task 重复删除
         :return:
         """
         taskid = self.addtask()
@@ -206,7 +170,7 @@ pp.reveal(data, "result")
 
     def test_deletetask_noexist(self):
         """
-        [all] delete task 不存在taskid
+        [exception] delete task 不存在taskid
         :return:
         """
         taskid = self.addtask()
