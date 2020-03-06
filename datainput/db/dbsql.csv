@@ -1,2 +1,8 @@
 title,sql,expect
-sum,select sum(price) from gold where price < 1000,37
+count(*),select count(*) from gold,1940
+count(c_code),select count(c_code) from gold,1940
+count(c_code) limit 10,select count(c_code) from gold limit 10,1940
+count(c_code) price > 1000,select count(c_code) from gold where price > 1000,1938
+sum(price) where price<1000,select sum(price) from gold where price < 1000,37
+sum(price) where price>1000,select sum(price) from gold,7816861
+多条件查询,select  count(price) from  gold where(c_code=5152) and (price <= 3948 and price >= 3946) and (day > 20181031 or (day=20181031  and time>=95327897)) and (day < 20181031 or (day=20181031  and time<=95838463));,12

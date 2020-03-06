@@ -148,8 +148,8 @@ def mk_test_name(name, value, index=0):
     #test_name = "{0}_{1}_{2}".format(name, index, value)
 
     test_name = "{0}_{1}_{2}".format(name, index, value)
-    return test_name
-    #return re.sub(r'\W|^(?=\d)', '_', test_name)
+    #return test_name
+    return re.sub(r'\W|^(?=\d)', '_', test_name)
 
 
 def feed_data(func, new_name, test_data_docstring, *args, **kwargs):
