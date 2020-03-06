@@ -119,7 +119,7 @@ class QueryMetaIdByName(unittest.TestCase):
 
     def test_getmetaid_byname_nomatch(self):
         """
-        [all] get metaId by dsName & dataSetName & key not match
+        [exception] get metaId by dsName & dataSetName & key not match
         :return:
         """
         dataserverId, dsname = self.get_dataserverid()

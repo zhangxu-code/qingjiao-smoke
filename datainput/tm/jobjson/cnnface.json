@@ -18,7 +18,7 @@
   "taskResultVOList": [
     {
       "resultVarName": "result",
-      "resultDest": "zhenghongguang1-c2"
+      "resultDest": "${namespace}-c2"
     }
   ]
 }

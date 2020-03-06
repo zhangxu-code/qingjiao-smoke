@@ -35,6 +35,7 @@ class TaskRunnerAPI:
         self.MQ = redis_producer()
 
     def produces(self,api,time=None,isOK=True):
+        return
         tmp = {}
         tmp["api"] = api
         if isOK == False:
@@ -45,6 +46,7 @@ class TaskRunnerAPI:
         self.MQ.producer(json.dumps(tmp))
 
     def pub_msg(self,msg):
+        return
         self.MQ.pub_performace(msg=msg)
 
     def run(self,code,name=None):

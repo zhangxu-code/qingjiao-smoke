@@ -16,6 +16,7 @@ import warnings
 from loguru import logger
 sys.path.append(os.getcwd())
 from tm.consoleapi import ConsoleAPI
+from console_api.cases.util import util
 
 class addTask(unittest.TestCase):
     code = """
@@ -85,14 +86,11 @@ pp.reveal(data, "result")
         [poc]  add task
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -118,14 +116,11 @@ pp.reveal(data, "result")
         [poc] add task wrong varName = data@
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -149,14 +144,11 @@ pp.reveal(data, "result")
         [poc] add task wrong varName = data data
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -180,14 +172,11 @@ pp.reveal(data, "result")
         [poc] add task wrong varName = data&data
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -211,14 +200,11 @@ pp.reveal(data, "result")
         [poc] add task wrong resultvarName = result&
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -242,14 +228,11 @@ pp.reveal(data, "result")
         [poc] add task wrong resultvarName = result result
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -270,17 +253,14 @@ pp.reveal(data, "result")
 
     def test_addtask_nocode(self):
         """
-        [all]  add task key code not exist
+        [exception]  add task key code not exist
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             #"code": self.code,
@@ -301,17 +281,14 @@ pp.reveal(data, "result")
 
     def test_addtask_code_none(self):
         """
-        [all]  add task key code = none
+        [exception]  add task key code = none
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": None,
@@ -332,17 +309,14 @@ pp.reveal(data, "result")
 
     def test_addtask_noname(self):
         """
-        [all]  add task key name not exist
+        [exception]  add task key name not exist
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -363,17 +337,14 @@ pp.reveal(data, "result")
 
     def test_addtask_name_none(self):
         """
-        [all]  add task key name = none
+        [exception]  add task key name = none
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -394,17 +365,14 @@ pp.reveal(data, "result")
 
     def test_addtask_result_none(self):
         """
-        [all]  add task key taskResultVOList = none
+        [exception]  add task key taskResultVOList = none
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -424,17 +392,14 @@ pp.reveal(data, "result")
 
     def test_addtask_noresult(self):
         """
-        [all]  add task key taskResultVOList not exist
+        [exception]  add task key taskResultVOList not exist
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -453,17 +418,14 @@ pp.reveal(data, "result")
 
     def test_addtask_nodatasource(self):
         """
-        [all]  add task key taskDataSourceVOList not exist
+        [exception]  add task key taskDataSourceVOList not exist
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,
@@ -482,17 +444,14 @@ pp.reveal(data, "result")
 
     def test_addtask_datasource_none(self):
         """
-        [all]  add task key taskDataSourceVOList = none
+        [exception]  add task key taskDataSourceVOList = none
         :return:
         """
-        dataserverId, dsname = self.get_dataserverid()
+        dataserverId, dsname = util.getdsid(client=self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        datasetid, datasetname = self.get_dataset(dataserverId)
-        if datasetid is False:
-            self.assertTrue(False, msg="get dataset failed")
-        key, metaid = self.get_metadata_key(dataserverid=dataserverId, datasetid=datasetid)
-        if key is False:
+        metaid = util.getmetaId(self.client)
+        if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         jsbody = {
             "code": self.code,

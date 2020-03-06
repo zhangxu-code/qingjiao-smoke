@@ -1,0 +1,7 @@
+{
+  "dbhost":"10.18.0.80",
+  "dbport": "21050",
+  "path":"job",
+  "sqlcsvfiles":"dbsql.csv",
+  "key":"ddt"
+}

@@ -49,7 +49,7 @@ class QueryMetaData(unittest.TestCase):
         response = self.client.query_ds()
         try:
             return response.get("data").get("data")[
-                random.randint(1, len(response.get("data").get("data"))) - 1].get("id")
+                random.randint(1, len(response.get("data").get("data"))) - 1].get("dsId")
         except Exception as err:
             logger.error(err)
             return False
@@ -146,7 +146,7 @@ class QueryMetaData(unittest.TestCase):
 
     def test_querymetadata_pageoutmax(self):
         """
-        [all] query metadatq page = totalpage + 1
+        [exception] query metadatq page = totalpage + 1
         :return:
         """
         dataserverId = self.get_dataserverid()

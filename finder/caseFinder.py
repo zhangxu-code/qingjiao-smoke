@@ -123,7 +123,7 @@ class casefinder:
         if os.path.isdir(path):
             pyfiles = self.find_py(path)
         elif os.path.isfile(path):
-            pyfiles = path
+            pyfiles = [path]
         cases_dict, casespath_dict = self.find_cases(pyfiles)
         suite = unittest.TestSuite()
         for pathkey in casespath_dict.keys():

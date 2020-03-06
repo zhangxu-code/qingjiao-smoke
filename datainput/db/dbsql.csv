@@ -1,2 +1,2 @@
 title,sql,expect
-sum(price) where price<1000,select sum(price) from gold where price < 1000,37
+sum,select sum(price) from gold where price < 1000,37

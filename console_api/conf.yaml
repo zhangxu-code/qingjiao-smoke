@@ -1,3 +1,3 @@
-dataServer: k8s-c2id
+dataServer: ${namespace}-c2
 dataSet: nyc_tlc_data_10M
 key: tlc_10M

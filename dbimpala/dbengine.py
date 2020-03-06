@@ -2,7 +2,7 @@
 
 from impala.dbapi import connect
 from impala.util import log
-import logging
+from loguru import logger
 #logging.basicConfig(level=logging.INFO)
 
 class dbengine:
@@ -11,8 +11,8 @@ class dbengine:
 
     def __init__(self,host = '10.18.0.19',port=21050):
         #logging.basicConfig(level=logging.INFO)
-        logger = logging.getLogger()
-        logger.setLevel(logging.INFO)
+        logger.info(host)
+        logger.info(port)
         self.conn = connect(host=host,port=port,database='default')
 
         self.cur = self.conn.cursor()
@@ -23,7 +23,7 @@ class dbengine:
 
     def execut_sql(self,sql):
         self.cur.execute(sql)
-        logging.info(sql)
+        logger.info(sql)
         return self.cur.fetchall()
 
     def __del__(self):
