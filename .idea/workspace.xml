@@ -11,34 +11,9 @@
       <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_psql/__init__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_ptorch/__init__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_putil/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/addtask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/addtask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/deletetask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/deletetask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/getexecmsg.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/getexecmsg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettaskinfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettaskinfo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettasklogbyid.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettasklogbyid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettasklogbyrequestid.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettasklogbyrequestid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettaskmsghistory.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettaskmsghistory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettaskresult.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettaskresult.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettaskrole.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettaskrole.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/modifytask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/modifytask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/querymetaIdbyname.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/querymetaIdbyname.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/querymetadata.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/querymetadata.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/starttask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/starttask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/stoptask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/stoptask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/util/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/util/util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/conf.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/conf.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/datainput/db/dbsql.csv" beforeDir="false" afterPath="$PROJECT_DIR$/datainput/db/dbsql.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datainput/db/select_heartbeat_master.csv" beforeDir="false" afterPath="$PROJECT_DIR$/datainput/db/select_heartbeat_master.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datainput/tm/jobjson/cnnface.json" beforeDir="false" afterPath="$PROJECT_DIR$/datainput/tm/jobjson/cnnface.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbimpala/dbengine.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbimpala/dbengine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.json" beforeDir="false" afterPath="$PROJECT_DIR$/env.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finder/caseFinder.py" beforeDir="false" afterPath="$PROJECT_DIR$/finder/caseFinder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/console_job.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/console_job.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddt/ddt.py" beforeDir="false" afterPath="$PROJECT_DIR$/ddt/ddt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/privpy_library" beforeDir="false" afterPath="$PROJECT_DIR$/privpy_library" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskrunner/taskRunner_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/taskrunner/taskRunner_api.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,20 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/job/dbengin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="67" column="50" selection-start-line="67" selection-start-column="50" selection-end-line="67" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/ddt.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="126" column="30" selection-start-line="126" selection-start-column="30" selection-end-line="126" selection-end-column="30" />
+            <state relative-caret-position="226">
+              <caret line="77" column="48" selection-start-line="77" selection-end-line="78" />
             </state>
           </provider>
         </entry>
@@ -94,7 +60,27 @@
         <entry file="file://$PROJECT_DIR$/sql.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_dev.csv">
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+          </provider>
+          <provider selected="true" editor-type-id="csv-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_master.csv">
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+          </provider>
+          <provider selected="true" editor-type-id="csv-text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="25" selection-end-line="7" selection-end-column="216" />
             </state>
           </provider>
         </entry>
@@ -111,14 +97,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/datainput/db/dbsql.csv">
           <provider editor-type-id="csv-table-editor">
             <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
           </provider>
           <provider selected="true" editor-type-id="csv-text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
+            <state>
+              <caret selection-end-line="1" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -168,7 +154,6 @@
         <option value="$PROJECT_DIR$/datainput/tm/6_alg_smoke_master.csv" />
         <option value="$PROJECT_DIR$/datainput/tm/job_xian.csv" />
         <option value="$PROJECT_DIR$/datainput/tm/jobjson/10M.json" />
-        <option value="$PROJECT_DIR$/ddt/ddt.py" />
         <option value="$PROJECT_DIR$/datainput/tm/jobjson/100M.json" />
         <option value="$PROJECT_DIR$/datainput/tm/jobjson/500M.json" />
         <option value="$PROJECT_DIR$/datainput/tm/jobjson/1G.json" />
@@ -198,12 +183,13 @@
         <option value="$PROJECT_DIR$/dbimpala/dbengine.py" />
         <option value="$PROJECT_DIR$/sql.json" />
         <option value="$PROJECT_DIR$/datainput/db/select_heartbeat_master.csv" />
-        <option value="$PROJECT_DIR$/datainput/db/dbsql.csv" />
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/job/sql_impala.py" />
         <option value="$PROJECT_DIR$/job/console_job.py" />
-        <option value="/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/ddt.py" />
         <option value="$PROJECT_DIR$/job/dbengin.py" />
+        <option value="/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/ddt.py" />
+        <option value="$PROJECT_DIR$/ddt/ddt.py" />
+        <option value="$PROJECT_DIR$/datainput/db/dbsql.csv" />
       </list>
     </option>
   </component>
@@ -229,13 +215,7 @@
             <path>
               <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
               <item name="smoketest" type="462c0819:PsiDirectoryNode" />
-              <item name="datainput" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smoketest" type="462c0819:PsiDirectoryNode" />
-              <item name="datainput" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="ddt" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
@@ -294,15 +274,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Python Console" weight="0.32959184" />
       <window_info anchor="bottom" id="Pylint" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.44693878" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32959184" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -317,21 +296,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_ptorch/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_ppandas/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_pnumpy/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_pai/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_examples/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_basic_operations/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -601,26 +565,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datainput/db/dbsql.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="68" column="21" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
-          <folding>
-            <element signature="e#1240#1650#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/job/sql_impala.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
@@ -637,13 +581,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sql.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -667,17 +604,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddt/ddt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="151" column="4" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/ddt.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="150" column="4" selection-start-line="150" selection-start-column="4" selection-end-line="150" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="126" column="30" selection-start-line="126" selection-start-column="30" selection-end-line="126" selection-end-column="30" />
+          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/job/dbengin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="67" column="50" selection-start-line="67" selection-start-column="50" selection-end-line="67" selection-end-column="50" />
+        <state relative-caret-position="226">
+          <caret line="77" column="48" selection-start-line="77" selection-end-line="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="68" column="21" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+          <folding>
+            <element signature="e#1240#1650#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_dev.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_master.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="25" selection-end-line="7" selection-end-column="216" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datainput/db/dbsql.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state>
+          <caret selection-end-line="1" selection-end-column="39" />
         </state>
       </provider>
     </entry>
