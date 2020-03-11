@@ -60,7 +60,7 @@ def check_task(token, site):
             logger.info(response.text)
             if response.json().get("data").get("queueStatus") == 6:
                 return True
-            elif response.json().get("data").get("queueStatus") != 2 or \
+            elif response.json().get("data").get("queueStatus") != 2 and \
                 response.json().get("data").get("queueStatus") != 4:
 
                 response = requests.put(url="%s/api/api-tm/v1/task/start/1" % site,
