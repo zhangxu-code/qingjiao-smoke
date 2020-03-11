@@ -32,14 +32,8 @@ def main(argv):
     """
     if FLAGS.args:
         conf = json.loads(FLAGS.args)
-        os.environ["consolesite"] = conf.get("consolesite")
-        os.environ["consoleuser"] = conf.get("consoleuser")
-        os.environ["consolepasswd"] = conf.get("consolepasswd")
-        os.environ["csvfiles"] = conf.get("csvfiles")
-        os.environ["namespace"] = conf.get("namespace")
-        os.environ["path"] = conf.get("path")
-        if conf.get("key"):
-            os.environ["key"] = conf.get("key")
+        for key in conf.keys():
+            os.environ[key] = conf.get(key)
     elif FLAGS.json:
         reader = open(FLAGS.json)
         conf = json.load(reader)
