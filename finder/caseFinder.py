@@ -102,6 +102,8 @@ class casefinder:
     def key_match(self, key, comment):
         if comment == None:
             return True
+        if ',' in key:
+            key = key.split(",")
         method_key = re.findall(r'\[[\w]+\]', comment)
         method_key_f = []
         for _ in method_key:
