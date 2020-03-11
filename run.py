@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Project smoketestbak
+Project integration
 Author  zhenghongguang
-Date    2020-02-22
+Date    2020-03-09
 """
 
+
 import os
-from xmlrunnerR import xmlrunner
-from loguru import logger
 import unittest
 import time
 import json
-from absl import flags,app
+from loguru import logger
+from absl import flags, app
 from finder import caseFinder
+from xmlrunnerR import xmlrunner
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string(name="args",
@@ -24,34 +25,27 @@ flags.DEFINE_string(name="timestr", default=None, help=None)
 flags.DEFINE_string(name="type", default="test", help=None)
 
 def main(argv):
-    # caseFinder.find_bypath(os.getcwd() + '/console_api')
+    """
+    main
+    :param argv:
+    :return:
+    """
     if FLAGS.args:
         conf = json.loads(FLAGS.args)
-        os.environ["consolesite"] = conf.get("site")
-        os.environ["consoleuser"] = conf.get("user")
-        os.environ["consolepasswd"] = conf.get("passwd")
+        os.environ["consolesite"] = conf.get("consolesite")
+        os.environ["consoleuser"] = conf.get("consoleuser")
+        os.environ["consolepasswd"] = conf.get("consolepasswd")
         os.environ["csvfiles"] = conf.get("csvfiles")
         os.environ["namespace"] = conf.get("namespace")
         os.environ["path"] = conf.get("path")
         if conf.get("key"):
             os.environ["key"] = conf.get("key")
     elif FLAGS.json:
-        fr = open(FLAGS.json)
-        conf = json.load(fr)
-        fr.close()
+        reader = open(FLAGS.json)
+        conf = json.load(reader)
+        reader.close()
         for key in conf.keys():
             os.environ[key] = conf.get(key)
-        '''
-        os.environ["consolesite"] = conf.get("site")
-        os.environ["consoleuser"] = conf.get("user")
-        os.environ["consolepasswd"] = conf.get("passwd")
-        os.environ["csvfiles"] = conf.get("csvfiles")
-        os.environ["namespace"] = conf.get("namespace")
-        os.environ["path"] = conf.get("path")
-        if conf.get("key"):
-            os.environ["key"] = conf.get("key")
-        '''
-
     print(os.environ)
     if FLAGS.timestr:
         timestr = FLAGS.timestr
@@ -60,7 +54,8 @@ def main(argv):
     finder = caseFinder.casefinder()
     suit_list = []
     for path in os.environ["path"].split(','):
-        suit_list.append(finder.findcases_bypath(path=os.getcwd() + "/" + path, key=os.getenv("key")))
+        suit_list.append(finder.findcases_bypath(path=
+                                                 os.getcwd() + "/" + path, key=os.getenv("key")))
     #logger.info(finder.find_bypath(path=os.getcwd() + '/console_api'))
     suite = unittest.TestSuite(suit_list)
     logger.info(suite.countTestCases())
@@ -68,6 +63,6 @@ def main(argv):
     runner = xmlrunner.XMLTestRunner(output="privpy-%s-%s" % (FLAGS.type, timestr))
     runner.run(suite)
 
+
 if __name__ == '__main__':
     app.run(main)
-
