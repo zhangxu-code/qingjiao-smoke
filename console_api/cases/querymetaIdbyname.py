@@ -132,19 +132,15 @@ class QueryMetaIdByName(unittest.TestCase):
         if key is False:
             self.assertTrue(False, msg="get metadata key failed")
 
-        response = self.client.query_metadata_byname(query="dsName=%sh&dataSetName=%s&key=%s"
-                                                           % (dsname, datasetname, key))
-        logger.info(response)
-
         response = self.client.query_metadata_byname(query="dsName=%snomatch&dataSetName=%s&key=%s"
                                                            % (dsname, datasetname, key))
         logger.info(response)
-        if isinstance(self.check_schema(resp=response), str):
-            self.assertTrue(False, "jsonschema check failed")
+        self.assertEqual(response.get("code"), 0, msg="expect code = 0")
+        self.assertEqual(response.get("data"), None, msg="expect data = None")
 
     def test_getmetaid_byid_nomatch(self):
         """
-        [all] get metaId by dataServerId & dataSetId & key
+        [exception] get metaId by dataServerId & dataSetId & key
         :return:
         """
         dataserverId, dsname = self.get_dataserverid()
@@ -159,9 +155,7 @@ class QueryMetaIdByName(unittest.TestCase):
         response = self.client.query_metadata_byname(query="dataServerId=%d33&dataSetId=%d&key=%s"
                                                            % (dataserverId, datasetid, key))
         logger.info(response)
-        if response.get("data"):
-            self.assertTrue(False, msg="expect data = None")
-        #if isinstance(self.check_schema(resp=response), str):
-        #    self.assertTrue(False, "jsonschema check failed")
+        self.assertEqual(response.get("code"), 0, msg="expect code = 0")
+        self.assertEqual(response.get("data"), None, msg="expect data = None")
 
 

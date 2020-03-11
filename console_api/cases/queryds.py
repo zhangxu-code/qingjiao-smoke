@@ -96,7 +96,7 @@ class QueryDS(unittest.TestCase):
 
     def test_queryds_page_wrong(self):
         """
-        [all] queryds page = -1
+        [exception] queryds page = -1
         :return:
         """
         logger.info("query ds page = -1")
@@ -108,7 +108,7 @@ class QueryDS(unittest.TestCase):
 
     def test_queryds_page_outmax(self):
         """
-        [all] queryds page = totalpage + 1
+        [exception] queryds page = totalpage + 1
         :return:
         """
         logger.info("query ds page = totalpage + 1")

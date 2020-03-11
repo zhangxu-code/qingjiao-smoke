@@ -29,7 +29,7 @@
     },
     "data": {
       "type": "object",
-      "required": ["metaId", "key", "keyType", "dataSetId", "dataSetName", "dataServerId", "dsName", "isCache", "isDelete"],
+      "required": ["metaId", "key", "keyType", "keyShape", "dataSetId", "dataSetName", "dataServerId", "dsName", "isCache", "isDelete"],
       "additionalProperties": false,
       "properties": {
         "metaId": {
@@ -39,6 +39,9 @@
           "type": "string"
         },
         "keyType": {
+          "type": "string"
+        },
+        "keyShape": {
           "type": "string"
         },
         "dataSetId": {

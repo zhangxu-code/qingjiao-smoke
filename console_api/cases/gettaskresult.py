@@ -91,7 +91,7 @@ pp.reveal(data, "result")
 
     def test_gettaskresult_finished(self):
         """
-        [poc] get task result status = finished
+        [none] get task result status = finished
         :return:
         """
         taskid = self.addtask()
@@ -106,7 +106,7 @@ pp.reveal(data, "result")
 
     def test_gettaskresult_running(self):
         """
-        [poc] get task result status = running
+        [none] get task result status = running
         :return:
         """
         taskid = self.addtask()
@@ -122,6 +122,6 @@ pp.reveal(data, "result")
 
     def test_gettaskresult_failed(self):
         """
-        [poc]
+        [none]
         :return:
         """

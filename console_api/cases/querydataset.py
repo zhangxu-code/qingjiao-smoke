@@ -124,7 +124,7 @@ class QeuryDataSet(unittest.TestCase):
 
     def test_querydataset_wrongpage(self):
         """
-        [all] query dataset page=-1
+        [exception] query dataset page=-1
         :return:
         """
         dataserverId = self.get_dataserverid()
@@ -137,7 +137,7 @@ class QeuryDataSet(unittest.TestCase):
 
     def test_querydataset_outpage(self):
         """
-        [all] query data page = totalpage  + 1
+        [exception] query data page = totalpage  + 1
         :return:
         """
         dataserverId = self.get_dataserverid()
@@ -156,7 +156,7 @@ class QeuryDataSet(unittest.TestCase):
 
     def test_querydataset_wrongdsid(self):
         """
-        [all] query dataset wrong dataServerId
+        [exception] query dataset wrong dataServerId
         :return:
         """
         response = self.client.query_dataset(query="dataServerId=%d" % (99999 + 1))

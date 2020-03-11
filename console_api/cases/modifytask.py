@@ -154,7 +154,7 @@ pp.reveal(data, "result")
         self.assertEqual(response.get("subCode"), None, msg="expect subCode = Null")
         response = self.client.get_task(taskid=self.taskid)
         logger.info(response)
-        self.assertEqual(response.get("data").get("taskResultVOList"), None,
+        self.assertEqual(response.get("data").get("taskResultVOList"), [],
                          msg="expect taskResultVOList = None")
         self.taskbody["taskResultVOList"] = latestdatasource
 
@@ -188,9 +188,6 @@ pp.reveal(data, "result")
         logger.info(self.taskbody)
         response = self.client.modify_task(job_data=json.dumps(self.taskbody))
         logger.info(response)
-        #if isinstance(self.check_schema(resp=response), str):
-        #    self.assertTrue(False, "jsonschema check failed")
         self.assertEqual(response.get("code"), 1, msg="expect code = 1")
         self.assertIsInstance(response.get("subCode"), str, msg="expect subCode = Str")
-        #self.assertEqual(response.get("subCode"), str, msg="expect subCode = Null")
         self.taskbody["code"] = lastcode

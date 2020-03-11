@@ -64,7 +64,7 @@ pp.reveal(data, "result")
         dataserverId, dsname = util.getdsid(self.client)
         if dataserverId is False:
             self.assertTrue(False, msg="get dataserverId failed")
-        metaid = util.getmetaId(self.clients)
+        metaid = util.getmetaId(self.client)
         if metaid is False:
             self.assertTrue(False, msg="get metadata key failed")
         self.taskbody = {
@@ -80,7 +80,7 @@ pp.reveal(data, "result")
             }]
         }
         if data:
-            self.taskbody["taskDataSourceVOList"]["varName"] = data
+            self.taskbody["taskDataSourceVOList"][0]["varName"] = data
         response = self.client.add_task(job_data=json.dumps(self.taskbody))
         logger.info(response)
         self.assertEqual(response.get("code"), 0, msg="expect code = 0")
@@ -118,7 +118,7 @@ pp.reveal(data, "result")
             time.sleep(10)
         response = self.client.start_task(jobid=taskid)
         logger.info(response)
-        self.assertEqual(response.get("code"), 1, msg="expect code = 1")
+        self.assertEqual(response.get("code"), 0, msg="expect code = 0")
         self.assertEqual(response.get("subCode"), None, msg="expect subCode = Null")
 
     def test_starttask_failed(self):
@@ -152,5 +152,5 @@ pp.reveal(data, "result")
         logger.info(response)
         if isinstance(self.check_schema(resp=response), str):
             self.assertTrue(False, "jsonschema check failed")
-        self.assertEqual(response.get("code"), 0, msg="expect code = 0")
-        self.assertEqual(response.get("subCode"), None, msg="expect subCode = Null")
+        self.assertEqual(response.get("code"), 1, msg="expect code = 0")
+        self.assertEqual(response.get("subCode"), "TM_TASK_NOT_EXIST", msg="expect subCode = TM_TASK_NOT_EXIST")

@@ -269,4 +269,5 @@ pp.reveal(data, "result")
         if isinstance(self.check_schema(resp=response), str):
             self.assertTrue(False, "jsonschema check failed")
         self.assertEqual(response.get("code"), 1, msg="stop task expect code = 0")
-        self.assertIsInstance(response.get("subCode"), str, msg="expect subCode = None")
+        self.assertIsInstance(response.get("subCode"), str, msg="expect subCode = TM_TASK_NOT_EXIST")
+        self.assertEqual(response.get("subCode"), "TM_TASK_NOT_EXIST", msg="expect subCode = TM_TASK_NOT_EXIST")

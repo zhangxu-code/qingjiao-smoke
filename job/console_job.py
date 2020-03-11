@@ -12,38 +12,42 @@ import sys
 import json
 import csv
 import time
+import warnings
 from loguru import logger
 import jsonschema
-import warnings
-sys.path.append(os.getcwd())
 import ddt
+sys.path.append(os.getcwd())
 from tm.consoleapi import ConsoleAPI
 
 
 def jobcsv():
+    """
+    读取csv文件，DictReader
+    :return:
+    """
     logger.info("get job.csv")
     jobs = []
     csvfiles = os.getenv("csvfiles")
     csv.field_size_limit(1024 * 1024 * 10)
     logger.info(csvfiles)
     if csvfiles is None:
-        return [False,False]
+        return [False, False]
     for file in csvfiles.split(","):
-        fr = open("./datainput/tm/"+file)
-        reader = csv.reader(fr)
+        file_reader = open("./datainput/tm/"+file)
+        reader = csv.reader(file_reader)
         fieldnames = next(reader)
-        csvfile = csv.DictReader(fr, fieldnames=fieldnames)
+        csvfile = csv.DictReader(file_reader, fieldnames=fieldnames)
         #next(csvfile)
         for row in csvfile:
             logger.info(dict(row))
             jobs.append([row.get("title"), dict(row)])
-        fr.close()
+        file_reader.close()
     logger.info(jobs)
     return jobs
 
 
 @ddt.ddt
-class job(unittest.TestCase):
+class Job(unittest.TestCase):
     namespace = None
     @classmethod
     def setUpClass(cls) -> None:
@@ -95,10 +99,10 @@ class job(unittest.TestCase):
             return False
         return datasource_metaid
 
-    def getdsid(self,dsname):
+    def getdsid(self, dsname):
         logger.info("get dsid")
         if "${namespace}" in dsname:
-            dsname =dsname.replace("${namespace}", self.namespace)
+            dsname=dsname.replace("${namespace}", self.namespace)
         page = 0
         try:
             while 1:
@@ -126,7 +130,8 @@ class job(unittest.TestCase):
 
         for result in data.get("taskResultVOList"):
             if "${namespace}" in result.get("resultDest"):
-                result["resultDest"] = result.get("resultDest").replace("${namespace}", self.namespace)
+                result["resultDest"] = result.get("resultDest").replace("${namespace}",
+                                                                        self.namespace)
         body["taskDataSourceVOList"] = datasource
         return body
 
@@ -169,7 +174,7 @@ class job(unittest.TestCase):
         response = self.client.add_task(job_data=json.dumps(jobbody))
         logger.info(response)
         if isinstance(self.check_schema(response), str):
-            self.assertTrue(False, "jsonschema check failed")
+            self.assertTrue(False, msg="jsonschema check failed")
         taskid = response.get("data").get("id")
         response = self.client.start_task(jobid=taskid)
         logger.info(response)
@@ -183,7 +188,8 @@ class job(unittest.TestCase):
                 timecount = timecount + 30
                 continue
             else:
-                self.assertEqual(response.get("data").get("queueStatus"), 6, msg="expect task success")
+                self.assertEqual(response.get("data").get("queueStatus"), 6,
+                                 msg="expect task success")
                 break
         #response = self.client.delete_task(jobid=taskid)
         #logger.info(response)

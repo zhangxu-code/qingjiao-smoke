@@ -97,10 +97,8 @@ pp.reveal(data, "result")
         taskid = self.addtask()
         response = self.client.get_role_log_bytaskid(query="role=tm&taskId=%d" % taskid)
         logger.info(response)
-        if isinstance(self.check_schema(resp=response), str):
-            self.assertTrue(False, "jsonschema check failed")
-        self.assertEqual(response.get("code"), 0, msg="expect code = 0")
-        self.assertEqual(response.get("data"), [], msg="expect data = []")
+        self.assertEqual(response.get("code"), 1, msg="expect code = 0")
+        self.assertEqual(response.get("subCode"), "TRACK_LOGS_NOT_EXIST", msg="expect data = []")
 
     def test_getlog_running(self):
         """
@@ -157,7 +155,7 @@ pp.reveal(data, "result")
             response = self.client.get_role_log_bytaskid(query="role=%s&taskId=%d" % (role, taskid + 9999))
             logger.info(response)
             self.assertEqual(response.get("code"), 1, msg="expect code = 1")
-            self.assertEqual(response.get("subCode"), "TM_TASK_NOT_EXIST", msg="expect subCode = TM_TASK_NOT_EXIST")
+            self.assertEqual(response.get("subCode"), "TRACK_LOGS_NOT_EXIST", msg="expect subCode = TM_TASK_NOT_EXIST")
 
     def test_getlog_role_noexist(self):
         """

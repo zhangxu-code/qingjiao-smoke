@@ -71,7 +71,7 @@ pp.reveal(data, "result")
                 "varName": "data"
             }],
             "taskResultVOList":[{
-                "resultDest": dataserverId,
+                "resultDest": dsname,
                 "resultVarName": "result"
             }]
         }
@@ -138,15 +138,16 @@ pp.reveal(data, "result")
         [poc] delete task 失败的任务
         :return:
         """
-        taskid = self.addtask()
+        taskid = self.addtask(data="none")
         response = self.client.start_task(jobid=taskid)
         logger.info(response)
         self.assertEqual(response.get("code"), 0, msg="expect code = 0")
         response = self.client.get_task(taskid=taskid)
         logger.info(response)
-        while response.get("data").get("queueStatus") < 8:
+        while response.get("data").get("queueStatus") < 6:
             response = self.client.get_task(taskid=taskid)
             time.sleep(10)
+        return
         response = self.client.delete_task(jobid=taskid)
         logger.info(response)
         if isinstance(self.check_schema(resp=response), str):

@@ -166,9 +166,10 @@ class queryTask(unittest.TestCase):
         logger.info(response)
         if isinstance(self.check_schema(resp=response), str):
             self.assertTrue(False, "jsonschema check failed")
-        self.assertEqual(response.get("data").get("totalRows"), 1, msg="expect total rows = 1")
-        self.assertEqual(response.get("data").get("data")[0].get("name"), name,
-                         msg="epxect name=%s" % name)
+        self.assertGreaterEqual(response.get("data").get("totalRows"), 1, msg="expect total rows >= 1")
+        for task in response.get("data").get("data"):
+            self.assertEqual(task.get("name"), name,
+                             msg="epxect name=%s" % name)
 
     def test_querytask_byid_noexist(self):
         """
