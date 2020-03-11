@@ -66,7 +66,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["id", "name", "type", "updateTime", "clusterName", "region", "computeServerStatus"],
+            "required": ["id", "name", "type", "updateTime", "cluster", "region", "computeServerStatus","hostName"],
             "additionalProperties": false,
             "properties": {
               "id": {
@@ -83,13 +83,16 @@
                 "type": "string",
                 "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
               },
-              "clusterName": {
+              "cluster": {
                 "type": "string"
               },
               "region": {
-                "type": "string"
+                "type": ["null","string"]
               },
               "computeServerStatus": {
+                "type": ["null","string"]
+              },
+              "hostName": {
                 "type": "string"
               }
             }

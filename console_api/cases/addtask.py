@@ -392,7 +392,7 @@ pp.reveal(data, "result")
 
     def test_addtask_noresult(self):
         """
-        [exception]  add task key taskResultVOList not exist
+        [poc]  add task key taskResultVOList not exist
         :return:
         """
         dataserverId, dsname = util.getdsid(client=self.client)
@@ -413,8 +413,8 @@ pp.reveal(data, "result")
         logger.info(response)
         if isinstance(self.check_schema(resp=response), str):
             self.assertTrue(False, "jsonschema check failed")
-        self.assertEqual(response.get("code"), 1, msg="expect code = 0")
-        self.assertEqual(response.get("subCode"), "PARAM_GLOBAL0005", msg="expect subCode = Null")
+        self.assertEqual(response.get("code"), 0, msg="expect code = 0")
+        self.assertEqual(response.get("subCode"), None, msg="expect subCode = Null")
 
     def test_addtask_nodatasource(self):
         """

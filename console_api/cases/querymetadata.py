@@ -49,7 +49,7 @@ class QueryMetaData(unittest.TestCase):
         response = self.client.query_ds()
         try:
             return response.get("data").get("data")[
-                random.randint(1, len(response.get("data").get("data"))) - 1].get("dsId")
+                random.randint(1, len(response.get("data").get("data"))) - 1].get("id")
         except Exception as err:
             logger.error(err)
             return False
@@ -130,7 +130,7 @@ class QueryMetaData(unittest.TestCase):
 
     def test_querymetadata_wrongpage(self):
         """
-        [all] query metadata page=-1
+        [exception] query metadata page=-1
         :return:
         """
         dataserverId = self.get_dataserverid()
@@ -165,7 +165,7 @@ class QueryMetaData(unittest.TestCase):
 
     def test_querymetadata_wrongds(self):
         """
-        [all] query metadata dataServerId not exist
+        [exception] query metadata dataServerId not exist
         :return:
         """
         dataserverId = self.get_dataserverid()
@@ -181,7 +181,7 @@ class QueryMetaData(unittest.TestCase):
 
     def test_querymetadata_ds_dataset_notmatch(self):
         """
-        [all] query metadata dataServerId&dataset not match
+        [exception] query metadata dataServerId&dataset not match
         :return:
         """
         dataserverId = self.get_dataserverid()

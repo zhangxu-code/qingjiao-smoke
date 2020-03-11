@@ -331,7 +331,7 @@ class ConsoleAPI:
             token = self.token
         head = {"Authorization": "bearer %s" % token}
         try:
-            req = requests.get(url="%s?%d" % (url, query), headers=head, verify=False)
+            req = requests.get(url="%s?%s" % (url, query), headers=head, verify=False)
             self.produces(
                 "GET/api/api-track/track/getLogsByRequestIdAndRole",
                 time=req.elapsed.total_seconds() * 1000,

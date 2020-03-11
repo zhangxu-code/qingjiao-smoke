@@ -65,22 +65,22 @@
                 "type": "string"
               },
               "requestId": {
-                "type": "string",
+                "type": ["null","string"],
                 "partern": "[0-9a-zA-Z]{24}"
               },
               "cluster": {
                 "type": ["string", "null"]
               },
               "reqCreateTime": {
-                "type": "string",
+                "type": ["null","string"],
                 "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
               },
               "reqExecTime": {
-                "type": "integer",
+                "type": ["null","integer"],
                 "mininum": 0
               },
               "reqUpdateTime": {
-                "type": "string",
+                "type": ["null","string"],
                 "partern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
               },
               "queueStatus": {

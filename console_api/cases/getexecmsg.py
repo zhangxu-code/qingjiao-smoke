@@ -126,39 +126,22 @@ pp.reveal(data, "result")
         :return:
         """
         taskid = self.addtask()
-        #response = self.client.start_task(jobid=taskid)
-        #logger.info(response)
-        #self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
-        index = 0
-        tasktype = ''
-        while tasktype != "taskSuccess" and tasktype != "taskFail":
-            response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid+9999, index))
-            logger.info(response)
-            if isinstance(self.check_schema(resp=response), str):
-                self.assertTrue(False, "jsonschema check failed")
-            self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
-            tasktype = response.get("data").get("type")
-            index = index + 1
+        response = self.client.get_task_msg(query="taskId=%d&index=%d" % (taskid+9999, 0))
+        logger.info(response)
+        self.assertEqual(response.get("code"), 1, msg="getExecMsg expect code = 1")
+        self.assertEqual(response.get("subCode"), "TM_TASK_NOT_EXIST")
 
     def test_getmsg_requestid_notexist(self):
         """
         [exception] get exec msg by requestid not exist
         :return:
         """
-        #taskid = self.addtask()
-        #response = self.client.start_task(jobid=taskid)
-        #logger.info(response)
-        #self.assertEqual(response.get("code"), 0, msg="start task expect code = 0")
         index = 0
         tasktype = ''
-        while tasktype != "taskSuccess" and tasktype != "taskFail":
-            response = self.client.get_task_msg(query="requestId=hahahahahihihi&index=%d" % index)
-            logger.info(response)
-            if isinstance(self.check_schema(resp=response), str):
-                self.assertTrue(False, "jsonschema check failed")
-            self.assertEqual(response.get("code"), 0, msg="getExecMsg expect code = 0")
-            tasktype = response.get("data").get("type")
-            index = index + 1
+        response = self.client.get_task_msg(query="requestId=hahahahahihihi&index=%d" % 0)
+        logger.info(response)
+        self.assertEqual(response.get("code"), 1, msg="getExecMsg expect code = 1")
+        self.assertEqual(response.get("subCode"), "TM_TASK_NOT_EXIST")
 
     def test_getmsg_tasknotrun(self):
         """

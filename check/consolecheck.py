@@ -52,6 +52,10 @@ def check_task(token, site):
     logger.info("check task run")
     head = {"Authorization": "bearer %s" % token}
     try_count = 0
+    response = requests.put(url="%s/api/api-tm/v1/task/start/1" % site,
+                            headers=head,
+                            verify=False)
+    logger.info(response.text)
     while try_count < 90:
         try:
             response = requests.get(url="%s/api/api-tm/v1/task/1" % site,

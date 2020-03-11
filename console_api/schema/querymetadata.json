@@ -54,7 +54,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["metaId", "key", "keyType", "dataSetName", "dataSetId", "dataServerId", "dsName", "isCache", "isDelete"],
+            "required": ["metaId", "key", "keyType", "keyShape", "dataSetName", "dataSetId", "dataServerId", "dsName", "isCache", "isDelete"],
             "additionalProperties": false,
             "properties": {
               "metaId": {
@@ -66,6 +66,9 @@
               "keyType": {
                 "type": "string",
                 "enum": ["double","int","string", "int32", "int64"]
+              },
+              "keyShape": {
+                "type": "string"
               },
               "dataSetName": {
                 "type": "string"
