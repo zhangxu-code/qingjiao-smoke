@@ -82,9 +82,9 @@ def main(argv):
     """
     if FLAGS.args:
         conf = json.loads(FLAGS.args)
-        os.environ["consolesite"] = conf.get("site")
-        os.environ["consoleuser"] = conf.get("user")
-        os.environ["consolepasswd"] = conf.get("passwd")
+        os.environ["consolesite"] = conf.get("consolesite")
+        os.environ["consoleuser"] = conf.get("consoleuser")
+        os.environ["consolepasswd"] = conf.get("consolepasswd")
     elif FLAGS.json:
         reader = open(FLAGS.json)
         conf = json.load(reader)
