@@ -50,15 +50,37 @@ def check_task(token, site):
     :return:
     """
     logger.info("check task run")
-    head = {"Authorization": "bearer %s" % token}
+    head = {"Authorization": "bearer %s" % token,"Content-Type":"application/json"}
     try_count = 0
-    response = requests.put(url="%s/api/api-tm/v1/task/start/1" % site,
+
+
+    jsbody = {
+        "code": '''
+import privpy as pp
+import os
+import sys
+sys.path.append(os.getcwd() + '/privpy_lib')
+
+import pnumpy as pnp
+s1 = pnp.zeros_like(pp.iarr([[0, 1, 2],
+       [3, 4, 5]]))
+    ''',
+        "name": "checktest"
+    }
+    response = requests.post(url="%s/api/api-tm/v1/task" % site,
+                             data=json.dumps(jsbody),
+                             headers=head,
+                             verify=False)
+    logger.info(response.text)
+    taskid = response.json().get("data").get("id")
+    response = requests.put(url="%s/api/api-tm/v1/task/start/%d" % (site, taskid),
                             headers=head,
                             verify=False)
     logger.info(response.text)
+
     while try_count < 90:
         try:
-            response = requests.get(url="%s/api/api-tm/v1/task/1" % site,
+            response = requests.get(url="%s/api/api-tm/v1/task/%d" % (site, taskid),
                                     headers=head,
                                     verify=False)
             logger.info(response.text)
@@ -67,7 +89,7 @@ def check_task(token, site):
             elif response.json().get("data").get("queueStatus") != 2 and \
                 response.json().get("data").get("queueStatus") != 4:
 
-                response = requests.put(url="%s/api/api-tm/v1/task/start/1" % site,
+                response = requests.put(url="%s/api/api-tm/v1/task/start/%d" % (site, taskid),
                                         headers=head,
                                         verify=False)
                 logger.info(response.text)
