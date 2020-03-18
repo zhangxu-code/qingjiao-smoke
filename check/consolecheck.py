@@ -19,6 +19,18 @@ flags.DEFINE_string(name="args",
                     help="json args")
 flags.DEFINE_string(name="json", default=None, help="read env from json")
 
+def check_tm_health(site):
+    url = "%s/api/api-tm/actuator/health" % site
+    try_count = 0
+    while try_count < 90:
+        response = requests.get(url=url, verify=False)
+        logger.info(response.text)
+        if response.json().get("status") == "UP":
+            return True
+        try_count = try_count + 1
+        time.sleep(10)
+    return False
+
 def check_login(site, user, passwd):
     """
     check console login
@@ -50,7 +62,7 @@ def check_task(token, site):
     :return:
     """
     logger.info("check task run")
-    head = {"Authorization": "bearer %s" % token,"Content-Type":"application/json"}
+    head = {"Authorization": "bearer %s" % token, "Content-Type":"application/json"}
     try_count = 0
 
 
@@ -118,6 +130,9 @@ def main(argv):
         for key in conf.keys():
             os.environ[key] = conf.get(key)
 
+    status = check_tm_health(site=os.getenv("consolesite"))
+    if status is False:
+        exit(1)
     token = check_login(site=os.getenv("consolesite"),
                         user=os.getenv("consoleuser"),
                         passwd=os.getenv("consolepasswd"))
