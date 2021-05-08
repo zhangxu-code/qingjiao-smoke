@@ -2,41 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fdc309f-af00-4ffa-aa47-72292f54acb6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_basic_operations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_examples/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_pai/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_phash/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_pnumpy/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_ppandas/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_psql/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_ptorch/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_putil/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/smoketest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/smoketest.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/check/consolecheck.py" beforeDir="false" afterPath="$PROJECT_DIR$/check/consolecheck.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/addtask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/addtask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/deletetask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/deletetask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/getexecmsg.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/getexecmsg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettasklogbyid.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettasklogbyid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettasklogbyrequestid.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettasklogbyrequestid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/gettaskresult.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/gettaskresult.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/modifytask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/modifytask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/querydataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/querydataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/queryds.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/queryds.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/querymetaIdbyname.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/querymetaIdbyname.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/querymetadata.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/querymetadata.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/querytask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/querytask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/starttask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/starttask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/cases/stoptask.py" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/cases/stoptask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/schema/gettaskinfo.json" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/schema/gettaskinfo.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/schema/querymetadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/schema/querymetadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/schema/querymetaid.json" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/schema/querymetaid.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console_api/schema/querytask.json" beforeDir="false" afterPath="$PROJECT_DIR$/console_api/schema/querytask.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.json" beforeDir="false" afterPath="$PROJECT_DIR$/env.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job/console_job.py" beforeDir="false" afterPath="$PROJECT_DIR$/job/console_job.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/privpy_library" beforeDir="false" afterPath="$PROJECT_DIR$/privpy_library" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tm/consoleapi.py" beforeDir="false" afterPath="$PROJECT_DIR$/tm/consoleapi.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,95 +15,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/env.json">
+      <file leaf-file-name="util.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/console_api/cases/util/util.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/stoptask.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="271" column="99" selection-start-line="271" selection-start-column="99" selection-end-line="271" selection-end-column="99" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/starttask.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="155" column="68" selection-start-line="155" selection-start-column="51" selection-end-line="155" selection-end-column="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/schema/querytask.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="82" column="42" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/querytask.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="59">
-              <caret line="156" column="12" selection-start-line="156" selection-start-column="12" selection-end-line="156" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/querymetaIdbyname.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="158" column="78" selection-start-line="158" selection-start-column="78" selection-end-line="158" selection-end-column="78" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/querymetadata.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1847">
-              <caret line="51" column="85" selection-start-line="51" selection-start-column="85" selection-end-line="51" selection-end-column="85" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/modifytask.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="156" column="73" selection-start-line="156" selection-start-column="73" selection-end-line="156" selection-end-column="73" />
+            <state relative-caret-position="255">
+              <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
               <folding>
-                <element signature="e#115#124#0" expanded="true" />
+                <element signature="e#118#143#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/gettaskrole.py">
+      <file leaf-file-name="consoleapi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tm/consoleapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="133" selection-start-line="133" selection-end-line="133" />
+            <state relative-caret-position="3360">
+              <caret line="401" column="41" lean-forward="true" selection-start-line="401" selection-start-column="41" selection-end-line="401" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/console_api/cases/gettaskmsghistory.py">
+      <file leaf-file-name="deletetask.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/console_api/cases/deletetask.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="63" column="43" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
+            <state relative-caret-position="781">
+              <caret line="169" column="68" selection-start-line="169" selection-start-column="51" selection-end-line="169" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addtask.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/console_api/cases/addtask.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4724">
+              <caret line="21" column="14" lean-forward="true" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+              <folding>
+                <element signature="e#115#124#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -227,9 +147,20 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1680" />
-    <option name="height" value="1050" />
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="71" />
+    <option name="y" value="139" />
+    <option name="width" value="1964" />
+    <option name="height" value="1266" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -250,11 +181,6 @@
             <path>
               <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
               <item name="smoketest" type="462c0819:PsiDirectoryNode" />
-              <item name="check" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smoketest" type="462c0819:PsiDirectoryNode" />
               <item name="console_api" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -267,7 +193,23 @@
               <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
               <item name="smoketest" type="462c0819:PsiDirectoryNode" />
               <item name="console_api" type="462c0819:PsiDirectoryNode" />
-              <item name="schema" type="462c0819:PsiDirectoryNode" />
+              <item name="cases" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smoketest" type="462c0819:PsiDirectoryNode" />
+              <item name="datainput" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smoketest" type="462c0819:PsiDirectoryNode" />
+              <item name="dbimpala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smoketest" type="462c0819:PsiDirectoryNode" />
+              <item name="ddt" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
@@ -277,7 +219,7 @@
             <path>
               <item name="smoketest" type="b2602c69:ProjectViewProjectNode" />
               <item name="smoketest" type="462c0819:PsiDirectoryNode" />
-              <item name="tm" type="462c0819:PsiDirectoryNode" />
+              <item name="xmlrunnerR" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -287,20 +229,24 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_basic_operations" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/datainput/tm" />
+      <recent name="$PROJECT_DIR$/console_api/cases" />
+    </key>
+    <key name="OPEN_URL_DIALOG">
+      <recent name="http://gitlab.tsingj.local/qa/stability_test.git" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_basic_operations" />
       <recent name="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_examples" />
       <recent name="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_pai" />
       <recent name="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_phash" />
       <recent name="$PROJECT_DIR$/privpy_library/privpy_lib/tests/test_pnumpy" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/datainput/tm" />
-      <recent name="$PROJECT_DIR$/console_api/cases" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -329,47 +275,40 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="23" width="2560" height="1323" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Pylint" order="7" weight="0.25306123" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.50102043" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32959184" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.13610889" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24921875" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="SciView" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Pylint" order="7" weight="0.25306123" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
     </layout>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/datainput/tm/job_xian_json.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datainput/tm/jobjson/500M.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="37" lean-forward="true" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/console_api/conf.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -402,76 +341,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="e#25#57#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datainput/db/select_heartbeat_master.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/datainput/db/select_heartbeat_master.csv" />
     <entry file="file://$PROJECT_DIR$/job/sql_impala.py" />
     <entry file="file://$PROJECT_DIR$/dbengine_cases.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="333">
           <caret line="79" column="48" lean-forward="true" selection-start-line="79" selection-start-column="48" selection-end-line="79" selection-end-column="48" />
-          <folding>
-            <element signature="e#75#113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddt/ddt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="151" column="4" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/ddt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="150" column="4" selection-start-line="150" selection-start-column="4" selection-end-line="150" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_master.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="25" selection-end-line="7" selection-end-column="216" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_dev.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datainput/db/dbsql.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="50" selection-end-line="7" selection-end-column="216" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/ddt.py" />
+    <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_master.csv" />
+    <entry file="file://$PROJECT_DIR$/datainput/db/select_smoke_dev.csv" />
+    <entry file="file://$PROJECT_DIR$/datainput/db/dbsql.csv" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -480,38 +365,17 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/login/login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/requests/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="103" column="14" selection-start-line="103" selection-start-column="14" selection-end-line="103" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/requests/api.py" />
     <entry file="file://$PROJECT_DIR$/job/console_job.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
           <caret line="94" column="27" selection-start-line="94" selection-start-column="21" selection-end-line="94" selection-end-column="27" />
-          <folding>
-            <element signature="e#115#130#0" expanded="true" />
-            <element signature="e#3077#3675#0" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datainput/tm/job_xian.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/datainput/tm/job_xian.csv" />
     <entry file="file://$PROJECT_DIR$/job/dbengin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="915">
@@ -537,12 +401,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
           <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-          <folding>
-            <element signature="e#118#127#0" expanded="true" />
-            <element signature="e#627#677#1" />
-            <element signature="e#705#810#0" />
-            <element signature="e#1159#1316#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -550,12 +408,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
-          <folding>
-            <element signature="e#461#1212#0" />
-            <element signature="e#1247#2302#0" />
-            <element signature="e#1447#2285#0" />
-            <element signature="e#2324#3099#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -570,27 +422,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1380">
           <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/console_api/cases/util/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/console_api/cases/addtask.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="394" column="12" selection-start-line="394" selection-start-column="12" selection-end-line="394" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/console_api/cases/deletetask.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="169" column="68" selection-start-line="169" selection-start-column="51" selection-end-line="169" selection-end-column="68" />
         </state>
       </provider>
     </entry>
@@ -621,13 +452,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tm/consoleapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="360" column="13" selection-start-line="360" selection-start-column="13" selection-end-line="360" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/gettasklogbyid.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -644,21 +468,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/gettaskmsghistory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="810">
           <caret line="63" column="43" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/gettaskrole.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
+        <state relative-caret-position="1875">
           <caret line="133" selection-start-line="133" selection-end-line="133" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/modifytask.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
+        <state relative-caret-position="2235">
           <caret line="156" column="73" selection-start-line="156" selection-start-column="73" selection-end-line="156" selection-end-column="73" />
           <folding>
             <element signature="e#115#124#0" expanded="true" />
@@ -689,7 +513,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/querymetadata.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1847">
+        <state relative-caret-position="750">
           <caret line="51" column="85" selection-start-line="51" selection-start-column="85" selection-end-line="51" selection-end-column="85" />
         </state>
       </provider>
@@ -701,45 +525,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/console_api/cases/querymetaIdbyname.py">
+    <entry file="file://$PROJECT_DIR$/console_api/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console_api/cases/util/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console_api/schema/querytask.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="158" column="78" selection-start-line="158" selection-start-column="78" selection-end-line="158" selection-end-column="78" />
+        <state relative-caret-position="1230">
+          <caret line="82" column="42" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/starttask.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
+        <state relative-caret-position="924">
           <caret line="155" column="68" selection-start-line="155" selection-start-column="51" selection-end-line="155" selection-end-column="68" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/stoptask.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
+        <state relative-caret-position="909">
           <caret line="271" column="99" selection-start-line="271" selection-start-column="99" selection-end-line="271" selection-end-column="99" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/env.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="105">
+          <caret line="7" column="27" lean-forward="true" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/console_api/schema/querytask.json">
+    <entry file="http://gitlab.tsingj.local/qa/stability_test.git">
+      <provider selected="true" editor-type-id="httpFileEditor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddt/ddt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="82" column="42" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
+        <state relative-caret-position="540">
+          <caret line="41" column="19" lean-forward="true" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console_api/cases/querymetaIdbyname.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/console_api/cases/querytask.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="156" column="12" selection-start-line="156" selection-start-column="12" selection-end-line="156" selection-end-column="12" />
+        <state relative-caret-position="870">
+          <caret line="58" column="64" selection-start-line="58" selection-start-column="64" selection-end-line="58" selection-end-column="64" />
+          <folding>
+            <element signature="e#115#124#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console_api/cases/util/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+          <folding>
+            <element signature="e#118#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tm/consoleapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3360">
+          <caret line="401" column="41" lean-forward="true" selection-start-line="401" selection-start-column="41" selection-end-line="401" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console_api/cases/deletetask.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="781">
+          <caret line="169" column="68" selection-start-line="169" selection-start-column="51" selection-end-line="169" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console_api/cases/addtask.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4724">
+          <caret line="21" column="14" lean-forward="true" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+          <folding>
+            <element signature="e#115#124#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
