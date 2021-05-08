@@ -1,0 +1,39 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+# Added by Docker Desktop
+# To allow the same kube context to work on the host and the container:
+127.0.0.1 kubernetes.docker.internal
+
+0.0.0.0 account.jetbrains.com
+
+192.168.200.187 es.mpc01.dev
+192.168.200.187 es.mpc02.dev
+192.168.200.187 es.mpc03.dev
+192.168.200.187 es.mpc04.dev
+
+
+140.82.114.4 github.com
+140.82.112.3 gist.github.com
+199.232.69.194 github.global.ssl.fastly.net
+185.199.108.153 assets-cdn.github.com
+185.199.111.153 raw.githubusercontent.com
+185.199.111.153 cloud.githubusercontent.com
+185.199.111.153 camo.githubusercontent.com
+185.199.111.153 avatars0.githubusercontent.com
+185.199.111.153 avatars1.githubusercontent.com
+185.199.111.153 avatars2.githubusercontent.com
+185.199.111.153 avatars3.githubusercontent.com
+185.199.111.153 avatars4.githubusercontent.com
+185.199.111.153 avatars5.githubusercontent.com
+185.199.111.153 avatars6.githubusercontent.com
+185.199.111.153 avatars7.githubusercontent.com
+185.199.111.153 avatars8.githubusercontent.com
+
+# End of section
